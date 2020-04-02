@@ -5,6 +5,7 @@ import com.xue.bean.SysResources;
 import com.xue.bean.SysUser;
 import com.xue.service.CourseService;
 import com.xue.service.ResourcesService;
+import com.xue.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +30,9 @@ public class PageController extends BaseController {
 
     @Autowired
     private CourseService courseService;
+
+    @Autowired
+    private UserService userService;
 
     /**
      * @Description 返回主页

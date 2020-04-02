@@ -68,4 +68,12 @@ public class UserServiceImpl implements UserService {
             return false;
         }
     }
+
+    /**
+     * @Description 根据用户ID获取用户信息数据
+     * @Date 2020/4/2 17:46
+     **/
+    public SysUser getUserInfo(){
+        return new SysUser();
+    }
 }
