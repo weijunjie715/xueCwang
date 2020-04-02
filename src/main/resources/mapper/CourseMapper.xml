@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.CourseMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.Course">
+    <id column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="c_su_id" jdbcType="INTEGER" property="cSuId" />
+    <result column="c_sr_id" jdbcType="INTEGER" property="cSrId" />
+    <result column="c_order" jdbcType="INTEGER" property="cOrder" />
+    <result column="c_author" jdbcType="VARCHAR" property="cAuthor" />
+    <result column="c_video" jdbcType="VARCHAR" property="cVideo" />
+    <result column="c_scoure" jdbcType="VARCHAR" property="cScoure" />
+    <result column="c_uptime" jdbcType="VARCHAR" property="cUptime" />
+    <result column="c_flag" jdbcType="VARCHAR" property="cFlag" />
+    <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+    <result column="c_update_time" jdbcType="TIMESTAMP" property="cUpdateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    c_id, c_name, c_su_id, c_sr_id, c_order, c_author, c_video, c_scoure, c_uptime, c_flag, 
+    c_create_time, c_update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from course
+    where c_id = #{cId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course
+    where c_id = #{cId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.Course">
+    insert into course (c_id, c_name, c_su_id, 
+      c_sr_id, c_order, c_author, 
+      c_video, c_scoure, c_uptime, 
+      c_flag, c_create_time, c_update_time
+      )
+    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cSuId,jdbcType=INTEGER}, 
+      #{cSrId,jdbcType=INTEGER}, #{cOrder,jdbcType=INTEGER}, #{cAuthor,jdbcType=VARCHAR}, 
+      #{cVideo,jdbcType=VARCHAR}, #{cScoure,jdbcType=VARCHAR}, #{cUptime,jdbcType=VARCHAR}, 
+      #{cFlag,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.Course">
+    insert into course
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="cName != null">
+        c_name,
+      </if>
+      <if test="cSuId != null">
+        c_su_id,
+      </if>
+      <if test="cSrId != null">
+        c_sr_id,
+      </if>
+      <if test="cOrder != null">
+        c_order,
+      </if>
+      <if test="cAuthor != null">
+        c_author,
+      </if>
+      <if test="cVideo != null">
+        c_video,
+      </if>
+      <if test="cScoure != null">
+        c_scoure,
+      </if>
+      <if test="cUptime != null">
+        c_uptime,
+      </if>
+      <if test="cFlag != null">
+        c_flag,
+      </if>
+      <if test="cCreateTime != null">
+        c_create_time,
+      </if>
+      <if test="cUpdateTime != null">
+        c_update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="cName != null">
+        #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cSuId != null">
+        #{cSuId,jdbcType=INTEGER},
+      </if>
+      <if test="cSrId != null">
+        #{cSrId,jdbcType=INTEGER},
+      </if>
+      <if test="cOrder != null">
+        #{cOrder,jdbcType=INTEGER},
+      </if>
+      <if test="cAuthor != null">
+        #{cAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="cVideo != null">
+        #{cVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="cScoure != null">
+        #{cScoure,jdbcType=VARCHAR},
+      </if>
+      <if test="cUptime != null">
+        #{cUptime,jdbcType=VARCHAR},
+      </if>
+      <if test="cFlag != null">
+        #{cFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreateTime != null">
+        #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUpdateTime != null">
+        #{cUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.Course">
+    update course
+    <set>
+      <if test="cName != null">
+        c_name = #{cName,jdbcType=VARCHAR},
+      </if>
+      <if test="cSuId != null">
+        c_su_id = #{cSuId,jdbcType=INTEGER},
+      </if>
+      <if test="cSrId != null">
+        c_sr_id = #{cSrId,jdbcType=INTEGER},
+      </if>
+      <if test="cOrder != null">
+        c_order = #{cOrder,jdbcType=INTEGER},
+      </if>
+      <if test="cAuthor != null">
+        c_author = #{cAuthor,jdbcType=VARCHAR},
+      </if>
+      <if test="cVideo != null">
+        c_video = #{cVideo,jdbcType=VARCHAR},
+      </if>
+      <if test="cScoure != null">
+        c_scoure = #{cScoure,jdbcType=VARCHAR},
+      </if>
+      <if test="cUptime != null">
+        c_uptime = #{cUptime,jdbcType=VARCHAR},
+      </if>
+      <if test="cFlag != null">
+        c_flag = #{cFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="cCreateTime != null">
+        c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="cUpdateTime != null">
+        c_update_time = #{cUpdateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.Course">
+    update course
+    set c_name = #{cName,jdbcType=VARCHAR},
+      c_su_id = #{cSuId,jdbcType=INTEGER},
+      c_sr_id = #{cSrId,jdbcType=INTEGER},
+      c_order = #{cOrder,jdbcType=INTEGER},
+      c_author = #{cAuthor,jdbcType=VARCHAR},
+      c_video = #{cVideo,jdbcType=VARCHAR},
+      c_scoure = #{cScoure,jdbcType=VARCHAR},
+      c_uptime = #{cUptime,jdbcType=VARCHAR},
+      c_flag = #{cFlag,jdbcType=VARCHAR},
+      c_create_time = #{cCreateTime,jdbcType=TIMESTAMP},
+      c_update_time = #{cUpdateTime,jdbcType=TIMESTAMP}
+    where c_id = #{cId,jdbcType=INTEGER}
+  </update>
+  <resultMap extends="BaseResultMap" id="course_info_page" type="com.xue.bean.Course">
+    <result column="fileUrl" jdbcType="VARCHAR" property="fileUrl" />
+  </resultMap>
+  <select id="selectCourseInfo" resultMap="course_info_page">
+    SELECT
+	c.*,
+	r.file as fileUrl
+    FROM
+	course c
+	LEFT JOIN sys_resources r ON c.c_sr_id = r.id
+    WHERE
+	c.c_flag = '1'
+    ORDER BY
+	c.c_order DESC
+	LIMIT #{bNumber},
+	#{eNumber}
+  </select>
+</mapper>

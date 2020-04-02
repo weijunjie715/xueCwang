@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.SysResourcesMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.SysResources">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="sr_name" jdbcType="VARCHAR" property="srName" />
+    <result column="sr_type" jdbcType="VARCHAR" property="srType" />
+    <result column="file" jdbcType="VARCHAR" property="file" />
+    <result column="url" jdbcType="VARCHAR" property="url" />
+    <result column="sr_index" jdbcType="INTEGER" property="srIndex" />
+    <result column="out_id" jdbcType="INTEGER" property="outId" />
+    <result column="flag" jdbcType="INTEGER" property="flag" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, sr_name, sr_type, file, url, sr_index, out_id, flag, remarks, create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_resources
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_resources
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.SysResources">
+    insert into sys_resources ( sr_name, sr_type,
+      file, url, sr_index, 
+      out_id, flag, remarks, 
+      create_time, update_time)
+    values ( #{srName,jdbcType=VARCHAR}, #{srType,jdbcType=VARCHAR},
+      #{file,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{srIndex,jdbcType=INTEGER}, 
+      #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.SysResources">
+    insert into sys_resources
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="srName != null">
+        sr_name,
+      </if>
+      <if test="srType != null">
+        sr_type,
+      </if>
+      <if test="file != null">
+        file,
+      </if>
+      <if test="url != null">
+        url,
+      </if>
+      <if test="srIndex != null">
+        sr_index,
+      </if>
+      <if test="outId != null">
+        out_id,
+      </if>
+      <if test="flag != null">
+        flag,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="srName != null">
+        #{srName,jdbcType=VARCHAR},
+      </if>
+      <if test="srType != null">
+        #{srType,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="srIndex != null">
+        #{srIndex,jdbcType=INTEGER},
+      </if>
+      <if test="outId != null">
+        #{outId,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.SysResources">
+    update sys_resources
+    <set>
+      <if test="srName != null">
+        sr_name = #{srName,jdbcType=VARCHAR},
+      </if>
+      <if test="srType != null">
+        sr_type = #{srType,jdbcType=VARCHAR},
+      </if>
+      <if test="file != null">
+        file = #{file,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="srIndex != null">
+        sr_index = #{srIndex,jdbcType=INTEGER},
+      </if>
+      <if test="outId != null">
+        out_id = #{outId,jdbcType=INTEGER},
+      </if>
+      <if test="flag != null">
+        flag = #{flag,jdbcType=INTEGER},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.SysResources">
+    update sys_resources
+    set sr_name = #{srName,jdbcType=VARCHAR},
+      sr_type = #{srType,jdbcType=VARCHAR},
+      file = #{file,jdbcType=VARCHAR},
+      url = #{url,jdbcType=VARCHAR},
+      sr_index = #{srIndex,jdbcType=INTEGER},
+      out_id = #{outId,jdbcType=INTEGER},
+      flag = #{flag,jdbcType=INTEGER},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByType" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_resources where sr_type = #{type}
+      and flag = '1'
+    order by sr_index desc
+    limit 0,#{number}
+  </select>
+  <select id="getMaxIndexByType" resultType="java.lang.Integer">
+    SELECT
+	IFNULL( max( sr_index ), 0 ) + 1
+    FROM
+  	sys_resources
+    WHERE
+	sr_type = #{type}
+  </select>
+  <insert id="insertForId" parameterType="com.xue.bean.SysResources">
+  insert into sys_resources ( sr_name, sr_type,
+  file, url, sr_index,
+  out_id, flag, remarks)
+  values ( #{srName,jdbcType=VARCHAR}, #{srType,jdbcType=VARCHAR},
+  #{file,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{srIndex,jdbcType=INTEGER},
+  #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
+  <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+    SELECT LAST_INSERT_ID()
+  </selectKey>
+  </insert>
+</mapper>

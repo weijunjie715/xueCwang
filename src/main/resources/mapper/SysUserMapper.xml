@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.SysUserMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.SysUser">
+    <id column="su_id" jdbcType="INTEGER" property="suId" />
+    <result column="su_uuid" jdbcType="VARCHAR" property="suUuid" />
+    <result column="su_name" jdbcType="VARCHAR" property="suName" />
+    <result column="su_code" jdbcType="VARCHAR" property="suCode" />
+    <result column="su_pwd" jdbcType="VARCHAR" property="suPwd" />
+    <result column="su_email" jdbcType="VARCHAR" property="suEmail" />
+    <result column="su_sex" jdbcType="VARCHAR" property="suSex" />
+    <result column="su_phone" jdbcType="VARCHAR" property="suPhone" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="su_sr_id" jdbcType="INTEGER" property="suSrId" />
+    <result column="su_birthday" jdbcType="VARCHAR" property="suBirthday" />
+    <result column="su_reason" jdbcType="VARCHAR" property="suReason" />
+    <result column="su_role" jdbcType="VARCHAR" property="suRole" />
+    <result column="su_last_ip" jdbcType="VARCHAR" property="suLastIp" />
+    <result column="su_last_time" jdbcType="TIMESTAMP" property="suLastTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    su_id, su_uuid, su_name, su_code, su_pwd, su_email, su_sex, su_phone, create_time, 
+    update_time, su_sr_id, su_birthday, su_reason, su_role, su_last_ip, su_last_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from sys_user
+    where su_id = #{suId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_user
+    where su_id = #{suId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.SysUser">
+    insert into sys_user (su_id, su_uuid, su_name,
+      su_code, su_pwd, su_email,
+      su_sex, su_phone, su_sr_id, su_birthday,
+      su_reason, su_role, su_last_ip,
+      su_last_time)
+    values (#{suId,jdbcType=INTEGER}, #{suUuid,jdbcType=VARCHAR}, #{suName,jdbcType=VARCHAR},
+      #{suCode,jdbcType=VARCHAR}, #{suPwd,jdbcType=VARCHAR}, #{suEmail,jdbcType=VARCHAR},
+      #{suSex,jdbcType=VARCHAR}, #{suPhone,jdbcType=VARCHAR}, #{suSrId,jdbcType=INTEGER}, #{suBirthday,jdbcType=VARCHAR},
+      #{suReason,jdbcType=VARCHAR}, #{suRole,jdbcType=VARCHAR}, #{suLastIp,jdbcType=VARCHAR},
+      #{suLastTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.SysUser">
+    insert into sys_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="suId != null">
+        su_id,
+      </if>
+      <if test="suUuid != null">
+        su_uuid,
+      </if>
+      <if test="suName != null">
+        su_name,
+      </if>
+      <if test="suCode != null">
+        su_code,
+      </if>
+      <if test="suPwd != null">
+        su_pwd,
+      </if>
+      <if test="suEmail != null">
+        su_email,
+      </if>
+      <if test="suSex != null">
+        su_sex,
+      </if>
+      <if test="suPhone != null">
+        su_phone,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="suSrId != null">
+        su_sr_id,
+      </if>
+      <if test="suBirthday != null">
+        su_birthday,
+      </if>
+      <if test="suReason != null">
+        su_reason,
+      </if>
+      <if test="suRole != null">
+        su_role,
+      </if>
+      <if test="suLastIp != null">
+        su_last_ip,
+      </if>
+      <if test="suLastTime != null">
+        su_last_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="suId != null">
+        #{suId,jdbcType=INTEGER},
+      </if>
+      <if test="suUuid != null">
+        #{suUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="suName != null">
+        #{suName,jdbcType=VARCHAR},
+      </if>
+      <if test="suCode != null">
+        #{suCode,jdbcType=VARCHAR},
+      </if>
+      <if test="suPwd != null">
+        #{suPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="suEmail != null">
+        #{suEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="suSex != null">
+        #{suSex,jdbcType=VARCHAR},
+      </if>
+      <if test="suPhone != null">
+        #{suPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suSrId != null">
+        #{suSrId,jdbcType=INTEGER},
+      </if>
+      <if test="suBirthday != null">
+        #{suBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="suReason != null">
+        #{suReason,jdbcType=VARCHAR},
+      </if>
+      <if test="suRole != null">
+        #{suRole,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastIp != null">
+        #{suLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastTime != null">
+        #{suLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.SysUser">
+    update sys_user
+    <set>
+      <if test="suUuid != null">
+        su_uuid = #{suUuid,jdbcType=VARCHAR},
+      </if>
+      <if test="suName != null">
+        su_name = #{suName,jdbcType=VARCHAR},
+      </if>
+      <if test="suCode != null">
+        su_code = #{suCode,jdbcType=VARCHAR},
+      </if>
+      <if test="suPwd != null">
+        su_pwd = #{suPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="suEmail != null">
+        su_email = #{suEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="suSex != null">
+        su_sex = #{suSex,jdbcType=VARCHAR},
+      </if>
+      <if test="suPhone != null">
+        su_phone = #{suPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="suSrId != null">
+        su_sr_id = #{suSrId,jdbcType=INTEGER},
+      </if>
+      <if test="suBirthday != null">
+        su_birthday = #{suBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="suReason != null">
+        su_reason = #{suReason,jdbcType=VARCHAR},
+      </if>
+      <if test="suRole != null">
+        su_role = #{suRole,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastIp != null">
+        su_last_ip = #{suLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastTime != null">
+        su_last_time = #{suLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where su_id = #{suId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.SysUser">
+    update sys_user
+    set su_uuid = #{suUuid,jdbcType=VARCHAR},
+      su_name = #{suName,jdbcType=VARCHAR},
+      su_code = #{suCode,jdbcType=VARCHAR},
+      su_pwd = #{suPwd,jdbcType=VARCHAR},
+      su_email = #{suEmail,jdbcType=VARCHAR},
+      su_sex = #{suSex,jdbcType=VARCHAR},
+      su_phone = #{suPhone,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      su_sr_id = #{suSrId,jdbcType=INTEGER},
+      su_birthday = #{suBirthday,jdbcType=VARCHAR},
+      su_reason = #{suReason,jdbcType=VARCHAR},
+      su_role = #{suRole,jdbcType=VARCHAR},
+      su_last_ip = #{suLastIp,jdbcType=VARCHAR},
+      su_last_time = #{suLastTime,jdbcType=TIMESTAMP}
+    where su_id = #{suId,jdbcType=INTEGER}
+  </update>
+
+  <select id="userLogin" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_user where su_pwd = #{pwd} and
+    (su_email = #{code} or su_code = #{code} or su_phone = #{code})
+  </select>
+  <select id="checkUser" parameterType="com.xue.bean.SysUser" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from sys_user where
+    su_name = #{suName,jdbcType=VARCHAR} or
+    su_email = #{suEmail,jdbcType=VARCHAR} or
+    su_code = #{suCode,jdbcType=VARCHAR} or
+    su_phone = #{suPhone,jdbcType=VARCHAR}
+    limit 0,1
+  </select>
+</mapper>
