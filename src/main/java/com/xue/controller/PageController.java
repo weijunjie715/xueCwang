@@ -57,4 +57,14 @@ public class PageController extends BaseController {
         return "student/userRegisterPage";
     }
 
+    /**
+     * @Description 展示用户信息数据
+     * @Date 2020/4/2 17:24
+     **/
+    @RequestMapping("showUserInfo")
+    public String showUserInfo(String userId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //通过用户ID获取用户的信息数据
+        return "student/userInfoPage";
+    }
+
 }
