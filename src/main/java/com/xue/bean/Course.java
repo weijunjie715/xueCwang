@@ -57,6 +57,16 @@ public class Course implements Serializable {
 
     private String fileUrl;
 
+    private String courseContent;
+
+    public String getCourseContent() {
+        return courseContent;
+    }
+
+    public void setCourseContent(String courseContent) {
+        this.courseContent = courseContent;
+    }
+
     public String getFileUrl() {
         return fileUrl;
     }

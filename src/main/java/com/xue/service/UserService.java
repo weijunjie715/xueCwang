@@ -14,4 +14,6 @@ public interface UserService {
     int userRegister(SysUser sysUser,String url);
 
     public boolean checkedUser(SysUser sysUser);
+
+    public SysUser getUserInfoByID(String id);
 }

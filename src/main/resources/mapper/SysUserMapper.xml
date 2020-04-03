@@ -19,6 +19,9 @@
     <result column="su_last_ip" jdbcType="VARCHAR" property="suLastIp" />
     <result column="su_last_time" jdbcType="TIMESTAMP" property="suLastTime" />
   </resultMap>
+    <resultMap id="userAllInfo" type="com.xue.bean.SysUser" extends="BaseResultMap">
+        <result column="photoUrl" jdbcType="VARCHAR" property="userPhoto" />
+    </resultMap>
   <sql id="Base_Column_List">
     su_id, su_uuid, su_name, su_code, su_pwd, su_email, su_sex, su_phone, create_time, 
     update_time, su_sr_id, su_birthday, su_reason, su_role, su_last_ip, su_last_time
@@ -233,4 +236,13 @@
     su_phone = #{suPhone,jdbcType=VARCHAR}
     limit 0,1
   </select>
+    <select id="selectByUUID" resultMap="userAllInfo">
+        SELECT
+            a.*,
+            b.file photoUrl
+        FROM
+            sys_user a
+            LEFT JOIN sys_resources b ON a.su_sr_id = b.id
+            where a.su_uuid = #{id}
+    </select>
 </mapper>

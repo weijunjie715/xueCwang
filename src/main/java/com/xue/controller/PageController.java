@@ -68,7 +68,14 @@ public class PageController extends BaseController {
     @RequestMapping("showUserInfo")
     public String showUserInfo(String userId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
         //通过用户ID获取用户的信息数据
-        return "student/userInfoPage";
+        SysUser userInfo = userService.getUserInfoByID(userId);
+        if(null == userInfo){
+            return "404";
+        }else{
+            model.addAttribute("userInfoShow",userInfo);
+            return "student/userInfoPage";
+        }
+
     }
 
 }

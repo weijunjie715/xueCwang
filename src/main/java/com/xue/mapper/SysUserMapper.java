@@ -20,4 +20,6 @@ public interface SysUserMapper {
 
     SysUser checkUser(SysUser record);
 
+    SysUser selectByUUID(String id);
+
 }

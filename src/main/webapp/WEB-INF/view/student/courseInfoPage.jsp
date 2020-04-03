@@ -114,68 +114,101 @@
             </div>
             <div id="clazzs">
                 <div class="mainBody">
-                    <h3>用户信息</h3>
-                    <table style="border-collapse:separate; border-spacing:0px 30px;">
-                        <tr>
-                            <td style="width: 20%;">用户ID</td>
-                            <td>
-                                ${userInfoShow.suUuid}
-                                <c:if test="${userInfoShow.suUuid == userInfo.suUuid}">
-                                    <a class="Hui-iconfont Hui-iconfont-edit2" title="信息修改" style="font-size: 30px!important;"></a>
-                                </c:if>
+                    <h3>课程详情</h3>
+                    <div class="themain">
+                        <div class="maskWraper" style="width: 20%; height:250px;">
+                            <img src="../../img/zlg.jpg" width="300" height="250">
+                            <div class="maskBar text-c">C语言学习第一章</div>
+                        </div>
+                        <div class="aboutClass" style="width: 70%; height:250px; ">
+                            <h4>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</h4>
+                            <div style="margin-top: 30px;">
+                                讲师：李四
+                            </div>
+                            <div style="margin-top: 30px;">
+                                发布时间：2020-03-11
+                            </div>
+                            <div class="clearfix" style="margin-top: 30px;">
+                                <span class="f-l f-14 va-m">课程评分：</span>
+                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
+                                    <!-- 修改width的百分比 实现变色 -->
+                                    <span class="star" style="width:70%"></span>
+                                </div>
+                                <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
+                            </div>
+                        </div>
+                        <div style="clear:both;"></div>
+                        <!-- 添加课程详情数据 -->
+                        <div>
+                            <h5 style="">这里是课程详情数据信息</h5>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>zzzzzzzzzzzdnjdwnjfbdfjensadssda</p>
+                            <p>课程结束！</p>
+                        </div>
+                        <!-- 评分 课程评论位置 -->
+                        <div id="pingjia" style="margin-top: 50px; ">
+                            <div class="clearfix">
+                                <span class="f-l f-15 va-m">评分：</span>
+                                <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
+                                <strong id="result-1" class="f-l va-m"></strong>
+                            </div>
+                            <div class="row cl">
+                                <div class="formControls col-xs-8" >
+                                    <textarea cols="" rows="" class="textarea" name="beizhu" id="beizhu"  placeholder="说点什么...最少输入10个字符"></textarea>
+                                </div>
+                            </div>
+                            <div class="row cl">
+                                <div class="col-xs-8 col-xs-offset-3">
+                                    <input class="btn btn-primary" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 评论列表位置 -->
+                        <div id="pinglunList" class="col-xs-8">
+                            <ul class="commentList">
+                                <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="../../img/zlg.jpg"></i></a>
+                                    <div class="comment-main">
+                                        <header class="comment-header">
+                                            <div class="comment-meta"><a class="comment-author" href="#">辉哥</a> 评论于
+                                                <time title="">2014-8-31 15:20</time>
+                                            </div>
+                                        </header>
+                                        <div class="comment-body">
+                                            <p>这篇文章写的真好呀</p>
+                                        </div>
+                                    </div>
+                                </li>
 
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>头像</td>
-                            <td><img src="${userInfoShow.userPhoto}" alt="" class="round" style="width: 60px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td>昵称</td>
-                            <td>${userInfoShow.suName}</td>
-                        </tr>
-                        <tr>
-                            <td>邮箱</td>
-                            <td>${userInfoShow.suEmail}</td>
-                        </tr>
-                        <tr>
-                            <td>手机号</td>
-                            <td>${userInfoShow.suPhone}</td>
-                        </tr>
-                        <tr>
-                            <td>性别</td>
-                            <td>${userInfoShow.suSex == '1'?'男':'女'}</td>
-                        </tr>
-                        <tr>
-                            <td>角色</td>
-                            <td>${userInfoShow.suRole == '1'?'教师':'学生'}</td>
-                        </tr>
-                        <tr>
-                            <td>生日</td>
-                            <td>${userInfoShow.suBirthday}</td>
-                        </tr>
-                        <tr>
-                            <td>注册时间</td>
-                            <td>${userInfoShow.createTime}</td>
-                        </tr>
-                        <tr>
-                            <td>个人描述</td>
-                            <td>${userInfoShow.suReason}</td>
-                        </tr>
-                        <tr>
-                            <td>他的课程</td>
-                            <td>
-                                <ul>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                </ul>
+                                <li class="item cl"> <a href="#"><i class="avatar size-L radius"><img alt="" src="../../img/zlg.jpg"></i></a>
+                                    <div class="comment-main">
+                                        <header class="comment-header">
+                                            <div class="comment-meta"><a class="comment-author" href="#">李四</a> 评论于
+                                                <time title="">2014-8-31 15:20</time>
+                                            </div>
+                                        </header>
+                                        <div class="comment-body">
+                                            <p>恩，是不错</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div style="clear:both;"></div>
 
-                            </td>
-                        </tr>
-                    </table>
+                    </div>
                 </div>
             </div>
         </div>

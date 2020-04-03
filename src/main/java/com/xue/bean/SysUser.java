@@ -81,6 +81,16 @@ public class SysUser implements Serializable {
      */
     private Date suLastTime;
 
+    private String userPhoto;
+
+    public String getUserPhoto() {
+        return userPhoto;
+    }
+
+    public void setUserPhoto(String userPhoto) {
+        this.userPhoto = userPhoto;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getSuId() {
