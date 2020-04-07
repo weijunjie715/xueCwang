@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.CourseCommentMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.CourseComment">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="cc_index" jdbcType="INTEGER" property="ccIndex" />
+    <result column="cc_user" jdbcType="VARCHAR" property="ccUser" />
+    <result column="cc_user_id" jdbcType="INTEGER" property="ccUserId" />
+    <result column="cc_time" jdbcType="VARCHAR" property="ccTime" />
+    <result column="cc_scoure" jdbcType="VARCHAR" property="ccScoure" />
+    <result column="cc_flag" jdbcType="VARCHAR" property="ccFlag" />
+    <result column="cc_type" jdbcType="VARCHAR" property="ccType" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.xue.bean.CourseComment">
+    <result column="cc_comment" jdbcType="LONGVARCHAR" property="ccComment" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, c_id, cc_index, cc_user, cc_user_id, cc_time, cc_scoure, cc_flag, cc_type
+  </sql>
+  <sql id="Blob_Column_List">
+    cc_comment
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from course_comment
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from course_comment
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.CourseComment">
+    insert into course_comment (id, c_id, cc_index, 
+      cc_user, cc_user_id, cc_time, 
+      cc_scoure, cc_flag, cc_type, 
+      cc_comment)
+    values (#{id,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{ccIndex,jdbcType=INTEGER}, 
+      #{ccUser,jdbcType=VARCHAR}, #{ccUserId,jdbcType=INTEGER}, #{ccTime,jdbcType=VARCHAR}, 
+      #{ccScoure,jdbcType=VARCHAR}, #{ccFlag,jdbcType=VARCHAR}, #{ccType,jdbcType=VARCHAR}, 
+      #{ccComment,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.CourseComment">
+    insert into course_comment
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="ccIndex != null">
+        cc_index,
+      </if>
+      <if test="ccUser != null">
+        cc_user,
+      </if>
+      <if test="ccUserId != null">
+        cc_user_id,
+      </if>
+      <if test="ccTime != null">
+        cc_time,
+      </if>
+      <if test="ccScoure != null">
+        cc_scoure,
+      </if>
+      <if test="ccFlag != null">
+        cc_flag,
+      </if>
+      <if test="ccType != null">
+        cc_type,
+      </if>
+      <if test="ccComment != null">
+        cc_comment,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="ccIndex != null">
+        #{ccIndex,jdbcType=INTEGER},
+      </if>
+      <if test="ccUser != null">
+        #{ccUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ccUserId != null">
+        #{ccUserId,jdbcType=INTEGER},
+      </if>
+      <if test="ccTime != null">
+        #{ccTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ccScoure != null">
+        #{ccScoure,jdbcType=VARCHAR},
+      </if>
+      <if test="ccFlag != null">
+        #{ccFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ccType != null">
+        #{ccType,jdbcType=VARCHAR},
+      </if>
+      <if test="ccComment != null">
+        #{ccComment,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.CourseComment">
+    update course_comment
+    <set>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="ccIndex != null">
+        cc_index = #{ccIndex,jdbcType=INTEGER},
+      </if>
+      <if test="ccUser != null">
+        cc_user = #{ccUser,jdbcType=VARCHAR},
+      </if>
+      <if test="ccUserId != null">
+        cc_user_id = #{ccUserId,jdbcType=INTEGER},
+      </if>
+      <if test="ccTime != null">
+        cc_time = #{ccTime,jdbcType=VARCHAR},
+      </if>
+      <if test="ccScoure != null">
+        cc_scoure = #{ccScoure,jdbcType=VARCHAR},
+      </if>
+      <if test="ccFlag != null">
+        cc_flag = #{ccFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="ccType != null">
+        cc_type = #{ccType,jdbcType=VARCHAR},
+      </if>
+      <if test="ccComment != null">
+        cc_comment = #{ccComment,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.xue.bean.CourseComment">
+    update course_comment
+    set c_id = #{cId,jdbcType=INTEGER},
+      cc_index = #{ccIndex,jdbcType=INTEGER},
+      cc_user = #{ccUser,jdbcType=VARCHAR},
+      cc_user_id = #{ccUserId,jdbcType=INTEGER},
+      cc_time = #{ccTime,jdbcType=VARCHAR},
+      cc_scoure = #{ccScoure,jdbcType=VARCHAR},
+      cc_flag = #{ccFlag,jdbcType=VARCHAR},
+      cc_type = #{ccType,jdbcType=VARCHAR},
+      cc_comment = #{ccComment,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.CourseComment">
+    update course_comment
+    set c_id = #{cId,jdbcType=INTEGER},
+      cc_index = #{ccIndex,jdbcType=INTEGER},
+      cc_user = #{ccUser,jdbcType=VARCHAR},
+      cc_user_id = #{ccUserId,jdbcType=INTEGER},
+      cc_time = #{ccTime,jdbcType=VARCHAR},
+      cc_scoure = #{ccScoure,jdbcType=VARCHAR},
+      cc_flag = #{ccFlag,jdbcType=VARCHAR},
+      cc_type = #{ccType,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <resultMap id="baseCommentList" type="com.xue.bean.CourseComment" extends="ResultMapWithBLOBs">
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="fileUrl" jdbcType="VARCHAR" property="userFile" />
+    <result column="userId" jdbcType="VARCHAR" property="userUId" />
+  </resultMap>
+  <select id="selectCommentByType" resultMap="baseCommentList">
+    SELECT
+        cc.*,
+        su.su_name as userName,
+        sr.file as fileUrl,
+        su.su_uuid as userId
+    FROM
+        course_comment cc
+        LEFT JOIN sys_user su ON cc.cc_user_id = su.su_id
+        LEFT JOIN sys_resources sr ON su.su_sr_id = sr.id
+    WHERE
+	    cc.c_id = #{courseId}
+	    and cc.cc_type = #{type}
+	order by cc.id desc
+	limit #{start},#{pageCount}
+  </select>
+
+  <select id="selectCountByType" resultType="java.lang.Integer">
+    SELECT
+        count(1)
+    FROM
+        course_comment cc
+    WHERE
+	    cc.c_id = #{courseId}
+	    and cc.cc_type = #{type}
+  </select>
+</mapper>

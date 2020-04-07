@@ -34,7 +34,7 @@
         }
 
     </style>
-    <title>用户信息</title>
+    <title>课程列表</title>
 
 </head>
 <body ontouchstart>
@@ -112,66 +112,13 @@
                 <span class="btn btn-default radius radiusNew">解惑答疑</span>
                 <span class="btn btn-default radius radiusNew">附件下载</span>
             </div>
-            <div id="clazzs">
+            <div id="others">
                 <div class="mainBody">
-                    <h3>课程详情</h3>
-                    <div class="themain">
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="${courseInfo.fileUrl}" width="300" height="250">
-                            <div class="maskBar text-c">${courseInfo.cName}</div>
-                        </div>
-                        <div class="aboutClass" style="width: 70%; height:250px; ">
-                            <h4>${courseInfo.cName}</h4>
-                            <input type="hidden" id="courseId" value="${courseInfo.cId}">
-                            <div style="margin-top: 30px;">
-                                讲师：${courseInfo.cAuthor}
-                            </div>
-                            <div style="margin-top: 30px;">
-                                发布时间：${courseInfo.cUptime}
-                            </div>
-                            <div class="clearfix" style="margin-top: 30px;">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <!-- 修改width的百分比 实现变色 -->
-                                    <span class="star" style="width:${courseInfo.cScoure}"></span>
-                                </div>
-                                <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
-                            </div>
-                        </div>
-                        <div style="clear:both;"></div>
-                        <!-- 添加课程详情数据 -->
-                        <div>
-                            <h5 style="">${courseInfo.cName}</h5>
-                            ${courseInfo.courseContent}
-                        </div>
-                        <!-- 评分 课程评论位置 -->
-                        <div id="pingjia" style="margin-top: 50px; ">
-                            <div class="clearfix">
-                                <span class="f-l f-15 va-m">评分：</span>
-                                <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
-                                <strong id="result-1" class="f-l va-m"></strong>
-                            </div>
-                            <div class="row cl">
-                                <div class="formControls col-xs-8" >
-                                    <textarea cols="" rows="" class="textarea" name="beizhu" id="beizhu"  placeholder="说点什么...最少输入10个字符"></textarea>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 评论列表位置 -->
-                        <div id="pinglunList" class="col-xs-8">
-                            <ul class="commentList" id="commentList"></ul>
-                        </div>
-                        <div id="forPage">
-                        </div>
-                        <div style="clear:both;"></div>
-
-                    </div>
+                    <h3>课程列表</h3>
+                    <div class="themain" id="courseList"></div>
+                    <div class="themain" id="coursePageDiv"></div>
                 </div>
+                <div style="clear:both;"></div>
             </div>
         </div>
         <footer class="footer mt-20" style="margin-top: 60px;">
@@ -229,20 +176,19 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    var courseId = $("#courseId").val();
-    $.getJSON('/comment/getCommentByCourseId', {curr: 1,limit:10,courseId:courseId}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
-            cont: 'forPage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
+            cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
             pages: res.pages, //通过后台拿到的总页数
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/comment/getCommentByCourseId', {curr: e.curr,limit:e.limit,courseId:courseId}, function(res){
+                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit}, function(res){
                     var zz = res.content;
                     var htmllet = "";
-                    $("#commentList").html(htmllet);
-                    createHtml(htmllet,zz,'commentList');
+                    $("#courseList").html(htmllet);
+                    createHtml(htmllet,zz,'courseList');
                 });
                 $('body,html').animate({
                         scrollTop: 0
@@ -252,24 +198,35 @@
         });
         var zz = res.content;
         var htmllet = "";
-        $("#commentList").html(htmllet);
-        createHtml(htmllet,zz,'commentList');
+        $("#courseList").html(htmllet);
+        createHtml(htmllet,zz,'courseList');
     });
     function createHtml(htmllet,zz,id) {
         for(var i = 0;i<zz.length;i++){
-            console.log(zz[i].ccComment);
-            htmllet += '<li class="item cl"> <a href="/showUserInfo?userId='+zz[i].userUId+'"><i class="avatar size-L radius"><img alt="" src="'+zz[i].userFile+'"></i></a>\n' +
-                '                                    <div class="comment-main">\n' +
-                '                                        <header class="comment-header">\n' +
-                '                                            <div class="comment-meta"><a class="comment-author" href="/showUserInfo?userId='+zz[i].userUId+'">'+zz[i].userName+'</a> 评论于\n' +
-                '                                                <time title="">'+zz[i].ccTime+'</time>\n' +
-                '                                            </div>\n' +
-                '                                        </header>\n' +
-                '                                        <div class="comment-body">\n' +
-                '                                            <p>'+zz[i].ccComment+'</p>\n' +
-                '                                        </div>\n' +
-                '                                    </div>\n' +
-                '                                </li>';
+            htmllet += '<div class="maskWraper" style="width: 20%; height:250px;">\n' +
+                '                            <img src="'+zz[i].fileUrl+'" width="300" height="250">\n' +
+                '                            <div class="maskBar text-c">'+zz[i].cName+'</div>\n' +
+                '                        </div>\n' +
+                '                        <div class="aboutClass" style="width: 70%; height:250px; ">\n' +
+                '                            <p>'+zz[i].cName+'</p>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                讲师：'+zz[i].cAuthor+'\n' +
+                '                            </div>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                发布时间：'+zz[i].cUptime+'\n' +
+                '                            </div>\n' +
+                '                            <div class="clearfix" style="margin-top: 30px;">\n' +
+                '                                <span class="f-l f-14 va-m">课程评分：</span>\n' +
+                '                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">\n' +
+                '                                    <span class="star" style="width:'+zz[i].cScoure+'"></span>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                <a href="/showCourseInfo?courseId='+zz[i].cId+'">进入学习》</a>\n' +
+                '                            </div>\n' +
+                '\n' +
+                '                        </div>\n' +
+                '                        <div style="clear:both;"></div>';
         }
         $("#"+id).html(htmllet);
     }
@@ -304,28 +261,6 @@
     });
     $(function() {
         $('.maskWraper').Huihover();
-        /* 计算输入域字体数量 */
-        $(".textarea").Huitextarealength({
-            minlength:10,
-            maxlength:200.
-        });
-    });
-    //星星评价效果
-    $(function(){
-        //星级评价
-        $("#star-1").raty({
-            hints: ['1','2', '3', '4', '5'],//自定义分数
-            starOff: 'iconpic-star-S-default.png',//默认灰色星星
-            starOn: 'iconpic-star-S.png',//黄色星星
-            path: '${staticPath}/hui/static/h-ui/images/star',//可以是相对路径
-            number: 5,//星星数量，要和hints数组对应
-            showHalf: true,
-            targetKeep : true,
-            click: function (score, evt) {//点击事件
-                //第一种方式：直接取值
-                $("#result-1").html(score+'分');
-            }
-        });
     });
     //弹窗
     function modaldemo(){

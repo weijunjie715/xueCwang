@@ -177,6 +177,10 @@
   <resultMap extends="BaseResultMap" id="course_info_page" type="com.xue.bean.Course">
     <result column="fileUrl" jdbcType="VARCHAR" property="fileUrl" />
   </resultMap>
+  <resultMap extends="BaseResultMap" id="course_content_page" type="com.xue.bean.Course">
+    <result column="fileUrl" jdbcType="VARCHAR" property="fileUrl" />
+    <result column="content" jdbcType="VARCHAR" property="courseContent" />
+  </resultMap>
   <select id="selectCourseInfo" resultMap="course_info_page">
     SELECT
 	c.*,
@@ -190,5 +194,24 @@
 	c.c_order DESC
 	LIMIT #{bNumber},
 	#{eNumber}
+  </select>
+  <select id="getCourseById" resultMap="course_content_page">
+    SELECT
+	c.*,
+	r.file as fileUrl,
+	cc.course_content as content
+    FROM
+	course c
+	LEFT JOIN sys_resources r ON c.c_sr_id = r.id
+	left join course_content cc on c_id = cc.course_id
+    WHERE
+	c.c_flag = '1'
+	and c.c_id = #{courseId}
+	limit 0,1
+  </select>
+  <select id="getCountByCourse" parameterType="com.xue.bean.Course" resultType="integer">
+    select count(1) FROM
+	course c WHERE
+	c.c_flag = '1'
   </select>
 </mapper>

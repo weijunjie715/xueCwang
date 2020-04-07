@@ -28,4 +28,22 @@ public class CourseServiceImpl implements CourseService {
         List<Course> courses = courseMapper.selectCourseInfo(bNumber, eNumber);
         return courses;
     }
+
+    /**
+     * @Description 获取课程信息数据
+     * @Date 2020/4/7 9:06
+     **/
+    public Course getCourseInfo(String courseId){
+        Course courseById = courseMapper.getCourseById(courseId);
+        return courseById;
+    }
+
+    /**
+     * @Description 获取当前课程总数
+     * @Date 2020/4/7 11:19
+     **/
+    public Integer getCourseCount(Course course){
+        int courseCount = courseMapper.getCountByCourse(course);
+        return courseCount;
+    }
 }

@@ -30,12 +30,10 @@
   <insert id="insert" parameterType="com.xue.bean.SysResources">
     insert into sys_resources ( sr_name, sr_type,
       file, url, sr_index, 
-      out_id, flag, remarks, 
-      create_time, update_time)
+      out_id, flag, remarks)
     values ( #{srName,jdbcType=VARCHAR}, #{srType,jdbcType=VARCHAR},
       #{file,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{srIndex,jdbcType=INTEGER}, 
-      #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+      #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
     <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
       SELECT LAST_INSERT_ID()
     </selectKey>

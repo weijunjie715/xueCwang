@@ -1,5 +1,6 @@
 package com.xue.controller;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.xue.bean.SysUser;
 import org.apache.commons.io.FilenameUtils;
@@ -24,7 +25,7 @@ public class TestController {
     @RequestMapping("test")
     public String testPage(){
         System.out.println("-----------------11111111111");
-        return "404";
+        return "page";
     }
 
     @ResponseBody
@@ -87,6 +88,22 @@ public class TestController {
         result.put("status",true);
         result.put("msg",msg);
         return JSONObject.toJSONString(result);
+    }
+
+    @ResponseBody
+    @RequestMapping("testPages")
+    public String testPages(Integer curr,Integer limit){
+        System.out.println("--------"+curr+"----"+limit);
+        JSONObject res = new JSONObject();
+        JSONArray objects = new JSONArray();
+        for(int i =0;i<limit;i++){
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("aaa","hahahah"+curr);
+            objects.add(jsonObject);
+        }
+        res.put("content",objects);
+        res.put("pages",100/limit);
+        return JSONObject.toJSONString(res);
     }
 
 }

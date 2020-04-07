@@ -78,4 +78,35 @@ public class PageController extends BaseController {
 
     }
 
+    /**
+     * @Description 课程列表页面
+     * @Date 2020/4/7 13:12
+     **/
+    @RequestMapping("toCourseListPage")
+    public String toCourseListPage(String userId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/courseListPage";
+    }
+
+    /**
+     * @Description 课程内容页面数据
+     * @Date 2020/4/7 15:28
+     **/
+    @RequestMapping("showCourseInfo")
+    public String showCourseInfo(String courseId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        //通过用户ID获取课程信息数据
+        Course courseInfo = courseService.getCourseInfo(courseId);
+        if(null == courseInfo){
+            return "404";
+        }else{
+            model.addAttribute("courseInfo",courseInfo);
+            return "student/courseInfoPage";
+        }
+
+    }
 }

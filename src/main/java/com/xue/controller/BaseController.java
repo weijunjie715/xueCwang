@@ -45,5 +45,23 @@ public class BaseController {
         }
     }
 
+    public Integer getPageSize(Integer count,Integer limit){
+        if(count%limit == 0){
+            return count/limit;
+        }else{
+            return ((count-(count%limit))/limit)+1;
+        }
+    }
+
+    public static void main(String args[]){
+        int count = 25;
+        int limit = 10;
+        if(count%limit == 0){
+            System.out.println(count/limit);
+        }else{
+            System.out.println(((count-(count%limit))/limit)+1);
+        }
+    }
+
 
 }

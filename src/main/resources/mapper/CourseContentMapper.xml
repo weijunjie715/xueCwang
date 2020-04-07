@@ -20,9 +20,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xue.bean.CourseContent">
-    insert into course_content (id, course_id, course_content
+    insert into course_content ( course_id, course_content
       )
-    values (#{id,jdbcType=INTEGER}, #{courseId,jdbcType=INTEGER}, #{courseContent,jdbcType=LONGVARCHAR}
+    values ( #{courseId,jdbcType=INTEGER}, #{courseContent,jdbcType=LONGVARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xue.bean.CourseContent">
