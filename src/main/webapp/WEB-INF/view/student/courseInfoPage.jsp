@@ -34,7 +34,7 @@
         }
 
     </style>
-    <title>用户信息</title>
+    <title>课程详情</title>
 
 </head>
 <body ontouchstart>
