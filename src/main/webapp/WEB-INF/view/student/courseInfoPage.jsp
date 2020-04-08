@@ -49,6 +49,7 @@
                 <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+                <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -119,6 +120,7 @@
                         <div class="maskWraper" style="width: 20%; height:250px;">
                             <img src="${courseInfo.fileUrl}" width="300" height="250">
                             <div class="maskBar text-c">${courseInfo.cName}</div>
+
                         </div>
                         <div class="aboutClass" style="width: 70%; height:250px; ">
                             <h4>${courseInfo.cName}</h4>
@@ -137,6 +139,9 @@
                                 </div>
                                 <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
                             </div>
+                            <div>
+                                <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" style="font-size: 30px!important;"></a>
+                            </div>
                         </div>
                         <div style="clear:both;"></div>
                         <!-- 添加课程详情数据 -->
@@ -150,6 +155,7 @@
                                 <span class="f-l f-15 va-m">评分：</span>
                                 <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
                                 <strong id="result-1" class="f-l va-m"></strong>
+                                <input type="hidden" id="mySc">
                             </div>
                             <div class="row cl">
                                 <div class="formControls col-xs-8" >
@@ -158,7 +164,7 @@
                             </div>
                             <div class="row cl">
                                 <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+                                    <input class="btn btn-primary" type="button" onclick="alertMsg()" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
                                 </div>
                             </div>
                         </div>
@@ -166,7 +172,7 @@
                         <div id="pinglunList" class="col-xs-8">
                             <ul class="commentList" id="commentList"></ul>
                         </div>
-                        <div id="forPage">
+                        <div id="forPage" style="margin-left: 30%;margin-top: 30px;">
                         </div>
                         <div style="clear:both;"></div>
 
@@ -278,8 +284,8 @@
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
-            var code = $("#username").val();
-            var pwd = $("#password").val();
+            var code = $("#usernameLogin").val();
+            var pwd = $("#passwordLogin").val();
             debugger;
             $.ajax({
                 url : "/user/userLogin",
@@ -323,13 +329,50 @@
             targetKeep : true,
             click: function (score, evt) {//点击事件
                 //第一种方式：直接取值
-                $("#result-1").html(score+'分');
+                // $("#result-1").html(score+'分');
+                $("#mySc").val(score);
             }
         });
     });
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
+    }
+    //点击提交按钮触发对文章添加评论事件
+    function alertMsg() {
+        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            var score = $("#mySc").val();
+            var beizhu = $("#beizhu").val();
+            var courseId = $("#courseId").val();
+            alert(score+"------"+beizhu+"---"+courseId+"---"+userId);
+            $.ajax({
+                url : "/comment/addCourseComment",
+                type : "post",
+                data : {
+                    cId:courseId,
+                    ccUserId:userId,
+                    ccScoure:score,
+                    ccComment:beizhu
+                },
+                success : function(data) {
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("评论成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("添加评论失败，联系管理员");
+                    }
+                }
+            });
+        }
+
     }
 </script>
 </body>

@@ -9,6 +9,8 @@ import com.xue.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * @ClassName UserServiceImpl
  * 描述 :
@@ -77,5 +79,14 @@ public class UserServiceImpl implements UserService {
         SysUser sysUser = sysUserMapper.selectByUUID(id);
 
         return sysUser;
+    }
+
+    /**
+     * @Description 获取对应条件下的用户列表数据
+     * @Date 2020/4/8 16:36
+     **/
+    public List<SysUser> getUserListByType(Integer curr,Integer limit,String type){
+        List<SysUser> sysUsers = sysUserMapper.selectSysUsersByType(curr, limit, type);
+        return sysUsers;
     }
 }

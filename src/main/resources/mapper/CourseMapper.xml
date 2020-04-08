@@ -214,4 +214,7 @@
 	course c WHERE
 	c.c_flag = '1'
   </select>
+  <update id="updateScoure">
+    update course set c_scoure = #{score} where c_id = #{cid}
+  </update>
 </mapper>

@@ -27,4 +27,6 @@ public interface CourseCommentMapper {
 
     int selectCountByType(@Param("courseId") String courseId,
                           @Param("type") String type);
+
+    Double getCourseScore(String courseId);
 }

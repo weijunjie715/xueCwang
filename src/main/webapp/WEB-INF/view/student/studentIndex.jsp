@@ -167,51 +167,18 @@
                 <div class="mainBody">
                     <h3>名师风采</h3>
                     <div class="themain">
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
+                        <c:forEach items="${teacherList}" var="t" varStatus="i">
+                            <div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px">
+                                <img src="${t.userPhoto}" width="300" height="250">
+                                <div class="maskBar text-c">${t.suName}</div>
                             </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
+                            <div class="aboutClass" style="width: 10%; height:250px; margin-top: 30px">
+                                <p class="textMargin">${t.suName}</p>
+                                <p class="textMargin">${t.suBirthday}</p>
+                                <p class="textMargin">${t.suSex == '1'?'男':'女'}</p>
+                                <a style="margin-top: 30px;" href="/showUserInfo?userId=${t.suUuid}">进入主页</a>
                             </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
-                            </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
+                        </c:forEach>
                     </div>
                 </div>
                 <a style="margin-left: 10%; float: left;">查看更多》》</a>
@@ -219,53 +186,12 @@
             </div>
             <div id="others">
                 <div class="mainBody">
-                    <h3>合作专区</h3>
+                    <h3>学习伙伴</h3>
                     <div class="themain">
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
-                            </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
-                            </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="../../img/zlg.jpg" width="300" height="250">
-                            <div class="maskBar text-c">C语言学习第一章</div>
-                        </div>
-                        <div class="aboutClass" style="width: 10%; height:250px; ">
-                            <p>C语言学习课程精讲zzzzzzzzzzzzzzzzzzz</p>
-                            <p>讲师</p>
-                            <div class="clearfix">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <span class="star" style="width:82%"></span>
-                                </div>
-                            </div>
-                            <p style="margin-top: 30px;">进入学习</p>
-                        </div>
+                        <c:forEach items="${userList}" var="u" varStatus="i">
+                            <img onclick="toUserInfo()" title="${u.suName}" src="${u.userPhoto}" alt="${u.suUuid}" class="round" style="width: 12%">
+
+                        </c:forEach>
                     </div>
                 </div>
                 <a style="margin-left: 10%; float: left;">查看更多》》</a>
@@ -362,6 +288,12 @@
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
+    }
+    //进入用户信息页面
+    function toUserInfo() {
+        var uid = $(this).attr('alt');
+        alert(uid);
+        // location.href="/showUserInfo?userId="+uid;
     }
 </script>
 </body>

@@ -235,8 +235,8 @@
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
-            var code = $("#username").val();
-            var pwd = $("#password").val();
+            var code = $("#usernameLogin").val();
+            var pwd = $("#passwordLogin").val();
             debugger;
             $.ajax({
                 url : "/user/userLogin",

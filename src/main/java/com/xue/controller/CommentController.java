@@ -39,4 +39,19 @@ public class CommentController extends BaseController {
         System.out.println(JSONObject.toJSONString(res));
         return JSONObject.toJSONString(res);
     }
+
+    /**
+     * @Description  添加课程评论信息
+     * @Date 2020/4/8 14:39
+     **/
+    @ResponseBody
+    @RequestMapping("addCourseComment")
+    public String addCourseComment(CourseComment comment){
+        JSONObject res = new JSONObject();
+        System.out.println(JSONObject.toJSONString(comment));
+        String s = commentService.addCourseComment(comment);
+        res.put("msg",s);
+        res.put("code","200");
+        return JSONObject.toJSONString(res);
+    }
 }

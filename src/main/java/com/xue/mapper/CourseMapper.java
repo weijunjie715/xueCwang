@@ -23,4 +23,8 @@ public interface CourseMapper {
     Course getCourseById(@Param("courseId") String courseId);
 
     int getCountByCourse(Course record);
+
+    int updateScoure(@Param("score") String score,@Param("cid") String cid);
+
+
 }

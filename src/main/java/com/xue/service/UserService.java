@@ -2,6 +2,8 @@ package com.xue.service;
 
 import com.xue.bean.SysUser;
 
+import java.util.List;
+
 /**
  * @ClassName UserService
  * 描述 :
@@ -16,4 +18,7 @@ public interface UserService {
     public boolean checkedUser(SysUser sysUser);
 
     public SysUser getUserInfoByID(String id);
+
+    public List<SysUser> getUserListByType(Integer curr, Integer limit, String type);
+
 }

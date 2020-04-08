@@ -34,11 +34,11 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xue.bean.CourseComment">
-    insert into course_comment (id, c_id, cc_index, 
+    insert into course_comment ( c_id, cc_index,
       cc_user, cc_user_id, cc_time, 
       cc_scoure, cc_flag, cc_type, 
       cc_comment)
-    values (#{id,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{ccIndex,jdbcType=INTEGER}, 
+    values ( #{cId,jdbcType=INTEGER}, #{ccIndex,jdbcType=INTEGER},
       #{ccUser,jdbcType=VARCHAR}, #{ccUserId,jdbcType=INTEGER}, #{ccTime,jdbcType=VARCHAR}, 
       #{ccScoure,jdbcType=VARCHAR}, #{ccFlag,jdbcType=VARCHAR}, #{ccType,jdbcType=VARCHAR}, 
       #{ccComment,jdbcType=LONGVARCHAR})
@@ -198,5 +198,17 @@
     WHERE
 	    cc.c_id = #{courseId}
 	    and cc.cc_type = #{type}
+  </select>
+
+  <select id="getCourseScore" resultType="double">
+    SELECT CONVERT
+        ( sum( cc_scoure ) / sum( 1 ), DECIMAL ( 10, 2 ) ) AS sumSc
+    FROM
+        course_comment
+    WHERE
+        c_id = #{courseId}
+        and cc_type = '1'
+    GROUP BY
+        c_id;
   </select>
 </mapper>

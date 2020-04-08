@@ -14,4 +14,6 @@ public interface CommentService {
     public List<CourseComment> getCommentInfo(String courseId, String type, Integer start, Integer pageCount);
 
     public Integer getCommentInfo(String courseId,String type);
+
+    public String addCourseComment(CourseComment comment);
 }

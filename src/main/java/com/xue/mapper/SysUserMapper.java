@@ -3,6 +3,8 @@ package com.xue.mapper;
 import com.xue.bean.SysUser;
 import org.apache.ibatis.annotations.Param;
 
+import java.util.List;
+
 public interface SysUserMapper {
     int deleteByPrimaryKey(Integer suId);
 
@@ -21,5 +23,7 @@ public interface SysUserMapper {
     SysUser checkUser(SysUser record);
 
     SysUser selectByUUID(String id);
+
+    List<SysUser> selectSysUsersByType(@Param("curr") Integer curr,@Param("limit") Integer limit,@Param("type") String type);
 
 }

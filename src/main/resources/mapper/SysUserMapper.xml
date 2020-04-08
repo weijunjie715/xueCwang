@@ -245,4 +245,15 @@
             LEFT JOIN sys_resources b ON a.su_sr_id = b.id
             where a.su_uuid = #{id}
     </select>
+  <select id="selectSysUsersByType" resultMap="userAllInfo">
+        SELECT
+            a.*,
+            b.file photoUrl
+        FROM
+            sys_user a
+            LEFT JOIN sys_resources b ON a.su_sr_id = b.id
+            where a.su_role = #{type}
+            order by a.su_id desc
+            limit #{curr},#{limit}
+  </select>
 </mapper>

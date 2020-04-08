@@ -46,6 +46,12 @@ public class PageController extends BaseController {
         //首页课程
         List<Course> courseForIndex = courseService.getCourseForIndex(0, 6);
         model.addAttribute("courseList",courseForIndex);
+        //首页名师
+        List<SysUser> teacherListByType = userService.getUserListByType(0, 6, "0");
+        model.addAttribute("teacherList",teacherListByType);
+        //首页推荐伙伴信息
+        List<SysUser> userListByType = userService.getUserListByType(0, 8, "1");
+        model.addAttribute("userList",userListByType);
         //用户信息
         SysUser sysUser = checkLogin(session);
         model.addAttribute("userInfo",sysUser);
