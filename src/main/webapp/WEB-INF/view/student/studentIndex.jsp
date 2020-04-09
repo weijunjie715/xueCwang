@@ -160,7 +160,7 @@
                     </div>
                 </div>
 
-                <a style="margin-left: 10%; float: left;" href="clazzListPage.html">查看更多》》</a>
+                <a style="margin-left: 10%; float: left;" href="/toCourseListPage">查看更多》》</a>
                 <div style="clear:both;"></div>
             </div>
             <div id="teachers">
@@ -189,8 +189,7 @@
                     <h3>学习伙伴</h3>
                     <div class="themain">
                         <c:forEach items="${userList}" var="u" varStatus="i">
-                            <img onclick="toUserInfo()" title="${u.suName}" src="${u.userPhoto}" alt="${u.suUuid}" class="round" style="width: 12%">
-
+                            <img title="${u.suName}" onclick="toUserInfo('${u.suUuid}')" id="${u.suUuid}" src="${u.userPhoto}" alt="${u.suName}" class="round" style="width: 12%">
                         </c:forEach>
                     </div>
                 </div>
@@ -289,11 +288,10 @@
     function modaldemo(){
         $("#modal-demo").modal("show");
     }
+
     //进入用户信息页面
-    function toUserInfo() {
-        var uid = $(this).attr('alt');
-        alert(uid);
-        // location.href="/showUserInfo?userId="+uid;
+    function toUserInfo(uid){
+        location.href="/showUserInfo?userId="+uid;
     }
 </script>
 </body>

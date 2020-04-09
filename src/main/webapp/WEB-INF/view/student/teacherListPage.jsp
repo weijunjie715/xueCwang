@@ -34,7 +34,7 @@
         }
 
     </style>
-    <title>用户信息</title>
+    <title>名师列表</title>
 
 </head>
 <body ontouchstart>
@@ -49,7 +49,6 @@
                 <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
-                <input type="hidden" id="loginId" value="${userInfo.suId}">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -113,75 +112,13 @@
                 <span class="btn btn-default radius radiusNew">解惑答疑</span>
                 <span class="btn btn-default radius radiusNew">附件下载</span>
             </div>
-            <div id="clazzs">
+            <div id="others">
                 <div class="mainBody">
-                    <h3>用户信息</h3>
-                    <table style="border-collapse:separate; border-spacing:0px 30px;">
-                        <tr>
-                            <td style="width: 20%;">用户ID</td>
-                            <td>
-                                ${userInfoShow.suUuid}
-                                <input type="hidden" value="${userInfoShow.suId}" id="theUserId">
-                                <c:if test="${userInfoShow.suUuid != userInfo.suUuid}">
-                                    <a class="Hui-iconfont Hui-iconfont-user-add" onclick="addUserRelation()" title="添加好友" style="font-size: 30px!important;"></a>
-                                </c:if>
-                                <c:if test="${userInfoShow.suUuid == userInfo.suUuid}">
-                                    <a class="Hui-iconfont Hui-iconfont-edit2" title="信息修改" style="font-size: 30px!important;"></a>
-                                </c:if>
-
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>头像</td>
-                            <td><img src="${userInfoShow.userPhoto}" alt="" class="round" style="width: 60px; height: 50px;"></td>
-                        </tr>
-                        <tr>
-                            <td>昵称</td>
-                            <td>${userInfoShow.suName}</td>
-                        </tr>
-                        <tr>
-                            <td>邮箱</td>
-                            <td>${userInfoShow.suEmail}</td>
-                        </tr>
-                        <tr>
-                            <td>手机号</td>
-                            <td>${userInfoShow.suPhone}</td>
-                        </tr>
-                        <tr>
-                            <td>性别</td>
-                            <td>${userInfoShow.suSex == '1'?'男':'女'}</td>
-                        </tr>
-                        <tr>
-                            <td>角色</td>
-                            <td>${userInfoShow.suRole == '0'?'教师':'学生'}</td>
-                        </tr>
-                        <tr>
-                            <td>生日</td>
-                            <td>${userInfoShow.suBirthday}</td>
-                        </tr>
-                        <tr>
-                            <td>注册时间</td>
-                            <td>${userInfoShow.createTime}</td>
-                        </tr>
-                        <tr>
-                            <td>个人描述</td>
-                            <td>${userInfoShow.suReason}</td>
-                        </tr>
-                        <tr>
-                            <td>他的课程</td>
-                            <td>
-                                <ul>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                </ul>
-
-                            </td>
-                        </tr>
-                    </table>
+                    <h3>课程列表</h3>
+                    <div class="themain" id="courseList"></div>
+                    <div class="themain" id="coursePageDiv"></div>
                 </div>
+                <div style="clear:both;"></div>
             </div>
         </div>
         <footer class="footer mt-20" style="margin-top: 60px;">
@@ -236,30 +173,50 @@
         </div>
     </div>
 </div>
+<%--初始化分页插件数据信息--%>
+<script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    /*注册数据提交*/
-    function updateImg(x) {
-        var form = new FormData(x);
-        var url = "/user/userRegister";
-        $.ajax({
-            url:url,
-            data:form,
-            type:'post',
-            processData:false,
-            contentType:false,
-            success : function(data){
-                if(data.status == true){
-                    alert("注册成功，返回主页登陆");
-                    window.location = "/toIndex";
-                }else{
-                    alert(data.msg);
-                }
-            },
-            error : function(data){
-                alert("系统异常，联系管理员");
+    $.getJSON('/user/getUserList', {curr: 1,limit:10,type:'0'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+        laypage({
+            limit:10,
+            cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
+            pages: res.pages, //通过后台拿到的总页数
+            curr: 1, //初始化当前页
+            jump: function(e){ //触发分页后的回调
+                console.log(e);
+                $.getJSON('/user/getUserList', {curr: e.curr,limit:e.limit,type:'0'}, function(res){
+                    var zz = res.content;
+                    var htmllet = "";
+                    $("#courseList").html(htmllet);
+                    createHtml(htmllet,zz,'courseList');
+                });
+                $('body,html').animate({
+                        scrollTop: 0
+                    },
+                    500);
             }
         });
+        var zz = res.content;
+        var htmllet = "";
+        $("#courseList").html(htmllet);
+        createHtml(htmllet,zz,'courseList');
+    });
+    function createHtml(htmllet,zz,id) {
+        for(var i = 0;i<zz.length;i++){
+            htmllet += '<div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px;margin-right:50px;">\n' +
+                '                                <img src="'+zz[i].userPhoto+'" width="300" height="250">\n' +
+                '                                <div class="maskBar text-c">'+zz[i].suName+'</div>\n' +
+                '                            </div>\n' +
+                '                            <div class="aboutClass" style="width: 60%; height:250px; margin-top: 30px;">\n' +
+                '                                <p class="textMargin">'+zz[i].suName+'</p>\n' +
+                '                                <p class="textMargin">'+zz[i].suBirthday+'</p>\n' +
+                '                                <a style="margin-top: 30px;" href="/showUserInfo?userId='+zz[i].suUuid+'">进入主页</a>\n' +
+                '                            </div>';
+        }
+        $("#"+id).html(htmllet);
     }
+</script>
+<script>
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
@@ -278,8 +235,7 @@
                     if(aa == "success"){
                         $("#modal-demo").modal("hide");
                         //刷新当前页面
-                        //跳转首页
-                        window.location = "/toIndex";
+                        location.reload(true);
                     }else{
                         //弹出错误问题
                         alert("账号密码错误，登陆失败");
@@ -291,129 +247,9 @@
     $(function() {
         $('.maskWraper').Huihover();
     });
-    //轮播图
-    $(function(){
-        //邮箱提示
-        $("#email").emailsuggest();
-
-        //checkbox 美化
-        $('.skin-minimal input').iCheck({
-            checkboxClass: 'icheckbox-blue',
-            radioClass: 'iradio-blue',
-            increaseArea: '20%'
-        });
-
-        //日期插件
-        $("#datetimepicker").datetimepicker({
-            format: 'yyyy-mm-dd',
-            minView: "month",
-            todayBtn:  1,
-            autoclose: 1,
-            endDate : new Date()
-        }).on('hide',function(e) {
-            //此处可以触发日期校验。
-        });
-
-        /*+1 -1效果*/
-        $("#spinner-demo").Huispinner({
-            value:1,
-            minValue:1,
-            maxValue:99,
-            dis:1
-        });
-
-        $(".textarea").Huitextarealength({
-            minlength:10,
-            maxlength:200.
-        });
-
-        $("#demoform").validate({
-            rules:{
-                email:{
-                    required:true,
-                    email:true,
-                },
-                username:{
-                    required:true,
-                    minlength:4,
-                    maxlength:16
-                },
-                telephone:{
-                    required:true,
-                    isMobile:true,
-                },
-                password:{
-                    required:true,
-                    isPwd:true,
-                },
-                password2:{
-                    required:true,
-                    equalTo: "#password"
-                },
-                sex:{
-                    required:true,
-                },
-                datetimepicker:{
-                    required:true,
-                },
-                checkbox2:{
-                    required:true,
-                },
-                city:{
-                    required:true,
-                },
-                website:{
-                    required:true,
-                    url:true,
-                },
-                beizhu:{
-                    maxlength:500,
-                }
-            },
-            onkeyup:false,
-            focusCleanup:true,
-            success:"valid",
-            submitHandler:function(form){
-                $("#modal-shenqing-success").modal("show");
-                $(form).ajaxSubmit();
-            }
-        });
-    });
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
-    }
-    //添加用户好友操作
-    function addUserRelation(){
-        //判断当前用户是否已经登录
-        var userId = $("#loginId").val();
-        if(userId.length == 0){
-            $("#modal-demo").modal("show");
-            return;
-        }else{
-            var relationId = $("#theUserId").val();
-            $.ajax({
-                url : "/comment/addCourseComment",
-                type : "post",
-                data : {
-                    cId:courseId,
-                    ccUserId:userId,
-                    ccScoure:score,
-                    ccComment:beizhu
-                },
-                success : function(data) {
-                    var aa = data.msg
-                    if(aa == "success"){
-                        alert("评论成功");
-                        //刷新当前页面
-                        location.reload(true);
-                    }else{
-                        //弹出错误问题
-                        alert("添加评论失败，联系管理员");
-                    }
-                }
-            });
-        }
     }
 </script>
 </body>

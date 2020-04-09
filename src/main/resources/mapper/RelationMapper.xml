@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.RelationMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.Relation">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="relation_type" jdbcType="VARCHAR" property="relationType" />
+    <result column="r_flag" jdbcType="VARCHAR" property="rFlag" />
+    <result column="r_remark" jdbcType="VARCHAR" property="rRemark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_id, relation_id, relation_type, r_flag, r_remark
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.Relation">
+    insert into relation (id, user_id, relation_id, 
+      relation_type, r_flag, r_remark
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{relationId,jdbcType=INTEGER}, 
+      #{relationType,jdbcType=VARCHAR}, #{rFlag,jdbcType=VARCHAR}, #{rRemark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.Relation">
+    insert into relation
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="relationId != null">
+        relation_id,
+      </if>
+      <if test="relationType != null">
+        relation_type,
+      </if>
+      <if test="rFlag != null">
+        r_flag,
+      </if>
+      <if test="rRemark != null">
+        r_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="relationId != null">
+        #{relationId,jdbcType=INTEGER},
+      </if>
+      <if test="relationType != null">
+        #{relationType,jdbcType=VARCHAR},
+      </if>
+      <if test="rFlag != null">
+        #{rFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="rRemark != null">
+        #{rRemark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.Relation">
+    update relation
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="relationId != null">
+        relation_id = #{relationId,jdbcType=INTEGER},
+      </if>
+      <if test="relationType != null">
+        relation_type = #{relationType,jdbcType=VARCHAR},
+      </if>
+      <if test="rFlag != null">
+        r_flag = #{rFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="rRemark != null">
+        r_remark = #{rRemark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.Relation">
+    update relation
+    set user_id = #{userId,jdbcType=INTEGER},
+      relation_id = #{relationId,jdbcType=INTEGER},
+      relation_type = #{relationType,jdbcType=VARCHAR},
+      r_flag = #{rFlag,jdbcType=VARCHAR},
+      r_remark = #{rRemark,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

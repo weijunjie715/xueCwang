@@ -21,4 +21,6 @@ public interface UserService {
 
     public List<SysUser> getUserListByType(Integer curr, Integer limit, String type);
 
+    public int getCountByType(String type);
+
 }

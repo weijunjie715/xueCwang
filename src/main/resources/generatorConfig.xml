@@ -81,7 +81,7 @@
 
         <!-- 指定数据库表 设置example查询方法不生成 -->
 
-        <table schema="" tableName="course_comment" enableCountByExample="false"
+        <table schema="" tableName="" enableCountByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"
                selectByExampleQueryId = "false"
         />

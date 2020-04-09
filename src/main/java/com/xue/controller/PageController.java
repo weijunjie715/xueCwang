@@ -97,6 +97,30 @@ public class PageController extends BaseController {
     }
 
     /**
+     * @Description 教师列表页面
+     * @Date 2020/4/7 13:12
+     **/
+    @RequestMapping("toTeacherListPage")
+    public String toTeacherListPage(String userId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/teacherListPage";
+    }
+
+    /**
+     * @Description 学生列表页面
+     * @Date 2020/4/7 13:12
+     **/
+    @RequestMapping("toUserListPage")
+    public String toUserListPage(String userId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/userListPage";
+    }
+
+    /**
      * @Description 课程内容页面数据
      * @Date 2020/4/7 15:28
      **/

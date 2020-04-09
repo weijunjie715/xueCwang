@@ -256,4 +256,11 @@
             order by a.su_id desc
             limit #{curr},#{limit}
   </select>
+  <select id="getCountByType" resultType="integer">
+    SELECT
+            sum(1)
+        FROM
+            sys_user a
+            where a.su_role = #{type}
+  </select>
 </mapper>

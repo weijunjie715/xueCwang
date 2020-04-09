@@ -89,4 +89,14 @@ public class UserServiceImpl implements UserService {
         List<SysUser> sysUsers = sysUserMapper.selectSysUsersByType(curr, limit, type);
         return sysUsers;
     }
+
+    /**
+     * @Description 获取条件获取当前符合的全部数据条数
+     * @Date 2020/4/8 16:36
+     **/
+    public int getCountByType(String type){
+        int count = sysUserMapper.getCountByType(type);
+        return count;
+    }
+
 }

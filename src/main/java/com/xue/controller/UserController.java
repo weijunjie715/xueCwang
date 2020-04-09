@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -176,6 +177,30 @@ public class UserController extends BaseController {
             return filePath;
         }else{
             return "302";
+        }
+    }
+
+    /**
+     * @Description 获取用户列表信息
+     * @Date 2020/4/9 14:16
+     **/
+    @ResponseBody
+    @RequestMapping("getUserList")
+    public String getUserList(Integer curr,Integer limit,String type,HttpSession session){
+        if("3".equals(type)){
+            //查看本人的好友信息数据
+            SysUser user = checkLogin(session);
+            //获取当前人对应的好友关系
+            return null;
+        }else{
+            //获取符合条件的用户列表 1 = 学生  2 = 老师
+            JSONObject res = new JSONObject();
+            curr = curr == null?1:curr;
+            List<SysUser> userListByType = userService.getUserListByType((curr-1) * 10, limit, type);
+            int countByType = userService.getCountByType(type);
+            res.put("content",userListByType);
+            res.put("pages",getPageSize(countByType,limit));
+            return JSONObject.toJSONString(res);
         }
 
 
