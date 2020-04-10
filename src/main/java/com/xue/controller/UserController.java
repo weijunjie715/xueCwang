@@ -274,4 +274,8 @@ public class UserController extends BaseController {
         result.put("msg","success");
         return JSONObject.toJSONString(result);
     }
+
+    public void zzzz(){
+
+    }
 }
