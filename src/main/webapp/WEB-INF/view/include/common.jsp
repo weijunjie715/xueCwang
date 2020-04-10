@@ -14,5 +14,23 @@
 <link rel="stylesheet" type="text/css" href="${staticPath}/hui/lib/Hui-iconfont/1.0.8/iconfont.min.css" />
 <link href="${staticPath}/h-ui/css/H-ui.ie.css" rel="stylesheet" type="text/css" />
 <%--浏览器中地址栏左侧显示的图标--%>
+<script>
+    //用户注销登录操作
+    function loginOut(){
+        $.ajax({
+            url : "/user/userLoginOut",
+            type : "get",
+            success : function(data) {
+                var aa = data.msg
+                if(aa == "success"){
+                    location.reload(true);
+                }else{
+                    //弹出错误问题
+                    alert("处理异常");
+                }
+            }
+        });
+    }
+</script>
 
 

@@ -27,4 +27,6 @@ public interface SysUserMapper {
     List<SysUser> selectSysUsersByType(@Param("curr") Integer curr,@Param("limit") Integer limit,@Param("type") String type);
 
     int getCountByType(@Param("type") String type);
+
+    int updateByUuid(SysUser record);
 }

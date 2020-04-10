@@ -53,6 +53,10 @@ public class BaseController {
         }
     }
 
+    public void loginOut(HttpSession session){
+        session.setAttribute("userInfo",null);
+    }
+
     public static void main(String args[]){
         int count = 25;
         int limit = 10;

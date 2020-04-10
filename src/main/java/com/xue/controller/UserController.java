@@ -202,7 +202,76 @@ public class UserController extends BaseController {
             res.put("pages",getPageSize(countByType,limit));
             return JSONObject.toJSONString(res);
         }
+    }
 
+    /**
+     * @Description 更新我的用户信息数据
+     * @Date 2020/4/10 11:25
+     **/
+    @ResponseBody
+    @RequestMapping("updateMyUserInfo")
+    public String updateMyUserInfo(SysUser sysUser,HttpSession session,
+                                 HttpServletResponse response, HttpServletRequest request,
+                                 @RequestParam(value="uploadfile",required=false)MultipartFile file){
+        //判断当前上传的文件是否为null
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",false);
+        try {
+//
+            //先判断账号是否存在
+            request.setCharacterEncoding("UTF-8");
+            String msg = null;
+            String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
+            if(null != file && file.getSize() >0){
+                String s = saveFile(response, session, request, file, uuid);
+                if("300".equals(s)){
+                    msg = "选择图片过大，请重新选择";
+                    result.put("msg",msg);
+                    return JSONObject.toJSONString(result);
+                }else if("301".equals(s)){
+                    msg = "保存文件失败";
+                    result.put("msg",msg);
+                    return JSONObject.toJSONString(result);
+                }else if("302".equals(s)){
+                    msg = "文件格式异常";
+                    result.put("msg",msg);
+                    return JSONObject.toJSONString(result);
+                }else{
+                    msg = s;
+                }
+            }else{
+            }
+            SysUser user = checkLogin(session);
+            sysUser.setSuUuid(user.getSuUuid());
+            //执行用户信息入库操作
+            int i = userService.updateUserInfo(sysUser, msg);
+            if(i>=1){
+                loginOut(session);
+                result.put("status",true);
+                result.put("msg","修改成功");
+            }else{
+                result.put("status",false);
+                result.put("msg","修改失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+        }
 
+        return JSONObject.toJSONString(result);
+    }
+
+    /**
+     * @Description 注销登录操作
+     * @Date 2020/4/10 16:51
+     **/
+    @ResponseBody
+    @RequestMapping("userLoginOut")
+    public String userLoginOut(HttpSession session,
+                               HttpServletResponse response, HttpServletRequest request){
+        Map<String,Object> result = new HashMap<>();
+        loginOut(session);
+        result.put("status",true);
+        result.put("msg","success");
+        return JSONObject.toJSONString(result);
     }
 }

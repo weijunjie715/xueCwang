@@ -23,4 +23,7 @@ public interface UserService {
 
     public int getCountByType(String type);
 
+    public int updateUserInfo(SysUser sysUser,String url);
+
+
 }

@@ -11,6 +11,7 @@
     </style>
 </head>
 <body>
+    <h1>${msg}</h1><a href="/toIndex">点我返回首页</a>
     <img class="aligncenter" src="static/img/404.jpg">
 </body>
 </html>

@@ -64,7 +64,7 @@
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
                             <li>
-                                <a href="#" target="_blank">${userInfo.suName}</a>
+                                <a href="#" >${userInfo.suName}</a>
                             </li>
                         </c:if>
 
@@ -81,19 +81,19 @@
                                 </c:if>
                                 <c:if test="${not empty userInfo}">
                                     <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" target="_blank">我的课程</a>
+                                        <a href="http://www.h-ui.net/bug.shtml" >我的课程</a>
                                     </li>
                                     <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" target="_blank">个人信息</a>
+                                        <a href="/showUserInfo?userId=${userInfo.suUuid}" >个人信息</a>
                                     </li>
                                     <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" target="_blank">作业管理</a>
+                                        <a href="http://www.h-ui.net/bug.shtml" >作业管理</a>
                                     </li>
                                     <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" target="_blank">教师页面</a>
+                                        <a href="http://www.h-ui.net/bug.shtml" >教师页面</a>
                                     </li>
                                     <li>
-                                        <a href="javascritp:;" >注销登陆</a>
+                                        <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
                                     </li>
                                 </c:if>
 
@@ -101,7 +101,7 @@
                         </li>
 
                         <li>
-                            <a href="http://h-ui.net/aboutHui.shtml" target="_blank">联系我们</a>
+                            <a href="http://h-ui.net/aboutHui.shtml" >联系我们</a>
                         </li>
                     </ul>
                 </nav>
@@ -115,7 +115,7 @@
                 <div class="bd bg-fff">
                     <ul>
                         <c:forEach items="${photoList}" var="p" varStatus="i">
-                            <li><a href="#" title="${p.srName}" target="_blank"><img src="${p.file}" ></a></li>
+                            <li><a href="#" title="${p.srName}" ><img src="${p.file}" ></a></li>
                         </c:forEach>
                     </ul>
                 </div>
@@ -200,14 +200,14 @@
         <footer class="footer mt-20" style="margin-top: 60px;">
             <div class="container">
                 <nav class="footer-nav">
-                    <a target="_blank" href="http://www.h-ui.net/aboutHui.shtml">关于我们</a>
+                    <a  href="http://www.h-ui.net/aboutHui.shtml">关于我们</a>
                     <span class="pipe">|</span>
-                    <a target="_blank" href="http://www.h-ui.net/copyright.shtml">软件著作权</a>
+                    <a  href="http://www.h-ui.net/copyright.shtml">软件著作权</a>
                     <span class="pipe">|</span>
-                    <a target="_blank" href="http://www.h-ui.net/juanzeng.shtml">感谢捐赠</a>
+                    <a  href="http://www.h-ui.net/juanzeng.shtml">感谢捐赠</a>
                 </nav>
                 <p>Copyright &copy;2013-2017 H-ui.net All Rights Reserved. <br>
-                    <a rel="nofollow" target="_blank" href="http://www.miitbeian.gov.cn/">京ICP备15015336号-1</a>
+                    <a rel="nofollow"  href="http://www.miitbeian.gov.cn/">京ICP备15015336号-1</a>
                     <br>
                     未经允许，禁止转载、抄袭、镜像<br>
                     用心做站，做不一样的站</p>

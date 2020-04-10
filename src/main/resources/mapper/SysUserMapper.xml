@@ -263,4 +263,46 @@
             sys_user a
             where a.su_role = #{type}
   </select>
+  <update id="updateByUuid" parameterType="com.xue.bean.SysUser">
+    update sys_user
+    <set>
+      <if test="suName != null">
+        su_name = #{suName,jdbcType=VARCHAR},
+      </if>
+      <if test="suCode != null">
+        su_code = #{suCode,jdbcType=VARCHAR},
+      </if>
+      <if test="suPwd != null">
+        su_pwd = #{suPwd,jdbcType=VARCHAR},
+      </if>
+      <if test="suEmail != null">
+        su_email = #{suEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="suSex != null">
+        su_sex = #{suSex,jdbcType=VARCHAR},
+      </if>
+      <if test="suPhone != null">
+        su_phone = #{suPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="suSrId != null">
+        su_sr_id = #{suSrId,jdbcType=INTEGER},
+      </if>
+      <if test="suBirthday != null">
+        su_birthday = #{suBirthday,jdbcType=VARCHAR},
+      </if>
+      <if test="suReason != null">
+        su_reason = #{suReason,jdbcType=VARCHAR},
+      </if>
+      <if test="suRole != null">
+        su_role = #{suRole,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastIp != null">
+        su_last_ip = #{suLastIp,jdbcType=VARCHAR},
+      </if>
+      <if test="suLastTime != null">
+        su_last_time = #{suLastTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where su_uuid = #{suUuid,jdbcType=VARCHAR}
+  </update>
 </mapper>

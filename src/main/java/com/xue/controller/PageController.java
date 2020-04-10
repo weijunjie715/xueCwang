@@ -78,6 +78,9 @@ public class PageController extends BaseController {
         if(null == userInfo){
             return "404";
         }else{
+            //添加当前登录信息
+            SysUser sysUser = checkLogin(session);
+            model.addAttribute("userInfo",sysUser);
             model.addAttribute("userInfoShow",userInfo);
             return "student/userInfoPage";
         }
@@ -138,5 +141,30 @@ public class PageController extends BaseController {
             return "student/courseInfoPage";
         }
 
+    }
+
+    /**
+     * @Description 进入更新个人信息页面
+     * @Date 2020/4/10 13:41
+     **/
+    @RequestMapping("toUpdateUserInfoPage")
+    public String toUpdateUserInfoPage(HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        //通过用户ID获取用户的信息数据
+        if(null == sysUser){
+            model.addAttribute("msg","数据异常");
+            return "404";
+        }
+        SysUser userInfo = userService.getUserInfoByID(sysUser.getSuUuid());
+        model.addAttribute("userInfoForUpdate",userInfo);
+        return "student/userInfoUpdatePage";
+    }
+
+
+    @RequestMapping("tocccc")
+    public String toUpdateUserInfoPage1(){
+        return "student/userInfoUpdatePage";
     }
 }

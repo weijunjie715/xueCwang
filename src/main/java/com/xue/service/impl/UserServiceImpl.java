@@ -6,6 +6,7 @@ import com.xue.mapper.SysResourcesMapper;
 import com.xue.mapper.SysUserMapper;
 import com.xue.service.ResourcesService;
 import com.xue.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,6 +41,9 @@ public class UserServiceImpl implements UserService {
      **/
     public int userRegister(SysUser sysUser,String url){
         int i = 0;
+        if(StringUtils.isBlank(sysUser.getSuPwd())){
+            sysUser.setSuPwd(null);
+        }
         try {
             if(null != url){
                 //执行文件路径上传保存操作
@@ -97,6 +101,25 @@ public class UserServiceImpl implements UserService {
     public int getCountByType(String type){
         int count = sysUserMapper.getCountByType(type);
         return count;
+    }
+
+    /**
+     * @Description
+     * @Date 2020/4/10 15:28
+     **/
+    public int updateUserInfo(SysUser sysUser,String url){
+        if(StringUtils.isBlank(sysUser.getSuPwd())){
+            sysUser.setSuPwd(null);
+        }
+        if(StringUtils.isBlank(url)){
+            sysUser.setSuSrId(null);
+        }else{
+            int z = resourcesService.insertResourcesId(url, sysUser.getSuName(), "3");
+            //插入用户表数据
+            sysUser.setSuSrId(z);
+        }
+        //执行数据库更新操作
+        return sysUserMapper.updateByUuid(sysUser);
     }
 
 }
