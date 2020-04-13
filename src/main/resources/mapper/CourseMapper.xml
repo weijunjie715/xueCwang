@@ -177,19 +177,37 @@
   <resultMap extends="BaseResultMap" id="course_info_page" type="com.xue.bean.Course">
     <result column="fileUrl" jdbcType="VARCHAR" property="fileUrl" />
   </resultMap>
-  <resultMap extends="BaseResultMap" id="course_content_page" type="com.xue.bean.Course">
+  <resultMap id="course_content_page" type="com.xue.bean.Course">
+    <id column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="c_name" jdbcType="VARCHAR" property="cName" />
+    <result column="suId" jdbcType="INTEGER" property="userUid" />
+    <result column="c_sr_id" jdbcType="INTEGER" property="cSrId" />
+    <result column="c_order" jdbcType="INTEGER" property="cOrder" />
+    <result column="suName" jdbcType="VARCHAR" property="cAuthor" />
+    <result column="c_video" jdbcType="VARCHAR" property="cVideo" />
+    <result column="c_scoure" jdbcType="VARCHAR" property="cScoure" />
+    <result column="c_uptime" jdbcType="VARCHAR" property="cUptime" />
+    <result column="c_flag" jdbcType="VARCHAR" property="cFlag" />
+    <result column="c_create_time" jdbcType="TIMESTAMP" property="cCreateTime" />
+    <result column="c_update_time" jdbcType="TIMESTAMP" property="cUpdateTime" />
     <result column="fileUrl" jdbcType="VARCHAR" property="fileUrl" />
     <result column="content" jdbcType="VARCHAR" property="courseContent" />
   </resultMap>
-  <select id="selectCourseInfo" resultMap="course_info_page">
+  <select id="selectCourseInfo" resultMap="course_content_page">
     SELECT
 	c.*,
-	r.file as fileUrl
+	r.file as fileUrl,
+	su.su_uuid as suId,
+	su.su_name as suName
     FROM
 	course c
 	LEFT JOIN sys_resources r ON c.c_sr_id = r.id
+	left join sys_user su on c.c_su_id = su.su_id
     WHERE
-	c.c_flag = '1'
+	c.c_flag = #{type}
+	<if test="uid != null ">
+      and c.c_su_id = #{uid}
+    </if>
     ORDER BY
 	c.c_order DESC
 	LIMIT #{bNumber},
@@ -199,20 +217,25 @@
     SELECT
 	c.*,
 	r.file as fileUrl,
-	cc.course_content as content
+	cc.course_content as content,
+	su.su_uuid as suId,
+	su.su_name as suName
     FROM
 	course c
 	LEFT JOIN sys_resources r ON c.c_sr_id = r.id
-	left join course_content cc on c_id = cc.course_id
+	left join course_content cc on c.c_id = cc.course_id
+	left join sys_user su on c.c_su_id = su.su_id
     WHERE
-	c.c_flag = '1'
-	and c.c_id = #{courseId}
+	c.c_id = #{courseId}
 	limit 0,1
   </select>
   <select id="getCountByCourse" parameterType="com.xue.bean.Course" resultType="integer">
     select count(1) FROM
 	course c WHERE
-	c.c_flag = '1'
+	c.c_flag = #{cFlag,jdbcType=INTEGER}
+    <if test="cSuId != null">
+      and c.c_su_id = #{cSuId,jdbcType=INTEGER}
+    </if>
   </select>
   <update id="updateScoure">
     update course set c_scoure = #{score} where c_id = #{cid}

@@ -1,14 +1,8 @@
 package com.xue.test;
 
 import com.alibaba.fastjson.JSONObject;
-import com.xue.bean.CourseComment;
-import com.xue.bean.CourseContent;
-import com.xue.bean.SysResources;
-import com.xue.bean.SysUser;
-import com.xue.mapper.CourseCommentMapper;
-import com.xue.mapper.CourseContentMapper;
-import com.xue.mapper.SysResourcesMapper;
-import com.xue.mapper.SysUserMapper;
+import com.xue.bean.*;
+import com.xue.mapper.*;
 import com.xue.util.ChineseName;
 import com.xue.util.RandomValueUtil;
 import org.apache.tools.ant.util.DateUtils;
@@ -41,10 +35,15 @@ public class BaseTest {
 
     @Autowired
     private CourseCommentMapper courseCommentMapper;
+
+    @Autowired
+    private CourseMapper courseMapper;
 //    @Test
     public void test1(){
-        List<SysResources> sysResources = sysResourcesMapper.selectByType("1", 5);
-        System.out.println(JSONObject.toJSONString(sysResources));
+        /*List<SysResources> sysResources = sysResourcesMapper.selectByType("1", 5);
+        System.out.println(JSONObject.toJSONString(sysResources));*/
+        List<Course> courses = courseMapper.selectCourseInfo(0, 10, "2", null);
+        System.out.println(JSONObject.toJSONString(courses));
     }
 
     /**
@@ -96,12 +95,10 @@ public class BaseTest {
 //    @Test
     public void testAddCourseContent(){
         //添加用户信息
-        for(int i = 2;i<=25;i++){
             CourseContent courseContent = new CourseContent();
-            courseContent.setCourseId(i);
+            courseContent.setCourseId(26);
             courseContent.setCourseContent(ChineseName.createCourseContent());
             courseContentMapper.insert(courseContent);
-        }
     }
     /**
      * @Description 随机添加用户评论数据
@@ -111,7 +108,7 @@ public class BaseTest {
     public void testAddComment(){
         //添加用户评论
         //遍历课程
-        for(int i = 1;i<=25;i++){
+//        for(int i = 10;i<=25;i++){
             //随机评论条数
             Random random = new Random();
             int j = random.nextInt(15);
@@ -123,14 +120,14 @@ public class BaseTest {
                 CourseComment cc = new CourseComment();
                 cc.setCcFlag("1");
                 cc.setCcUserId(uId);
-                cc.setcId(i);
-                cc.setCcTime("2020-04-07 16:15");
+                cc.setcId(27);
+                cc.setCcTime("2020-04-13 16:15");
                 cc.setCcComment(ChineseName.createCourseComment());
                 cc.setCcScoure("4");
-                cc.setCcType("1");
+                cc.setCcType("2");
                 courseCommentMapper.insert(cc);
             }
-        }
+//        }
     }
 
 }

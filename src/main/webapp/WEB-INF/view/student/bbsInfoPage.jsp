@@ -32,9 +32,11 @@
         .mainBody {
             margin-left: 10%;
         }
-
+        .theTr{
+            height: 150px;
+        }
     </style>
-    <title>课程详情</title>
+    <title>问题详情</title>
 
 </head>
 <body ontouchstart>
@@ -46,7 +48,7 @@
     <header class="navbar-wrapper">
         <div class="navbar navbar-black navbar-fixed-top">
             <div class="container cl">
-                <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">C语言学习网</a>
+                <a class="logo navbar-logo hidden-xs" href="/">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
                 <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
@@ -113,71 +115,42 @@
                 <span class="btn btn-default radius radiusNew">解惑答疑</span>
                 <span class="btn btn-default radius radiusNew">附件下载</span>
             </div>
-            <div id="clazzs">
+            <div id="others">
                 <div class="mainBody">
-                    <h3>课程详情</h3>
-                    <div class="themain">
-                        <div class="maskWraper" style="width: 20%; height:250px;">
-                            <img src="${courseInfo.fileUrl}" width="300" height="250">
-                            <div class="maskBar text-c">${courseInfo.cName}</div>
+                    <h3>问题详情</h3>
+                    <table class="table table-border">
+                        <tr class="theTr">
+                            <td width="10%">
+                            </td>
+                            <td>
+                                <h3>
+                                    ${courseInfo.cName}
+                                        <input type="hidden" value="${courseInfo.userUid}" id="theUserId"/>
+                                        <input type="hidden" value="${courseInfo.cId}" id="theCourseId"/>
+                                </h3>
+                                <div>
+                                    ${courseInfo.courseContent}
+                                </div>
+                                <div style="float:right; margin-right: 10%; margin-top: 30px;">
+                                    <a onClick="showDeit('111')">回复</a>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="theTr">
+                            <td colspan="10">
 
-                        </div>
-                        <div class="aboutClass" style="width: 70%; height:250px; ">
-                            <h4>${courseInfo.cName}</h4>
-                            <input type="hidden" id="courseId" value="${courseInfo.cId}">
-                            <div style="margin-top: 30px;">
-                                讲师：<a href="/showUserInfo?userId=${courseInfo.userUid}">${courseInfo.cAuthor}</a>
-                            </div>
-                            <div style="margin-top: 30px;">
-                                发布时间：${courseInfo.cUptime}
-                            </div>
-                            <div class="clearfix" style="margin-top: 30px;">
-                                <span class="f-l f-14 va-m">课程评分：</span>
-                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                    <!-- 修改width的百分比 实现变色 -->
-                                    <span class="star" style="width:${courseInfo.cScoure}"></span>
+                                <ul class="commentList" id="commentList">
+                                </ul>
+                                <div id="forPage" style="margin-left: 30%;margin-top: 30px;">
                                 </div>
-                                <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
-                            </div>
-                            <div>
-                                <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" style="font-size: 30px!important;"></a>
-                            </div>
-                        </div>
-                        <div style="clear:both;"></div>
-                        <!-- 添加课程详情数据 -->
-                        <div>
-                            <h5 style="">${courseInfo.cName}</h5>
-                            ${courseInfo.courseContent}
-                        </div>
-                        <!-- 评分 课程评论位置 -->
-                        <div id="pingjia" style="margin-top: 50px; ">
-                            <div class="clearfix">
-                                <span class="f-l f-15 va-m">评分：</span>
-                                <div id="star-1" class="star-bar size-M f-l mr-10 va-m"></div>
-                                <strong id="result-1" class="f-l va-m"></strong>
-                                <input type="hidden" id="mySc">
-                            </div>
-                            <div class="row cl">
-                                <div class="formControls col-xs-8" >
-                                    <textarea cols="" rows="" class="textarea" name="beizhu" id="beizhu"  placeholder="说点什么...最少输入10个字符"></textarea>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="button" onclick="alertMsg()" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-                                </div>
-                            </div>
-                        </div>
-                        <!-- 评论列表位置 -->
-                        <div id="pinglunList" class="col-xs-8">
-                            <ul class="commentList" id="commentList"></ul>
-                        </div>
-                        <div id="forPage" style="margin-left: 30%;margin-top: 30px;">
-                        </div>
-                        <div style="clear:both;"></div>
+                            </td>
 
-                    </div>
+
+                        </tr>
+
+                    </table>
                 </div>
+                <div style="clear:both;"></div>
             </div>
         </div>
         <footer class="footer mt-20" style="margin-top: 60px;">
@@ -232,11 +205,193 @@
         </div>
     </div>
 </div>
+<%--回复评论弹出层--%>
+<div id="editorDiv" class="modal fade middle">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">回复评论</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript;">×</a>
+            </div>
+            <div class="modal-body">
+                <div id="editor" style=""></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="alertMsg()">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+<script>
+    UE.getEditor('editor').setHide();
+    function showDeit(toUser) {
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }
+        clearLocalData();
+        var zz = '';
+        if ('111' != toUser) {
+            var aa = toUser.split("-");
+            zz = '<a href="/showUserInfo?userId='+aa[0]+'">@'+aa[1]+'</a>	';
+        }
+        UE.getEditor('editor').setContent('');
+        UE.getEditor('editor').setContent(zz);
+        $("#editorDiv").modal("show");
+        // UE.getEditor('editor').setShow();
+    }
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+
+    function alertMsg() {
+        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            // var beizhu = $("#beizhu").val();
+            var beizhu = UE.getEditor('editor').getContent();
+            var courseId = $("#theCourseId").val();
+            $.ajax({
+                url : "/comment/addCourseComment",
+                type : "post",
+                data : {
+                    cId:courseId,
+                    ccUserId:userId,
+                    ccComment:beizhu,
+                    ccType:'2'
+                },
+                success : function(data) {
+                    debugger;
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("评论成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("回复失败，联系管理员");
+                    }
+                }
+            });
+        }
+
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+    }
+</script>
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    var courseId = $("#courseId").val();
-    $.getJSON('/comment/getCommentByCourseId', {curr: 1,limit:10,courseId:courseId,type:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    var courseId = $("#theCourseId").val();
+    $.getJSON('/comment/getCommentByCourseId', {curr: 1,limit:10,courseId:courseId,type:'2'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'forPage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -244,7 +399,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/comment/getCommentByCourseId', {curr: e.curr,limit:e.limit,courseId:courseId,type:'1'}, function(res){
+                $.getJSON('/comment/getCommentByCourseId', {curr: e.curr,limit:e.limit,courseId:courseId,type:'2'}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#commentList").html(htmllet);
@@ -263,7 +418,6 @@
     });
     function createHtml(htmllet,zz,id) {
         for(var i = 0;i<zz.length;i++){
-            console.log(zz[i].ccComment);
             htmllet += '<li class="item cl"> <a href="/showUserInfo?userId='+zz[i].userUId+'"><i class="avatar size-L radius"><img alt="" src="'+zz[i].userFile+'"></i></a>\n' +
                 '                                    <div class="comment-main">\n' +
                 '                                        <header class="comment-header">\n' +
@@ -272,7 +426,10 @@
                 '                                            </div>\n' +
                 '                                        </header>\n' +
                 '                                        <div class="comment-body">\n' +
-                '                                            <p>'+zz[i].ccComment+'</p>\n' +
+                '                                            '+zz[i].ccComment+'\n' +
+                '                                                <div style="float:right; margin-right: 10%; margin-top: 30px;">\n' +
+                '                                                    <a onClick="showDeit(\''+zz[i].userUId+'-'+zz[i].userName+'\')">回复</a>\n' +
+                '                                                </div>\n' +
                 '                                        </div>\n' +
                 '                                    </div>\n' +
                 '                                </li>';
@@ -310,70 +467,10 @@
     });
     $(function() {
         $('.maskWraper').Huihover();
-        /* 计算输入域字体数量 */
-        $(".textarea").Huitextarealength({
-            minlength:10,
-            maxlength:200.
-        });
-    });
-    //星星评价效果
-    $(function(){
-        //星级评价
-        $("#star-1").raty({
-            hints: ['1','2', '3', '4', '5'],//自定义分数
-            starOff: 'iconpic-star-S-default.png',//默认灰色星星
-            starOn: 'iconpic-star-S.png',//黄色星星
-            path: '${staticPath}/hui/static/h-ui/images/star',//可以是相对路径
-            number: 5,//星星数量，要和hints数组对应
-            showHalf: true,
-            targetKeep : true,
-            click: function (score, evt) {//点击事件
-                //第一种方式：直接取值
-                // $("#result-1").html(score+'分');
-                $("#mySc").val(score);
-            }
-        });
     });
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
-    }
-    //点击提交按钮触发对文章添加评论事件
-    function alertMsg() {
-        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
-        var userId = $("#userHiddenId").val();
-        if(userId.length == 0){
-            $("#modal-demo").modal("show");
-            return;
-        }else{
-            var score = $("#mySc").val();
-            var beizhu = $("#beizhu").val();
-            var courseId = $("#courseId").val();
-            alert(score+"------"+beizhu+"---"+courseId+"---"+userId);
-            $.ajax({
-                url : "/comment/addCourseComment",
-                type : "post",
-                data : {
-                    cId:courseId,
-                    ccUserId:userId,
-                    ccScoure:score,
-                    ccComment:beizhu,
-                    ccType:'1'
-                },
-                success : function(data) {
-                    var aa = data.msg
-                    if(aa == "success"){
-                        alert("评论成功");
-                        //刷新当前页面
-                        location.reload(true);
-                    }else{
-                        //弹出错误问题
-                        alert("添加评论失败，联系管理员");
-                    }
-                }
-            });
-        }
-
     }
 </script>
 </body>

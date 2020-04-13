@@ -11,7 +11,7 @@ import java.util.List;
  */
 public interface CourseService {
 
-    public List<Course> getCourseForIndex(Integer bNumber, Integer eNumber);
+    public List<Course> getCourseForIndex(Integer bNumber, Integer eNumber,String type,String uid);
 
     public Course getCourseInfo(String courseId);
 

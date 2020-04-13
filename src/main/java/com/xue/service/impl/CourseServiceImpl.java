@@ -24,8 +24,8 @@ public class CourseServiceImpl implements CourseService {
      * @Description 获取首页需要展示的课程列表数据信息
      * @Date 2020/3/30 15:22
      **/
-    public List<Course> getCourseForIndex(Integer bNumber, Integer eNumber){
-        List<Course> courses = courseMapper.selectCourseInfo(bNumber, eNumber);
+    public List<Course> getCourseForIndex(Integer bNumber, Integer eNumber,String type,String uid){
+        List<Course> courses = courseMapper.selectCourseInfo(bNumber, eNumber,type,uid);
         return courses;
     }
 

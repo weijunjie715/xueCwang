@@ -6,6 +6,7 @@ import com.xue.bean.SysUser;
 import com.xue.service.CourseService;
 import com.xue.service.ResourcesService;
 import com.xue.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,7 +45,7 @@ public class PageController extends BaseController {
         List<SysResources> resourcesByType = resourcesService.getResourcesByType("1", 5);
         model.addAttribute("photoList",resourcesByType);
         //首页课程
-        List<Course> courseForIndex = courseService.getCourseForIndex(0, 6);
+        List<Course> courseForIndex = courseService.getCourseForIndex(0, 6,"1",null);
         model.addAttribute("courseList",courseForIndex);
         //首页名师
         List<SysUser> teacherListByType = userService.getUserListByType(0, 6, "0");
@@ -160,6 +161,36 @@ public class PageController extends BaseController {
         SysUser userInfo = userService.getUserInfoByID(sysUser.getSuUuid());
         model.addAttribute("userInfoForUpdate",userInfo);
         return "student/userInfoUpdatePage";
+    }
+
+    /**
+     * @Description 进入论坛问题列表页面
+     * @Date 2020/4/10 13:41
+     **/
+    @RequestMapping("toBbsListPage")
+    public String toBbsListPage(HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/bbsListPage";
+    }
+
+    /**
+     * @Description 进入论坛问题详情页面
+     * @Date 2020/4/10 13:41
+     **/
+    @RequestMapping("toBbsInfoPage")
+    public String toBbsInfoPage(String courseId,HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        //获取当前传入课程的数据信息
+        if (StringUtils.isBlank(courseId)){
+            return "404";
+        }
+        Course courseInfo = courseService.getCourseInfo(courseId);
+        model.addAttribute("courseInfo",courseInfo);
+        return "student/bbsInfoPage";
     }
 
 

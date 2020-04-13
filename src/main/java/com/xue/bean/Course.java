@@ -59,6 +59,16 @@ public class Course implements Serializable {
 
     private String courseContent;
 
+    private String userUid;
+
+    public String getUserUid() {
+        return userUid;
+    }
+
+    public void setUserUid(String userUid) {
+        this.userUid = userUid;
+    }
+
     public String getCourseContent() {
         return courseContent;
     }

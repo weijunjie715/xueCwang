@@ -41,12 +41,12 @@ public class CommentServiceImpl implements CommentService {
      * @Date 2020/4/8 14:41
      **/
     public String addCourseComment(CourseComment comment){
-        comment.setCcType("1");
+//        comment.setCcType("1");
         comment.setCcFlag("1");
         comment.setCcTime(DateUtils.format(new Date(),"yyyy-MM-dd HH:mm"));
         int insert = commentMapper.insert(comment);
         //重新计算分数  添加至课程信息数据
-        if(insert > 0){
+        if(insert > 0 && comment.getCcType().equals("1")){
             updateCourseScore(comment);
         }
         return "success";

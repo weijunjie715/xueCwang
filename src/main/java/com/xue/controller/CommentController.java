@@ -29,10 +29,10 @@ public class CommentController extends BaseController {
      **/
     @ResponseBody
     @RequestMapping("getCommentByCourseId")
-    public String getCommentByCourseId(Integer curr,Integer limit,String courseId){
+    public String getCommentByCourseId(Integer curr,Integer limit,String courseId,String type){
         curr = curr == null?1:curr;
-        List<CourseComment> commentInfo = commentService.getCommentInfo(courseId, "1", (curr-1) * limit, limit);
-        Integer count = commentService.getCommentInfo(courseId, "1");
+        List<CourseComment> commentInfo = commentService.getCommentInfo(courseId, type, (curr-1) * limit, limit);
+        Integer count = commentService.getCommentInfo(courseId, type);
         JSONObject res = new JSONObject();
         res.put("content",commentInfo);
         res.put("pages",getPageSize(count,limit));
@@ -54,4 +54,6 @@ public class CommentController extends BaseController {
         res.put("code","200");
         return JSONObject.toJSONString(res);
     }
+
+
 }

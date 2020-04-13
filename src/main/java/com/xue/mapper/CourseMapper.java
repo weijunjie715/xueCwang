@@ -18,7 +18,8 @@ public interface CourseMapper {
 
     int updateByPrimaryKey(Course record);
 
-    List<Course> selectCourseInfo(@Param("bNumber") Integer bNumber,@Param("eNumber") Integer eNumber);
+    List<Course> selectCourseInfo(@Param("bNumber") Integer bNumber,@Param("eNumber") Integer eNumber,
+                                  @Param("type") String type,@Param("uid") String uid);
 
     Course getCourseById(@Param("courseId") String courseId);
 

@@ -176,7 +176,7 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:1}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -184,7 +184,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit}, function(res){
+                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:1}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);
@@ -210,7 +210,7 @@
                 '                        <div class="aboutClass" style="width: 70%; height:250px; ">\n' +
                 '                            <p>'+zz[i].cName+'</p>\n' +
                 '                            <div style="margin-top: 30px;">\n' +
-                '                                讲师：'+zz[i].cAuthor+'\n' +
+                '                                讲师：<a href="/showUserInfo?userId='+zz[i].userUid+'">'+zz[i].cAuthor+'</a>\n' +
                 '                            </div>\n' +
                 '                            <div style="margin-top: 30px;">\n' +
                 '                                发布时间：'+zz[i].cUptime+'\n' +
