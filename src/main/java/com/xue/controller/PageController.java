@@ -193,6 +193,19 @@ public class PageController extends BaseController {
         return "student/bbsInfoPage";
     }
 
+    /**
+     * @Description 进入关于我们页面
+     * @Date 2020/4/10 13:41
+     **/
+    @RequestMapping("toAboutUsPage")
+    public String toAboutUsPage(HttpSession session, HttpServletResponse response, HttpServletRequest request, Model model){
+        //用户信息
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        //获取当前传入课程的数据信息
+        return "student/aboutUsPage";
+    }
+
 
     @RequestMapping("tocccc")
     public String toUpdateUserInfoPage1(){

@@ -48,9 +48,10 @@
     <header class="navbar-wrapper">
         <div class="navbar navbar-black navbar-fixed-top">
             <div class="container cl">
-                <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">C语言学习网</a>
+                <a class="logo navbar-logo hidden-xs" href="/toIndex">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+                <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -107,12 +108,12 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew">课程学习</span>
-                <span class="btn btn-default radius radiusNew">团队简介</span>
-                <span class="btn btn-default radius radiusNew">名师风采</span>
-                <span class="btn btn-default radius radiusNew">课堂作业</span>
-                <span class="btn btn-default radius radiusNew">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew">附件下载</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
             </div>
             <div id="others">
                 <div class="mainBody">
@@ -179,6 +180,196 @@
         </div>
     </div>
 </div>
+<%--添加问题弹出层--%>
+<div id="editorDiv" class="modal fade middle">
+    <div class="modal-dialog">
+        <div class="modal-content radius">
+            <div class="modal-header">
+                <h3 class="modal-title">发布问题</h3>
+                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript;">×</a>
+            </div>
+            <div class="modal-body">
+                <div class="row cl">
+                    <div>
+                        <input type="text" id="courseName" class="input-text" placeholder="输入标题">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="editor" style=""></div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="alertMsg()">确定</button>
+                <button class="btn" data-dismiss="modal" aria-hidden="true">关闭</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+<script>
+    UE.getEditor('editor').setHide();
+    function showDeit() {
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }
+        clearLocalData();
+        var zz = '';
+        // UE.getEditor('editor').setContent('');
+        UE.getEditor('editor').setContent(zz);
+        $("#editorDiv").modal("show");
+        // UE.getEditor('editor').setShow();
+    }
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    //提交按钮点击操作
+    function alertMsg() {
+        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
+        var userId = $("#userHiddenId").val();
+        var cName = $("#courseName").val();
+        if(cName.length == 0){
+            alert("请输入问题标题！");
+            return;
+        }
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            // var beizhu = $("#beizhu").val();
+            var beizhu = UE.getEditor('editor').getContent();
+            $.ajax({
+                url : "/course/addCourse",
+                type : "post",
+                data : {
+                    cSuId:userId,
+                    courseContent:beizhu,
+                    cFlag:'2',
+                    cName:cName
+                },
+                success : function(data) {
+                    debugger;
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("发布成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("发布失败，联系管理员");
+                    }
+                }
+            });
+        }
+
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+    }
+</script>
+
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
@@ -209,9 +400,10 @@
     });
     function createHtml(htmllet,zz,id) {
         for(var i = 0;i<zz.length;i++){
+            var z=i+1;
             htmllet += '<tr class="theTr">\n' +
                 '                            <td>\n' +
-                '                                1\n' +
+                '                                '+z+'\n' +
                 '                            </td>\n' +
                 '                            <td>\n' +
                 '                                <a href="/toBbsInfoPage?courseId='+zz[i].cId+'">'+zz[i].cName+'</a>\n' +

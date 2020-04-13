@@ -42,8 +42,11 @@ public class BaseTest {
     public void test1(){
         /*List<SysResources> sysResources = sysResourcesMapper.selectByType("1", 5);
         System.out.println(JSONObject.toJSONString(sysResources));*/
-        List<Course> courses = courseMapper.selectCourseInfo(0, 10, "2", null);
-        System.out.println(JSONObject.toJSONString(courses));
+        Course course = new Course();
+        course.setcSuId(9);
+        course.setcName("HHAHAHAHAH");
+        int t = courseMapper.insertForId(course);
+        System.out.println(course.getcId());
     }
 
     /**

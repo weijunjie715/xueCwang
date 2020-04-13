@@ -34,10 +34,6 @@
     values ( #{srName,jdbcType=VARCHAR}, #{srType,jdbcType=VARCHAR},
       #{file,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{srIndex,jdbcType=INTEGER}, 
       #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
-    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
-      SELECT LAST_INSERT_ID()
-    </selectKey>
-
   </insert>
   <insert id="insertSelective" parameterType="com.xue.bean.SysResources">
     insert into sys_resources

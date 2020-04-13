@@ -36,7 +36,8 @@ public class ResourcesServiceImpl implements ResourcesService {
             sysResources.setFlag(1);
             sysResources.setSrType(type);
             sysResources.setSrIndex(getLastIndexByType(type));
-            return resourcesMapper.insertForId(sysResources);
+            int i = resourcesMapper.insertForId(sysResources);
+            return sysResources.getId();
         }catch (Exception e){
             e.printStackTrace();
             return 0;

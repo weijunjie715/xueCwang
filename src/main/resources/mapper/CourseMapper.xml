@@ -30,15 +30,15 @@
     where c_id = #{cId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xue.bean.Course">
-    insert into course (c_id, c_name, c_su_id, 
+    insert into course ( c_name, c_su_id,
       c_sr_id, c_order, c_author, 
       c_video, c_scoure, c_uptime, 
-      c_flag, c_create_time, c_update_time
+      c_flag
       )
-    values (#{cId,jdbcType=INTEGER}, #{cName,jdbcType=VARCHAR}, #{cSuId,jdbcType=INTEGER}, 
+    values ( #{cName,jdbcType=VARCHAR}, #{cSuId,jdbcType=INTEGER},
       #{cSrId,jdbcType=INTEGER}, #{cOrder,jdbcType=INTEGER}, #{cAuthor,jdbcType=VARCHAR}, 
       #{cVideo,jdbcType=VARCHAR}, #{cScoure,jdbcType=VARCHAR}, #{cUptime,jdbcType=VARCHAR}, 
-      #{cFlag,jdbcType=VARCHAR}, #{cCreateTime,jdbcType=TIMESTAMP}, #{cUpdateTime,jdbcType=TIMESTAMP}
+      #{cFlag,jdbcType=VARCHAR}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.xue.bean.Course">
@@ -209,7 +209,7 @@
       and c.c_su_id = #{uid}
     </if>
     ORDER BY
-	c.c_order DESC
+	c.c_id DESC
 	LIMIT #{bNumber},
 	#{eNumber}
   </select>
@@ -240,4 +240,17 @@
   <update id="updateScoure">
     update course set c_scoure = #{score} where c_id = #{cid}
   </update>
+  <!--插入一条数据  获取插入的ID-->
+  <insert id="insertForId" parameterType="com.xue.bean.Course" useGeneratedKeys="true" keyProperty="cId">
+    insert into course ( c_name, c_su_id,
+      c_sr_id, c_order, c_author,
+      c_video, c_scoure, c_uptime,
+      c_flag
+      )
+    values ( #{cName,jdbcType=VARCHAR}, #{cSuId,jdbcType=INTEGER},
+      #{cSrId,jdbcType=INTEGER}, #{cOrder,jdbcType=INTEGER}, #{cAuthor,jdbcType=VARCHAR},
+      #{cVideo,jdbcType=VARCHAR}, #{cScoure,jdbcType=VARCHAR}, #{cUptime,jdbcType=VARCHAR},
+      #{cFlag,jdbcType=VARCHAR}
+      )
+  </insert>
 </mapper>

@@ -27,5 +27,5 @@ public interface CourseMapper {
 
     int updateScoure(@Param("score") String score,@Param("cid") String cid);
 
-
+    int insertForId(Course course);
 }

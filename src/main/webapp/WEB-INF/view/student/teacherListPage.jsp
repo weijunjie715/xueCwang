@@ -46,7 +46,7 @@
     <header class="navbar-wrapper">
         <div class="navbar navbar-black navbar-fixed-top">
             <div class="container cl">
-                <a class="logo navbar-logo hidden-xs" href="/aboutHui.shtml">C语言学习网</a>
+                <a class="logo navbar-logo hidden-xs" href="/toIndex">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
@@ -105,12 +105,12 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew">课程学习</span>
-                <span class="btn btn-default radius radiusNew">团队简介</span>
-                <span class="btn btn-default radius radiusNew">名师风采</span>
-                <span class="btn btn-default radius radiusNew">课堂作业</span>
-                <span class="btn btn-default radius radiusNew">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew">附件下载</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
+                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
             </div>
             <div id="others">
                 <div class="mainBody">

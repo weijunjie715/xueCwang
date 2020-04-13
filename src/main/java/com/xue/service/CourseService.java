@@ -16,4 +16,6 @@ public interface CourseService {
     public Course getCourseInfo(String courseId);
 
     public Integer getCourseCount(Course course);
+
+    public String addCourse(Course course);
 }

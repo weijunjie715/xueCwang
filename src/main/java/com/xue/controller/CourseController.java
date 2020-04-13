@@ -70,4 +70,17 @@ public class CourseController extends BaseController {
         return JSONObject.toJSONString(res);
     }
 
+    @ResponseBody
+    @RequestMapping("addCourse")
+    public String addCourse(Course course,HttpSession session){
+        SysUser user = checkLogin(session);
+        course.setcSuId(user.getSuId());
+        course.setcAuthor(user.getSuName());
+        JSONObject res = new JSONObject();
+        String s = courseService.addCourse(course);
+        res.put("msg",s);
+        res.put("code","200");
+        return JSONObject.toJSONString(res);
+    }
+
 }
