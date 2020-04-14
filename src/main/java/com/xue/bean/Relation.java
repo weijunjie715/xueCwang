@@ -16,6 +16,11 @@ public class Relation implements Serializable {
     private Integer relationId;
 
     /**
+     * 附件ID
+     */
+    private Integer srId;
+
+    /**
      * 关系类型 1：关注 2 订阅 3 学习 4 作业
      */
     private String relationType;
@@ -29,6 +34,11 @@ public class Relation implements Serializable {
      * 关系备注
      */
     private String rRemark;
+
+    /**
+     * 发布时间
+     */
+    private String upTime;
 
     private static final long serialVersionUID = 1L;
 
@@ -56,6 +66,14 @@ public class Relation implements Serializable {
         this.relationId = relationId;
     }
 
+    public Integer getSrId() {
+        return srId;
+    }
+
+    public void setSrId(Integer srId) {
+        this.srId = srId;
+    }
+
     public String getRelationType() {
         return relationType;
     }
@@ -80,6 +98,14 @@ public class Relation implements Serializable {
         this.rRemark = rRemark == null ? null : rRemark.trim();
     }
 
+    public String getUpTime() {
+        return upTime;
+    }
+
+    public void setUpTime(String upTime) {
+        this.upTime = upTime == null ? null : upTime.trim();
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -89,9 +115,11 @@ public class Relation implements Serializable {
         sb.append(", id=").append(id);
         sb.append(", userId=").append(userId);
         sb.append(", relationId=").append(relationId);
+        sb.append(", srId=").append(srId);
         sb.append(", relationType=").append(relationType);
         sb.append(", rFlag=").append(rFlag);
         sb.append(", rRemark=").append(rRemark);
+        sb.append(", upTime=").append(upTime);
         sb.append(", serialVersionUID=").append(serialVersionUID);
         sb.append("]");
         return sb.toString();

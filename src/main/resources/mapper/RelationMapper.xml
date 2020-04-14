@@ -5,12 +5,14 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="relation_id" jdbcType="INTEGER" property="relationId" />
+    <result column="sr_id" jdbcType="INTEGER" property="srId" />
     <result column="relation_type" jdbcType="VARCHAR" property="relationType" />
     <result column="r_flag" jdbcType="VARCHAR" property="rFlag" />
     <result column="r_remark" jdbcType="VARCHAR" property="rRemark" />
+    <result column="up_time" jdbcType="VARCHAR" property="upTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, user_id, relation_id, relation_type, r_flag, r_remark
+    id, user_id, relation_id, sr_id, relation_type, r_flag, r_remark, up_time
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -23,12 +25,12 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xue.bean.Relation">
-    insert into relation (id, user_id, relation_id, 
-      relation_type, r_flag, r_remark
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{relationId,jdbcType=INTEGER}, 
-      #{relationType,jdbcType=VARCHAR}, #{rFlag,jdbcType=VARCHAR}, #{rRemark,jdbcType=VARCHAR}
-      )
+    insert into relation ( user_id, relation_id,
+      sr_id, relation_type, r_flag, 
+      r_remark, up_time)
+    values (#{userId,jdbcType=INTEGER}, #{relationId,jdbcType=INTEGER},
+      #{srId,jdbcType=INTEGER}, #{relationType,jdbcType=VARCHAR}, #{rFlag,jdbcType=VARCHAR}, 
+      #{rRemark,jdbcType=VARCHAR}, #{upTime,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.xue.bean.Relation">
     insert into relation
@@ -42,6 +44,9 @@
       <if test="relationId != null">
         relation_id,
       </if>
+      <if test="srId != null">
+        sr_id,
+      </if>
       <if test="relationType != null">
         relation_type,
       </if>
@@ -50,6 +55,9 @@
       </if>
       <if test="rRemark != null">
         r_remark,
+      </if>
+      <if test="upTime != null">
+        up_time,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
@@ -62,6 +70,9 @@
       <if test="relationId != null">
         #{relationId,jdbcType=INTEGER},
       </if>
+      <if test="srId != null">
+        #{srId,jdbcType=INTEGER},
+      </if>
       <if test="relationType != null">
         #{relationType,jdbcType=VARCHAR},
       </if>
@@ -70,6 +81,9 @@
       </if>
       <if test="rRemark != null">
         #{rRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="upTime != null">
+        #{upTime,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -82,6 +96,9 @@
       <if test="relationId != null">
         relation_id = #{relationId,jdbcType=INTEGER},
       </if>
+      <if test="srId != null">
+        sr_id = #{srId,jdbcType=INTEGER},
+      </if>
       <if test="relationType != null">
         relation_type = #{relationType,jdbcType=VARCHAR},
       </if>
@@ -91,6 +108,9 @@
       <if test="rRemark != null">
         r_remark = #{rRemark,jdbcType=VARCHAR},
       </if>
+      <if test="upTime != null">
+        up_time = #{upTime,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -98,9 +118,22 @@
     update relation
     set user_id = #{userId,jdbcType=INTEGER},
       relation_id = #{relationId,jdbcType=INTEGER},
+      sr_id = #{srId,jdbcType=INTEGER},
       relation_type = #{relationType,jdbcType=VARCHAR},
       r_flag = #{rFlag,jdbcType=VARCHAR},
-      r_remark = #{rRemark,jdbcType=VARCHAR}
+      r_remark = #{rRemark,jdbcType=VARCHAR},
+      up_time = #{upTime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectRelation" resultMap="BaseResultMap">
+    SELECT
+	*
+    FROM
+	relation
+    WHERE
+	user_id = #{userId}
+	AND relation_id = #{relationId}
+	AND relation_type = #{type}
+	LIMIT 0,1
+  </select>
 </mapper>

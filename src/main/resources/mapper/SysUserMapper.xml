@@ -305,4 +305,18 @@
     </set>
     where su_uuid = #{suUuid,jdbcType=VARCHAR}
   </update>
+  <!--获取用户的好友列表数据-->
+  <select id="selectSysUsersByUid" resultMap="userAllInfo">
+        SELECT
+            a.*,
+            b.file photoUrl
+        FROM
+            sys_user a
+            LEFT JOIN sys_resources b ON a.su_sr_id = b.id
+            left join relation r on a.su_id = r.relation_id
+            where r.user_id = #{uid}
+            and r.relation_type = #{type}
+            order by r.id desc
+            limit #{curr},#{limit}
+  </select>
 </mapper>

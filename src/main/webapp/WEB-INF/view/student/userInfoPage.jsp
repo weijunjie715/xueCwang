@@ -123,7 +123,7 @@
                                 ${userInfoShow.suUuid}
                                 <input type="hidden" value="${userInfoShow.suId}" id="theUserId">
                                 <c:if test="${userInfoShow.suUuid != userInfo.suUuid}">
-                                    <a class="Hui-iconfont Hui-iconfont-user-add" onclick="addUserRelation()" title="添加好友" style="font-size: 30px!important;"></a>
+                                    <a class="Hui-iconfont Hui-iconfont-user-add" onclick="addUserRelation('${userInfoShow.suId}')" title="添加好友" style="font-size: 30px!important;"></a>
                                 </c:if>
                                 <c:if test="${userInfoShow.suUuid == userInfo.suUuid}">
                                     <a class="Hui-iconfont Hui-iconfont-edit2" title="信息修改" href="/toUpdateUserInfoPage" style="font-size: 30px!important;"></a>
@@ -384,32 +384,30 @@
         $("#modal-demo").modal("show");
     }
     //添加用户好友操作
-    function addUserRelation(){
+    function addUserRelation(uid){
         //判断当前用户是否已经登录
         var userId = $("#loginId").val();
         if(userId.length == 0){
             $("#modal-demo").modal("show");
             return;
         }else{
-            var relationId = $("#theUserId").val();
             $.ajax({
-                url : "/comment/addCourseComment",
+                url : "/relation/addRelation",
                 type : "post",
                 data : {
-                    cId:courseId,
-                    ccUserId:userId,
-                    ccScoure:score,
-                    ccComment:beizhu
+                    relationId:uid,
+                    relationType:"1",
+                    rFlag:"1"
                 },
                 success : function(data) {
                     var aa = data.msg
                     if(aa == "success"){
-                        alert("评论成功");
+                        alert("添加好友成功");
                         //刷新当前页面
                         location.reload(true);
                     }else{
                         //弹出错误问题
-                        alert("添加评论失败，联系管理员");
+                        alert("添加好友失败，联系管理员");
                     }
                 }
             });

@@ -1,6 +1,10 @@
 package com.xue.mapper;
 
 import com.xue.bean.Relation;
+import com.xue.bean.SysUser;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 public interface RelationMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +18,9 @@ public interface RelationMapper {
     int updateByPrimaryKeySelective(Relation record);
 
     int updateByPrimaryKey(Relation record);
+
+    Relation selectRelation(@Param("userId") Integer userId,
+                            @Param("relationId") Integer relationId,
+                            @Param("type") String type);
+
 }
