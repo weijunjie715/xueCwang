@@ -1,9 +1,11 @@
 package com.xue.controller;
 
 import com.xue.bean.Course;
+import com.xue.bean.Relation;
 import com.xue.bean.SysResources;
 import com.xue.bean.SysUser;
 import com.xue.service.CourseService;
+import com.xue.service.RelationService;
 import com.xue.service.ResourcesService;
 import com.xue.service.UserService;
 import org.apache.commons.lang3.StringUtils;
@@ -34,6 +36,9 @@ public class PageController extends BaseController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private RelationService relationService;
 
     /**
      * @Description 返回主页
@@ -83,6 +88,13 @@ public class PageController extends BaseController {
             SysUser sysUser = checkLogin(session);
             model.addAttribute("userInfo",sysUser);
             model.addAttribute("userInfoShow",userInfo);
+            //添加当前数据好友信息
+            if(null != sysUser){
+                Relation relation = relationService.checkRelation(sysUser.getSuId(), userInfo.getSuId(), "1");
+                if(null != relation){
+                    model.addAttribute("relation","已添加");
+                }
+            }
             return "student/userInfoPage";
         }
 

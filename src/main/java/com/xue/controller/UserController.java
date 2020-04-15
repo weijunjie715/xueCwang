@@ -83,7 +83,7 @@ public class UserController extends BaseController {
         boolean b = userService.checkedUser(sysUser);
         if(!b){
             //直接返回账号已存在数据
-            result.put("status",true);
+            result.put("status",false);
             result.put("msg","账号已存在");
             return JSONObject.toJSONString(result);
         }

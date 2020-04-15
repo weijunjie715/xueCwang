@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
      **/
     public boolean checkedUser(SysUser sysUser){
         SysUser sysUser1 = sysUserMapper.checkUser(sysUser);
-        if(null == sysUser){
+        if(null == sysUser1){
             return true;
         }else{
             return false;

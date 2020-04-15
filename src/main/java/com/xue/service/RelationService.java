@@ -17,4 +17,6 @@ public interface RelationService {
     public void addRelation(Relation relation, SysUser user);
 
     public void getCourseRelation(Integer curr,Integer limit,SysUser sysUser);
+
+    public Relation checkRelation(Integer userId,Integer relationId,String type);
 }

@@ -122,9 +122,12 @@
                             <td>
                                 ${userInfoShow.suUuid}
                                 <input type="hidden" value="${userInfoShow.suId}" id="theUserId">
-                                <c:if test="${userInfoShow.suUuid != userInfo.suUuid}">
+                                <c:if test="${userInfoShow.suUuid != userInfo.suUuid && empty relation}">
                                     <a class="Hui-iconfont Hui-iconfont-user-add" onclick="addUserRelation('${userInfoShow.suId}')" title="添加好友" style="font-size: 30px!important;"></a>
                                 </c:if>
+                                    <c:if test="${not empty relation}">
+                                        <span class="badge badge-success radius">${relation}</span>
+                                    </c:if>
                                 <c:if test="${userInfoShow.suUuid == userInfo.suUuid}">
                                     <a class="Hui-iconfont Hui-iconfont-edit2" title="信息修改" href="/toUpdateUserInfoPage" style="font-size: 30px!important;"></a>
                                 </c:if>
