@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.TWorkMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.TWork">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="c_id" jdbcType="INTEGER" property="cId" />
+    <result column="u_id" jdbcType="INTEGER" property="uId" />
+    <result column="sr_id" jdbcType="INTEGER" property="srId" />
+    <result column="w_flag" jdbcType="VARCHAR" property="wFlag" />
+    <result column="w_name" jdbcType="VARCHAR" property="wName" />
+    <result column="w_comment" jdbcType="VARCHAR" property="wComment" />
+    <result column="w_uptime" jdbcType="VARCHAR" property="wUptime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, c_id, u_id, sr_id, w_flag, w_name, w_comment, w_uptime
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_work
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_work
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.TWork">
+    insert into t_work (id, c_id, u_id, 
+      sr_id, w_flag, w_name, 
+      w_comment, w_uptime)
+    values (#{id,jdbcType=INTEGER}, #{cId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER}, 
+      #{srId,jdbcType=INTEGER}, #{wFlag,jdbcType=VARCHAR}, #{wName,jdbcType=VARCHAR}, 
+      #{wComment,jdbcType=VARCHAR}, #{wUptime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.TWork">
+    insert into t_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="cId != null">
+        c_id,
+      </if>
+      <if test="uId != null">
+        u_id,
+      </if>
+      <if test="srId != null">
+        sr_id,
+      </if>
+      <if test="wFlag != null">
+        w_flag,
+      </if>
+      <if test="wName != null">
+        w_name,
+      </if>
+      <if test="wComment != null">
+        w_comment,
+      </if>
+      <if test="wUptime != null">
+        w_uptime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="cId != null">
+        #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="srId != null">
+        #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="wFlag != null">
+        #{wFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="wName != null">
+        #{wName,jdbcType=VARCHAR},
+      </if>
+      <if test="wComment != null">
+        #{wComment,jdbcType=VARCHAR},
+      </if>
+      <if test="wUptime != null">
+        #{wUptime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.TWork">
+    update t_work
+    <set>
+      <if test="cId != null">
+        c_id = #{cId,jdbcType=INTEGER},
+      </if>
+      <if test="uId != null">
+        u_id = #{uId,jdbcType=INTEGER},
+      </if>
+      <if test="srId != null">
+        sr_id = #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="wFlag != null">
+        w_flag = #{wFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="wName != null">
+        w_name = #{wName,jdbcType=VARCHAR},
+      </if>
+      <if test="wComment != null">
+        w_comment = #{wComment,jdbcType=VARCHAR},
+      </if>
+      <if test="wUptime != null">
+        w_uptime = #{wUptime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.TWork">
+    update t_work
+    set c_id = #{cId,jdbcType=INTEGER},
+      u_id = #{uId,jdbcType=INTEGER},
+      sr_id = #{srId,jdbcType=INTEGER},
+      w_flag = #{wFlag,jdbcType=VARCHAR},
+      w_name = #{wName,jdbcType=VARCHAR},
+      w_comment = #{wComment,jdbcType=VARCHAR},
+      w_uptime = #{wUptime,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

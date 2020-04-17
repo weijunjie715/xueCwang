@@ -70,21 +70,7 @@
                                     </li>
                                 </c:if>
                                 <c:if test="${not empty userInfo}">
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >我的课程</a>
-                                    </li>
-                                    <li>
-                                        <a href="/showUserInfo?userId=${userInfo.suUuid}" >个人信息</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >作业管理</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >教师页面</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
-                                    </li>
+                                    <c:import url="userChoose.jsp"></c:import>
                                 </c:if>
 
                             </ul>

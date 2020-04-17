@@ -150,6 +150,12 @@ public class PageController extends BaseController {
         if(null == courseInfo){
             return "404";
         }else{
+            if(null != sysUser){
+                Relation relation = relationService.checkRelation(sysUser.getSuId(), courseInfo.getcId(), "2");
+                if(null != relation){
+                    model.addAttribute("relation","已订阅");
+                }
+            }
             model.addAttribute("courseInfo",courseInfo);
             return "student/courseInfoPage";
         }
@@ -218,6 +224,47 @@ public class PageController extends BaseController {
         return "student/aboutUsPage";
     }
 
+    /**
+     * @Description 学生访问关注课程列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toUserCoursePage")
+    public String toUserCoursePage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/userCourseListPage";
+    }
+
+    /**
+     * @Description 教师访问发布课程列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toMyCoursePage")
+    public String toTeacherCoursePage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/myCourseListPage";
+    }
+
+    /**
+     * @Description 教师访问发布课程列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toMyBbsPage")
+    public String toMyBbsPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/myBbsListPage";
+    }
+
+    /**
+     * @Description 进入好友列表页面数据
+     * @Date 2020/4/16 9:46
+     **/
+    public String toMyUserListPage(HttpSession session,Model model){
+
+        return "";
+    }
 
     @RequestMapping("tocccc")
     public String toUpdateUserInfoPage1(){

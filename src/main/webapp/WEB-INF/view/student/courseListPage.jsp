@@ -69,21 +69,7 @@
                                     </li>
                                 </c:if>
                                 <c:if test="${not empty userInfo}">
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >我的课程</a>
-                                    </li>
-                                    <li>
-                                        <a href="/showUserInfo?userId=${userInfo.suUuid}" >个人信息</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >作业管理</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >教师页面</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
-                                    </li>
+                                    <c:import url="userChoose.jsp"></c:import>
                                 </c:if>
 
                             </ul>
@@ -176,7 +162,7 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:1}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:1,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -184,7 +170,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:1}, function(res){
+                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:1,tag:'1'}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);

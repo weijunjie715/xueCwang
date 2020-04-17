@@ -68,4 +68,16 @@ public class CourseServiceImpl implements CourseService {
         int insert = contentMapper.insert(courseContent);
         return "success";
     }
+
+    /**
+     * @Description 获取用户关注的课程学习列表
+     * @Date 2020/4/16 13:53
+     **/
+    public List<Course> getUserCourse(Integer bNumber,Integer eNumber,String uId,String courseType,String rType){
+        return courseMapper.selectRelationCourse(bNumber, eNumber, uId, rType);
+    }
+
+    public Integer getUserCourseCount(String uId,String courseType,String rType){
+        return courseMapper.getUserCourseCount(uId,rType);
+    }
 }

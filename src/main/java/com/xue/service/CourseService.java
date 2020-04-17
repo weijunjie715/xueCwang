@@ -18,4 +18,8 @@ public interface CourseService {
     public Integer getCourseCount(Course course);
 
     public String addCourse(Course course);
+
+    public Integer getUserCourseCount(String uId,String courseType,String rType);
+
+    public List<Course> getUserCourse(Integer bNumber,Integer eNumber,String uId,String courseType,String rType);
 }

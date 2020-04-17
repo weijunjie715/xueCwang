@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xue.mapper.TMyWorkMapper">
+  <resultMap id="BaseResultMap" type="com.xue.bean.TMyWork">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="w_id" jdbcType="INTEGER" property="wId" />
+    <result column="su_id" jdbcType="INTEGER" property="suId" />
+    <result column="w_type" jdbcType="VARCHAR" property="wType" />
+    <result column="sr_id" jdbcType="INTEGER" property="srId" />
+    <result column="w_name" jdbcType="VARCHAR" property="wName" />
+    <result column="w_common" jdbcType="VARCHAR" property="wCommon" />
+    <result column="w_uptime" jdbcType="VARCHAR" property="wUptime" />
+    <result column="w_score" jdbcType="VARCHAR" property="wScore" />
+    <result column="w_status" jdbcType="VARCHAR" property="wStatus" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, w_id, su_id, w_type, sr_id, w_name, w_common, w_uptime, w_score, w_status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_my_work
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_my_work
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.xue.bean.TMyWork">
+    insert into t_my_work (id, w_id, su_id, 
+      w_type, sr_id, w_name, 
+      w_common, w_uptime, w_score, 
+      w_status)
+    values (#{id,jdbcType=INTEGER}, #{wId,jdbcType=INTEGER}, #{suId,jdbcType=INTEGER}, 
+      #{wType,jdbcType=VARCHAR}, #{srId,jdbcType=INTEGER}, #{wName,jdbcType=VARCHAR}, 
+      #{wCommon,jdbcType=VARCHAR}, #{wUptime,jdbcType=VARCHAR}, #{wScore,jdbcType=VARCHAR}, 
+      #{wStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.xue.bean.TMyWork">
+    insert into t_my_work
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="wId != null">
+        w_id,
+      </if>
+      <if test="suId != null">
+        su_id,
+      </if>
+      <if test="wType != null">
+        w_type,
+      </if>
+      <if test="srId != null">
+        sr_id,
+      </if>
+      <if test="wName != null">
+        w_name,
+      </if>
+      <if test="wCommon != null">
+        w_common,
+      </if>
+      <if test="wUptime != null">
+        w_uptime,
+      </if>
+      <if test="wScore != null">
+        w_score,
+      </if>
+      <if test="wStatus != null">
+        w_status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="wId != null">
+        #{wId,jdbcType=INTEGER},
+      </if>
+      <if test="suId != null">
+        #{suId,jdbcType=INTEGER},
+      </if>
+      <if test="wType != null">
+        #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="srId != null">
+        #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="wName != null">
+        #{wName,jdbcType=VARCHAR},
+      </if>
+      <if test="wCommon != null">
+        #{wCommon,jdbcType=VARCHAR},
+      </if>
+      <if test="wUptime != null">
+        #{wUptime,jdbcType=VARCHAR},
+      </if>
+      <if test="wScore != null">
+        #{wScore,jdbcType=VARCHAR},
+      </if>
+      <if test="wStatus != null">
+        #{wStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.xue.bean.TMyWork">
+    update t_my_work
+    <set>
+      <if test="wId != null">
+        w_id = #{wId,jdbcType=INTEGER},
+      </if>
+      <if test="suId != null">
+        su_id = #{suId,jdbcType=INTEGER},
+      </if>
+      <if test="wType != null">
+        w_type = #{wType,jdbcType=VARCHAR},
+      </if>
+      <if test="srId != null">
+        sr_id = #{srId,jdbcType=INTEGER},
+      </if>
+      <if test="wName != null">
+        w_name = #{wName,jdbcType=VARCHAR},
+      </if>
+      <if test="wCommon != null">
+        w_common = #{wCommon,jdbcType=VARCHAR},
+      </if>
+      <if test="wUptime != null">
+        w_uptime = #{wUptime,jdbcType=VARCHAR},
+      </if>
+      <if test="wScore != null">
+        w_score = #{wScore,jdbcType=VARCHAR},
+      </if>
+      <if test="wStatus != null">
+        w_status = #{wStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.xue.bean.TMyWork">
+    update t_my_work
+    set w_id = #{wId,jdbcType=INTEGER},
+      su_id = #{suId,jdbcType=INTEGER},
+      w_type = #{wType,jdbcType=VARCHAR},
+      sr_id = #{srId,jdbcType=INTEGER},
+      w_name = #{wName,jdbcType=VARCHAR},
+      w_common = #{wCommon,jdbcType=VARCHAR},
+      w_uptime = #{wUptime,jdbcType=VARCHAR},
+      w_score = #{wScore,jdbcType=VARCHAR},
+      w_status = #{wStatus,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

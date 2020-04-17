@@ -36,7 +36,7 @@
             height: 150px;
         }
     </style>
-    <title>问题列表</title>
+    <title>我的问题</title>
 
 </head>
 <body ontouchstart>
@@ -103,9 +103,8 @@
             </div>
             <div id="others">
                 <div class="mainBody">
-                    <h3>学习论坛
-                        <a class="Hui-iconfont Hui-iconfont-add4" onClick="showDeit()" title="发布问题"></a>
-                        <a class="Hui-iconfont Hui-iconfont-order" title="我的问题"></a></h3>
+                    <h3>我的问题
+                        </h3>
                     <table class="table table-border" id="bbsList">
 
                     </table>

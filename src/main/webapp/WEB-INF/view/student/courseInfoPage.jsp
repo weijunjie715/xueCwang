@@ -70,21 +70,7 @@
                                     </li>
                                 </c:if>
                                 <c:if test="${not empty userInfo}">
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >我的课程</a>
-                                    </li>
-                                    <li>
-                                        <a href="/showUserInfo?userId=${userInfo.suUuid}" >个人信息</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >作业管理</a>
-                                    </li>
-                                    <li>
-                                        <a href="http://www.h-ui.net/bug.shtml" >教师页面</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
-                                    </li>
+                                    <c:import url="userChoose.jsp"></c:import>
                                 </c:if>
 
                             </ul>
@@ -123,7 +109,16 @@
 
                         </div>
                         <div class="aboutClass" style="width: 70%; height:250px; ">
-                            <h4>${courseInfo.cName}</h4>
+                            <h4>${courseInfo.cName}
+                                <c:choose>
+                                    <c:when test="${not empty relation}">
+                                        <span class="badge badge-success radius">${relation}</span>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <span class="badge badge-danger radius">未订阅</span>
+                                    </c:otherwise>
+                                </c:choose>
+                            </h4>
                             <input type="hidden" id="courseId" value="${courseInfo.cId}">
                             <div style="margin-top: 30px;">
                                 讲师：<a href="/showUserInfo?userId=${courseInfo.userUid}">${courseInfo.cAuthor}</a>
@@ -140,7 +135,16 @@
                                 <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
                             </div>
                             <div>
-                                <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" style="font-size: 30px!important;"></a>
+                                <c:choose>
+                                    <c:when test="${not empty relation}">
+                                        <a class="Hui-iconfont Hui-iconfont-xuanzhong1" title="取消订阅" style="color: green;font-size: 30px!important;"></a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" onclick="addUserRelation('${courseInfo.cId}')" style="font-size: 30px!important;"></a>
+                                    </c:otherwise>
+                                </c:choose>
+
+
                             </div>
                         </div>
                         <div style="clear:both;"></div>
@@ -316,6 +320,36 @@
             maxlength:200.
         });
     });
+    //添加订阅课程操作
+    function addUserRelation(uid){
+        //判断当前用户是否已经登录
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            $.ajax({
+                url : "/relation/addRelation",
+                type : "post",
+                data : {
+                    relationId:uid,
+                    relationType:"2",
+                    rFlag:"1"
+                },
+                success : function(data) {
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("订阅成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("订阅失败，联系管理员");
+                    }
+                }
+            });
+        }
+    }
     //星星评价效果
     $(function(){
         //星级评价

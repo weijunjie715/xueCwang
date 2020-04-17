@@ -30,22 +30,11 @@
         /* 星星评分大小 */
         .size-S img{width:16px;height:16px}
         .mainBody {
-            margin-left: 5%;
+            margin-left: 10%;
         }
-        .textMargin{
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        /* 幻灯片 */
-        #slider-1{width:80%;text-align:center;margin-left: 10%;}
-        #slider-1 .bd,#slider-1 .bd li,#slider-1 .bd img{width:100%; height:350px}
-        #slider-1 .hd{ margin-top:2px;height:60px;width:100%}
-        #slider-1 .hd li{ position:relative; display:inline-block; float:left; margin-right:2px;cursor:pointer;width:19%; height:58px}
-        #slider-1 .hd li img{ display:block;width:100%; height:58px}
-        #slider-1 .hd li i{ position:absolute; display:block; z-index:9; left:0; top:0; right:0; bottom:0; background-color:rgba(0,0,0,0.6)}
 
     </style>
-    <title>学C网首页</title>
+    <title>我的发布</title>
 
 </head>
 <body ontouchstart>
@@ -73,7 +62,7 @@
                             <ul class="dropDown-menu menu radius box-shadow">
                                 <c:if test="${empty userInfo}">
                                     <li>
-                                        <a href="/toRegister">注册</a>
+                                        <a href="/toRegister" >注册</a>
                                     </li>
                                     <li>
                                         <a href="javascritp:;" onClick="modaldemo()">登陆</a>
@@ -97,20 +86,7 @@
     </header>
     <div class="wap-container">
         <div id="slider-1" class="bg-fff box-shadow radius">
-            <div class="slider">
-                <div class="bd bg-fff">
-                    <ul>
-                        <c:forEach items="${photoList}" var="p" varStatus="i">
-                            <li><a href="#" title="${p.srName}" ><img src="${p.file}" ></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <ol class="hd cl">
-                    <c:forEach items="${photoList}" var="p" varStatus="i">
-                        <li><i></i><img src="${p.file}"></li>
-                    </c:forEach>
-                </ol>
-            </div>
+
         </div>
 
         <div class="panel-body">
@@ -122,64 +98,12 @@
                 <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
                 <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
             </div>
-            <div id="clazzs">
-                <div class="mainBody">
-                    <h3>课程精选</h3>
-                    <div class="themain">
-                        <c:forEach items="${courseList}" var="course" varStatus="i">
-                            <div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px">
-                                <img src="${course.fileUrl}" width="300" height="250">
-                                <div class="maskBar text-c">${course.cName}</div>
-                            </div>
-                            <div class="aboutClass" style="width: 10%; height:250px; margin-top: 30px">
-                                <p class="textMargin">${course.cName}</p>
-                                <p class="textMargin">讲师：<a href="/showUserInfo?userId=${course.userUid}">${course.cAuthor}</a></p>
-                                <div class="clearfix">
-                                    <span class="f-l f-14 va-m">课程评分：</span>
-                                    <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                        <span class="star" style="width:${course.cScoure}"></span>
-                                    </div>
-                                </div>
-                                <a style="margin-top: 30px;" href="/showCourseInfo?courseId=${course.cId}">进入学习</a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-
-                <a style="margin-left: 10%; float: left;" href="/toCourseListPage">查看更多》》</a>
-                <div style="clear:both;"></div>
-            </div>
-            <div id="teachers">
-                <div class="mainBody">
-                    <h3>名师风采</h3>
-                    <div class="themain">
-                        <c:forEach items="${teacherList}" var="t" varStatus="i">
-                            <div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px">
-                                <img src="${t.userPhoto}" width="300" height="250">
-                                <div class="maskBar text-c">${t.suName}</div>
-                            </div>
-                            <div class="aboutClass" style="width: 10%; height:250px; margin-top: 30px">
-                                <p class="textMargin">${t.suName}</p>
-                                <p class="textMargin">${t.suBirthday}</p>
-                                <p class="textMargin">${t.suSex == '1'?'男':'女'}</p>
-                                <a style="margin-top: 30px;" href="/showUserInfo?userId=${t.suUuid}">进入主页</a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-                <a style="margin-left: 10%; float: left;" href="/toTeacherListPage">查看更多》》</a>
-                <div style="clear:both;"></div>
-            </div>
             <div id="others">
                 <div class="mainBody">
-                    <h3>学习伙伴</h3>
-                    <div class="themain">
-                        <c:forEach items="${userList}" var="u" varStatus="i">
-                            <img title="${u.suName}" onclick="toUserInfo('${u.suUuid}')" id="${u.suUuid}" src="${u.userPhoto}" alt="${u.suName}" class="round" style="width: 12%">
-                        </c:forEach>
-                    </div>
+                    <h3>我的发布</h3>
+                    <div class="themain" id="courseList"></div>
+                    <div class="themain" id="coursePageDiv"></div>
                 </div>
-                <a style="margin-left: 10%; float: left;" href="/toUserListPage">查看更多》》</a>
                 <div style="clear:both;"></div>
             </div>
         </div>
@@ -211,17 +135,17 @@
             </div>
             <div class="modal-body">
                 <div class="panel-body">
-                    <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+                    <form action="" method="post" class="form form-horizontal responsive" id="demoformLogin">
                         <div class="row cl">
                             <label class="form-label col-xs-3">账号：</label>
                             <div class="formControls col-xs-8">
-                                <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="username" id="username">
+                                <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="username" id="usernameLogin">
                             </div>
                         </div>
                         <div class="row cl">
                             <label class="form-label col-xs-3">密码：</label>
                             <div class="formControls col-xs-8">
-                                <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password" id="password">
+                                <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password" id="passwordLogin">
                             </div>
                         </div>
                         <div class="row cl">
@@ -235,12 +159,70 @@
         </div>
     </div>
 </div>
+<%--初始化分页插件数据信息--%>
+<script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
+<script>
+    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:2,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+        laypage({
+            limit:10,
+            cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
+            pages: res.pages, //通过后台拿到的总页数
+            curr: 1, //初始化当前页
+            jump: function(e){ //触发分页后的回调
+                console.log(e);
+                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:2,tag:'1'}, function(res){
+                    var zz = res.content;
+                    var htmllet = "";
+                    $("#courseList").html(htmllet);
+                    createHtml(htmllet,zz,'courseList');
+                });
+                $('body,html').animate({
+                        scrollTop: 0
+                    },
+                    500);
+            }
+        });
+        var zz = res.content;
+        var htmllet = "";
+        $("#courseList").html(htmllet);
+        createHtml(htmllet,zz,'courseList');
+    });
+    function createHtml(htmllet,zz,id) {
+        for(var i = 0;i<zz.length;i++){
+            htmllet += '<div class="maskWraper" style="width: 20%; height:250px;">\n' +
+                '                            <img src="'+zz[i].fileUrl+'" width="300" height="250">\n' +
+                '                            <div class="maskBar text-c">'+zz[i].cName+'</div>\n' +
+                '                        </div>\n' +
+                '                        <div class="aboutClass" style="width: 70%; height:250px; ">\n' +
+                '                            <p>'+zz[i].cName+'</p>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                讲师：<a href="/showUserInfo?userId='+zz[i].userUid+'">'+zz[i].cAuthor+'</a>\n' +
+                '                            </div>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                发布时间：'+zz[i].cUptime+'\n' +
+                '                            </div>\n' +
+                '                            <div class="clearfix" style="margin-top: 30px;">\n' +
+                '                                <span class="f-l f-14 va-m">课程评分：</span>\n' +
+                '                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">\n' +
+                '                                    <span class="star" style="width:'+zz[i].cScoure+'"></span>\n' +
+                '                                </div>\n' +
+                '                            </div>\n' +
+                '                            <div style="margin-top: 30px;">\n' +
+                '                                <a href="/showCourseInfo?courseId='+zz[i].cId+'">进入学习》</a>\n' +
+                '                            </div>\n' +
+                '\n' +
+                '                        </div>\n' +
+                '                        <div style="clear:both;"></div>';
+        }
+        $("#"+id).html(htmllet);
+    }
+</script>
 <script>
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
-            var code = $("#username").val();
-            var pwd = $("#password").val();
+            var code = $("#usernameLogin").val();
+            var pwd = $("#passwordLogin").val();
             debugger;
             $.ajax({
                 url : "/user/userLogin",
@@ -263,21 +245,12 @@
             });
         })
     });
-    //hover效果
     $(function() {
         $('.maskWraper').Huihover();
     });
-    //轮播图
-    $(function(){
-        jQuery("#slider-1 .slider").slide({mainCell:".bd ul",titCell:".hd li",trigger:"click",effect:"leftLoop",autoPlay:true,delayTime:850,interTime:7000,pnLoop:false,titOnClassName:"active"})});
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
-    }
-
-    //进入用户信息页面
-    function toUserInfo(uid){
-        location.href="/showUserInfo?userId="+uid;
     }
 </script>
 </body>

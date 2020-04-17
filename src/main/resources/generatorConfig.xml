@@ -81,9 +81,13 @@
 
         <!-- 指定数据库表 设置example查询方法不生成 -->
 
-        <table schema="" tableName="" enableCountByExample="false"
+       <!-- <table schema="" tableName="t_work" enableCountByExample="false"
         enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"
                selectByExampleQueryId = "false"
         />
+        <table schema="" tableName="t_my_work" enableCountByExample="false"
+               enableDeleteByExample="false" enableSelectByExample="false" enableUpdateByExample="false"
+               selectByExampleQueryId = "false"
+        />-->
     </context>
 </generatorConfiguration>

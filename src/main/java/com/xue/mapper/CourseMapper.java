@@ -28,4 +28,9 @@ public interface CourseMapper {
     int updateScoure(@Param("score") String score,@Param("cid") String cid);
 
     int insertForId(Course course);
+
+    List<Course> selectRelationCourse(@Param("bNumber") Integer bNumber,@Param("eNumber") Integer eNumber,
+                                      @Param("uId") String uId,@Param("rType") String rType);
+
+    int getUserCourseCount(@Param("uId") String uId,@Param("rType") String rType);
 }

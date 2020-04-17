@@ -253,4 +253,28 @@
       #{cFlag,jdbcType=VARCHAR}
       )
   </insert>
+  <select id="selectRelationCourse" resultMap="course_content_page">
+    SELECT
+	c.*,
+	r.file as fileUrl,
+	cc.course_content as content,
+	su.su_uuid as suId,
+	su.su_name as suName
+    FROM
+	course c
+	LEFT JOIN sys_resources r ON c.c_sr_id = r.id
+	left join course_content cc on c.c_id = cc.course_id
+	left join sys_user su on c.c_su_id = su.su_id
+    WHERE
+	c.c_id in (
+	SELECT relation_id from relation where user_id = #{uId} and relation_type = #{rType}
+	)
+	ORDER BY
+	c.c_id DESC
+	LIMIT #{bNumber},
+	#{eNumber}
+  </select>
+  <select id="getUserCourseCount" resultType="integer">
+    SELECT count(1) from relation where user_id = #{uId} and relation_type = #{rType}
+  </select>
 </mapper>
