@@ -5,6 +5,8 @@ import com.xue.bean.CourseContent;
 import com.xue.mapper.CourseContentMapper;
 import com.xue.mapper.CourseMapper;
 import com.xue.service.CourseService;
+import com.xue.service.ResourcesService;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,6 +28,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private CourseContentMapper contentMapper;
+
+    @Autowired
+    private ResourcesService resourcesService;
 
     /**
      * @Description 获取首页需要展示的课程列表数据信息
@@ -58,7 +63,11 @@ public class CourseServiceImpl implements CourseService {
      * @Description 添加课程信息数据
      * @Date 2020/4/13 15:46
      **/
-    public String addCourse(Course course){
+    public String addCourse(Course course,String msg){
+        if(StringUtils.isNotBlank(msg)){
+            int z = resourcesService.insertResourcesId(msg, course.getcName(), "3");
+            course.setcSrId(z);
+        }
         course.setcUptime(DateUtils.format(new Date(),"yyyy-MM-dd HH:mm"));
         int i = courseMapper.insertForId(course);
         //插入描述表

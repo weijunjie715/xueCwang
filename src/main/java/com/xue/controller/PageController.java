@@ -266,6 +266,27 @@ public class PageController extends BaseController {
         return "";
     }
 
+    /**
+     * @Description 进入添加课程页面
+     * @Date 2020/4/17 10:47
+     **/
+    @RequestMapping("toAddCoursePage")
+    public String toAddCoursePage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/addCoursePage";
+    }
+
+    /**
+     * @Description 进入布置作业页面
+     * @Date 2020/4/17 15:33
+     **/
+    @RequestMapping("toAddWorkPage")
+    public String toAddWorkPage(){
+        return "student/addWorkPage";
+    }
+
+
     @RequestMapping("tocccc")
     public String toUpdateUserInfoPage1(){
         return "student/userInfoUpdatePage";

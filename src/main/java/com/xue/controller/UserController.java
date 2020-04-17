@@ -126,61 +126,6 @@ public class UserController extends BaseController {
     }
 
     /**
-     * @Description 保存上传头像图片
-     * @Date 2020/3/31 15:37
-     **/
-    public String saveFile(HttpServletResponse response, HttpSession session,
-                           HttpServletRequest request,MultipartFile file,String uuid) throws Exception{
-        request.setCharacterEncoding("UTF-8");
-        String filePath = "";
-        //定义文件保存的位置   放到 tomcat 下的 upload 文件夹中的 images 文件夹中
-        String targetPath = "upload"+File.separator + "images";
-
-        String path = request.getSession().getServletContext().getRealPath("/");
-
-        //获取 url + 端口号 + 项目名
-        String indexPath = request.getContextPath();
-        String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+indexPath+"/";
-        System.out.println(" basePath ："  + basePath);
-        response.setHeader("Pragma","No-cache");
-        response.setHeader("Cache-Control","no-cache");
-        //获取源文件文件名
-        String oldName= file.getOriginalFilename();
-        //获取源文件名后缀
-        String prefixName = FilenameUtils.getExtension(oldName);
-        String newName = uuid + "." + prefixName;
-        int fileMaxSize = 1024000;
-        //判断上传大小不得超过 1M
-        if(file.getSize()>fileMaxSize){
-            return "300";
-        }else if(prefixName.equalsIgnoreCase("jpg")
-                || prefixName.equalsIgnoreCase("png")
-                || prefixName.equalsIgnoreCase("jpeg")
-                || prefixName.equalsIgnoreCase("gif")){
-            //判断上传格式
-            //定义新的文件名，当前系统时间+随机数+固定后缀，
-            //RandomUtils需要引入jar文件commons-lang.jar
-            //String fileName = System.currentTimeMillis()+RandomUtils.nextInt(1000000)+"personer.jpg";
-            //创建新的文件，用于接收用户上传的文件流
-            File targetFile = new File(path + targetPath, newName);
-            if(!targetFile.exists()){
-                targetFile.mkdirs();
-            }
-            //将上传的文件保存
-            try {
-                file.transferTo(targetFile);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return "301";
-            }
-            filePath = basePath + File.separator + targetPath + File.separator + newName;
-            return filePath;
-        }else{
-            return "302";
-        }
-    }
-
-    /**
      * @Description 获取用户列表信息
      * @Date 2020/4/9 14:16
      **/

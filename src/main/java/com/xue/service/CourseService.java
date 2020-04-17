@@ -17,7 +17,7 @@ public interface CourseService {
 
     public Integer getCourseCount(Course course);
 
-    public String addCourse(Course course);
+    public String addCourse(Course course,String msg);
 
     public Integer getUserCourseCount(String uId,String courseType,String rType);
 

@@ -38,6 +38,7 @@
 
 </head>
 <body ontouchstart>
+<c:import url="backLoli.jsp"></c:import>
 <div class="sideBox">
 
 </div>

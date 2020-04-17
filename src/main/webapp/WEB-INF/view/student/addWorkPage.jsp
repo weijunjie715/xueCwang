@@ -34,7 +34,7 @@
         }
 
     </style>
-    <title>学C网注册</title>
+    <title>发布作业</title>
 
 </head>
 <body ontouchstart>
@@ -50,6 +50,7 @@
                 <a class="logo navbar-logo hidden-xs" href="/toIndex">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+                <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -101,80 +102,17 @@
             </div>
             <div id="clazzs">
                 <div class="mainBody">
-                    <h3>账户注册</h3>
+                    <h3>发布作业</h3>
                     <div class="panel-body" style="margin-left: -20%;">
                         <form action="" method="post" class="form form-horizontal responsive" id="demoform">
                             <div class="row cl">
-                                <label class="form-label col-xs-3">邮箱：</label>
+                                <label class="form-label col-xs-3">课程标题：</label>
                                 <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" placeholder="@" name="suEmail" id="email" autocomplete="off">
+                                    <input type="text" class="input-text" placeholder="请输入课程标题" name="cName" id="cName" autocomplete="off">
                                 </div>
                             </div>
                             <div class="row cl">
-                                <label class="form-label col-xs-3">用户名：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="suCode" id="username">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">手机：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" autocomplete="off" placeholder="手机" name="suPhone" id="telephone">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">密码：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="suPwd" id="password">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">密码验证：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password2" id="password2">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">角色：</label>
-                                <div class="formControls skin-minimal col-xs-5">
-                                    <div class="radio-box">
-                                        <input type="radio" id="role-1" value="0" name="suRole">
-                                        <label for="sex-1">教师</label>
-                                    </div>
-                                    <div class="radio-box">
-                                        <input type="radio" id="role-2" value="1" name="suRole">
-                                        <label for="sex-2">学生</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">性别：</label>
-                                <div class="formControls skin-minimal col-xs-5">
-                                    <div class="radio-box">
-                                        <input type="radio" id="sex-1" value="1" name="suSex">
-                                        <label for="sex-1">男</label>
-                                    </div>
-                                    <div class="radio-box">
-                                        <input type="radio" id="sex-2" value="0" name="suSex">
-                                        <label for="sex-2">女</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">昵称：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" value="" autocomplete="off" id="realName" name="suName">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">出生日期：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" value="" autocomplete="off" id="datetimepicker" name="suBirthday">
-                                </div>
-                            </div>
-
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">头像选择：</label>
+                                <label class="form-label col-xs-3">课程图片：</label>
                                 <div class="formControls col-xs-8">
 											<span class="btn-upload form-group">
 											<input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly style="width:200px">
@@ -184,15 +122,14 @@
                                 </div>
                             </div>
                             <div class="row cl">
-                                <label class="form-label col-xs-3">个人描述：</label>
-                                <div class="formControls col-xs-8">
-                                    <textarea cols="" rows="" class="textarea" name="suReason" id="beizhu"  placeholder="说点什么...最少输入10个字符"></textarea>
+                                <label class="form-label col-xs-3">课程内容：</label>
+                                <div class="col-xs-8 modal-body" style="height: 600px;">
+                                    <div id="editor" style="height: 480px;"></div>
                                 </div>
                             </div>
-
                             <div class="row cl">
                                 <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="button" onclick="updateImg(this.form)" value="&nbsp;&nbsp;注册&nbsp;&nbsp;">
+                                    <input class="btn btn-primary" type="button" onclick="updateImg(this.form)" value="&nbsp;&nbsp;发布&nbsp;&nbsp;">
                                 </div>
                             </div>
                         </form>
@@ -252,11 +189,192 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.config.js"></script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.all.min.js"> </script>
+<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
+<script>
+    UE.getEditor('editor',{
+        initialFrameHeight:500,//设置编辑器高度
+        scaleEnabled:true//设置不自动调整高度
+        //scaleEnabled {Boolean} [默认值：false]//是否可以拉伸长高，(设置true开启时，自动长高失效)
+    });
+    function showDeit() {
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }
+        clearLocalData();
+        var zz = '';
+        // UE.getEditor('editor').setContent('');
+        UE.getEditor('editor').setContent(zz);
+        $("#editorDiv").modal("show");
+        // UE.getEditor('editor').setShow();
+    }
+    function isFocus(e){
+        alert(UE.getEditor('editor').isFocus());
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function setblur(e){
+        UE.getEditor('editor').blur();
+        UE.dom.domUtils.preventDefault(e)
+    }
+    function insertHtml() {
+        var value = prompt('插入html代码', '');
+        UE.getEditor('editor').execCommand('insertHtml', value)
+    }
+    function createEditor() {
+        enableBtn();
+        UE.getEditor('editor');
+    }
+    function getAllHtml() {
+        alert(UE.getEditor('editor').getAllHtml())
+    }
+    function getContent() {
+        var arr = [];
+        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getContent());
+        alert(arr.join("\n"));
+    }
+    //提交按钮点击操作
+    function alertMsg() {
+        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
+        var userId = $("#userHiddenId").val();
+        var cName = $("#courseName").val();
+        if(cName.length == 0){
+            alert("请输入问题标题！");
+            return;
+        }
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            // var beizhu = $("#beizhu").val();
+            var beizhu = UE.getEditor('editor').getContent();
+            $.ajax({
+                url : "/course/addCourse",
+                type : "post",
+                data : {
+                    cSuId:userId,
+                    courseContent:beizhu,
+                    cFlag:'2',
+                    cName:cName
+                },
+                success : function(data) {
+                    debugger;
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("发布成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("发布失败，联系管理员");
+                    }
+                }
+            });
+        }
+
+    }
+    function getPlainTxt() {
+        var arr = [];
+        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
+        arr.push("内容为：");
+        arr.push(UE.getEditor('editor').getPlainTxt());
+        alert(arr.join('\n'))
+    }
+    function setContent(isAppendTo) {
+        var arr = [];
+        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
+        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
+        alert(arr.join("\n"));
+    }
+    function setDisabled() {
+        UE.getEditor('editor').setDisabled('fullscreen');
+        disableBtn("enable");
+    }
+
+    function setEnabled() {
+        UE.getEditor('editor').setEnabled();
+        enableBtn();
+    }
+
+    function getText() {
+        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
+        var range = UE.getEditor('editor').selection.getRange();
+        range.select();
+        var txt = UE.getEditor('editor').selection.getText();
+        alert(txt)
+    }
+
+    function getContentTxt() {
+        var arr = [];
+        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
+        arr.push("编辑器的纯文本内容为：");
+        arr.push(UE.getEditor('editor').getContentTxt());
+        alert(arr.join("\n"));
+    }
+    function hasContent() {
+        var arr = [];
+        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
+        arr.push("判断结果为：");
+        arr.push(UE.getEditor('editor').hasContents());
+        alert(arr.join("\n"));
+    }
+    function setFocus() {
+        UE.getEditor('editor').focus();
+    }
+    function deleteEditor() {
+        disableBtn();
+        UE.getEditor('editor').destroy();
+    }
+    function disableBtn(str) {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            if (btn.id == str) {
+                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+            } else {
+                btn.setAttribute("disabled", "true");
+            }
+        }
+    }
+    function enableBtn() {
+        var div = document.getElementById('btns');
+        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
+        for (var i = 0, btn; btn = btns[i++];) {
+            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
+        }
+    }
+
+    function getLocalData () {
+        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
+    }
+
+    function clearLocalData () {
+        UE.getEditor('editor').execCommand( "clearlocaldata" );
+    }
+</script>
 <script>
     /*注册数据提交*/
     function updateImg(x) {
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }
+        if($("#cName").val().length == 0){
+            alert("课程标题不允许为空！");
+            return;
+        }
+
         var form = new FormData(x);
-        var url = "/user/userRegister";
+        //获取
+        var beizhu = UE.getEditor('editor').getContent();
+        form.append('courseContent',beizhu);
+        form.append('cFlag','1');
+        var url = "/course/addCourse";
         $.ajax({
             url:url,
             data:form,
@@ -309,91 +427,6 @@
     });
     //轮播图
     $(function(){
-        //邮箱提示
-        $("#email").emailsuggest();
-
-        //checkbox 美化
-        $('.skin-minimal input').iCheck({
-            checkboxClass: 'icheckbox-blue',
-            radioClass: 'iradio-blue',
-            increaseArea: '20%'
-        });
-
-        //日期插件
-        $("#datetimepicker").datetimepicker({
-            format: 'yyyy-mm-dd',
-            minView: "month",
-            todayBtn:  1,
-            autoclose: 1,
-            endDate : new Date()
-        }).on('hide',function(e) {
-            //此处可以触发日期校验。
-        });
-
-        /*+1 -1效果*/
-        $("#spinner-demo").Huispinner({
-            value:1,
-            minValue:1,
-            maxValue:99,
-            dis:1
-        });
-
-        $(".textarea").Huitextarealength({
-            minlength:10,
-            maxlength:200.
-        });
-
-        $("#demoform").validate({
-            rules:{
-                email:{
-                    required:true,
-                    email:true,
-                },
-                username:{
-                    required:true,
-                    minlength:4,
-                    maxlength:16
-                },
-                telephone:{
-                    required:true,
-                    isMobile:true,
-                },
-                password:{
-                    required:true,
-                    isPwd:true,
-                },
-                password2:{
-                    required:true,
-                    equalTo: "#password"
-                },
-                sex:{
-                    required:true,
-                },
-                datetimepicker:{
-                    required:true,
-                },
-                checkbox2:{
-                    required:true,
-                },
-                city:{
-                    required:true,
-                },
-                website:{
-                    required:true,
-                    url:true,
-                },
-                beizhu:{
-                    maxlength:500,
-                }
-            },
-            onkeyup:false,
-            focusCleanup:true,
-            success:"valid",
-            submitHandler:function(form){
-                $("#modal-shenqing-success").modal("show");
-                $(form).ajaxSubmit();
-            }
-        });
     });
     //弹窗
     function modaldemo(){

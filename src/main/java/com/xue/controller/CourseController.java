@@ -5,13 +5,19 @@ import com.xue.bean.Course;
 import com.xue.bean.SysUser;
 import com.xue.service.CourseService;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -83,14 +89,42 @@ public class CourseController extends BaseController {
         return JSONObject.toJSONString(res);
     }
 
+    /**
+     * @Description 课程讨论问题新增
+     * @Date 2020/4/17 13:58
+     **/
     @ResponseBody
     @RequestMapping("addCourse")
-    public String addCourse(Course course,HttpSession session){
+    public String addCourse(Course course,HttpServletResponse response,
+                            HttpSession session, HttpServletRequest request,
+                            @RequestParam(value="uploadfile",required=false)MultipartFile file) throws Exception{
         SysUser user = checkLogin(session);
         course.setcSuId(user.getSuId());
         course.setcAuthor(user.getSuName());
         JSONObject res = new JSONObject();
-        String s = courseService.addCourse(course);
+        request.setCharacterEncoding("UTF-8");
+        String msg = "";
+        String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
+        if(null != file && file.getSize() >0){
+            String s = saveFile(response, session, request, file, uuid);
+            if("300".equals(s)){
+                msg = "选择图片过大，请重新选择";
+                res.put("msg",msg);
+                return JSONObject.toJSONString(res);
+            }else if("301".equals(s)){
+                msg = "保存文件失败";
+                res.put("msg",msg);
+                return JSONObject.toJSONString(res);
+            }else if("302".equals(s)){
+                msg = "文件格式异常";
+                res.put("msg",msg);
+                return JSONObject.toJSONString(res);
+            }else{
+                msg = s;
+            }
+        }
+        //执行用户信息入库操作
+        String s = courseService.addCourse(course,msg);
         res.put("msg",s);
         res.put("code","200");
         return JSONObject.toJSONString(res);
