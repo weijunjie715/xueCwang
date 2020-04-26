@@ -282,8 +282,18 @@ public class PageController extends BaseController {
      * @Date 2020/4/17 15:33
      **/
     @RequestMapping("toAddWorkPage")
-    public String toAddWorkPage(){
-        return "student/addWorkPage";
+    public String toAddWorkPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        //获取当前教师对应的课程数据信息
+        List<Course> courseList = courseService.getCourseForIndex(0, 20, "1", sysUser.getSuId() + "");
+        if(null == courseList || courseList.size() == 0){
+            return "404";
+        }else{
+            model.addAttribute("courseList",courseList);
+            return "student/addWorkPage";
+        }
+
     }
 
     @RequestMapping("tocccc")

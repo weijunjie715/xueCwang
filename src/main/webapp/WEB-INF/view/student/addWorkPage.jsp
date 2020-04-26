@@ -106,23 +106,25 @@
                     <div class="panel-body" style="margin-left: -20%;">
                         <form action="" method="post" class="form form-horizontal responsive" id="demoform">
                             <div class="row cl">
-                                <label class="form-label col-xs-3">课程标题：</label>
+                                <label class="form-label col-xs-3">课程选择：</label>
+                                <div class="formControls col-xs-8">
+                                    <span class="select-box">
+                                      <select class="select" size="1" name="demo1">
+                                          <c:forEach var="${courseList}" items="c">
+                                              <option value="${c.cId}">${c.cName}</option>
+                                          </c:forEach>
+                                      </select>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="row cl">
+                                <label class="form-label col-xs-3">作业名称：</label>
                                 <div class="formControls col-xs-8">
                                     <input type="text" class="input-text" placeholder="请输入课程标题" name="cName" id="cName" autocomplete="off">
                                 </div>
                             </div>
                             <div class="row cl">
-                                <label class="form-label col-xs-3">课程图片：</label>
-                                <div class="formControls col-xs-8">
-											<span class="btn-upload form-group">
-											<input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly style="width:200px">
-											<a href="javascript:void(0);" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-											<input type="file" multiple name="uploadfile" class="input-file">
-											</span>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">课程内容：</label>
+                                <label class="form-label col-xs-3">作业内容：</label>
                                 <div class="col-xs-8 modal-body" style="height: 600px;">
                                     <div id="editor" style="height: 480px;"></div>
                                 </div>

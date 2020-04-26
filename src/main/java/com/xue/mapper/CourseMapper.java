@@ -33,4 +33,5 @@ public interface CourseMapper {
                                       @Param("uId") String uId,@Param("rType") String rType);
 
     int getUserCourseCount(@Param("uId") String uId,@Param("rType") String rType);
+
 }

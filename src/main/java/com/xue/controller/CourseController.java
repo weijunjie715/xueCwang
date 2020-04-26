@@ -78,7 +78,6 @@ public class CourseController extends BaseController {
             courseList = courseService.getCourseForIndex((curr-1) * limit, limit,type,uid);
             courseCount = courseService.getCourseCount(course);
         }else if("2".equals(tag)){
-
             //用户关注课程
             courseList = courseService.getUserCourse((curr-1) * limit, limit,user.getSuId()+"",null,"2");
             courseCount = courseService.getUserCourseCount(user.getSuId()+"",null,"2");
@@ -125,6 +124,25 @@ public class CourseController extends BaseController {
         }
         //执行用户信息入库操作
         String s = courseService.addCourse(course,msg);
+        res.put("msg",s);
+        res.put("code","200");
+        return JSONObject.toJSONString(res);
+    }
+
+    /**
+     * @Description 课程讨论问题新增
+     * @Date 2020/4/17 13:58
+     **/
+    @ResponseBody
+    @RequestMapping("addBbs")
+    public String addBbs(Course course,HttpServletResponse response,
+                            HttpSession session, HttpServletRequest request) throws Exception{
+        SysUser user = checkLogin(session);
+        course.setcSuId(user.getSuId());
+        course.setcAuthor(user.getSuName());
+        JSONObject res = new JSONObject();
+        //执行用户信息入库操作
+        String s = courseService.addCourse(course,"");
         res.put("msg",s);
         res.put("code","200");
         return JSONObject.toJSONString(res);

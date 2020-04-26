@@ -2,6 +2,7 @@ package com.xue.service.impl;
 
 import com.xue.bean.Relation;
 import com.xue.bean.SysUser;
+import com.xue.mapper.CourseMapper;
 import com.xue.mapper.RelationMapper;
 import com.xue.mapper.SysUserMapper;
 import com.xue.service.RelationService;
@@ -26,6 +27,9 @@ public class RelationServiceImpl implements RelationService {
     @Autowired
     private SysUserMapper userMapper;
 
+    @Autowired
+    private CourseMapper courseMapper;
+
 
     public List<Relation> getRelation(){
         return null;
@@ -38,14 +42,6 @@ public class RelationServiceImpl implements RelationService {
     public List<SysUser> getUserRelation(Integer curr,Integer limit,SysUser sysUser){
         List<SysUser> sysUsers = userMapper.selectSysUsersByUid(curr, limit, "1", sysUser.getSuId() + "");
         return sysUsers;
-    }
-
-    /**
-     * @Description 获取用户课程列表
-     * @Date 2020/4/9 16:59
-     **/
-    public void getCourseRelation(Integer curr,Integer limit,SysUser sysUser){
-
     }
 
     /**

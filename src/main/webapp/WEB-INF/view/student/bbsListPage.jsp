@@ -253,7 +253,7 @@
             // var beizhu = $("#beizhu").val();
             var beizhu = UE.getEditor('editor').getContent();
             $.ajax({
-                url : "/course/addCourse",
+                url : "/course/addBbs",
                 type : "post",
                 data : {
                     cSuId:userId,
