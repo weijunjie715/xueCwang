@@ -23,4 +23,8 @@ public interface RelationMapper {
                             @Param("relationId") Integer relationId,
                             @Param("type") String type);
 
+    List<Relation> selectRelations(@Param("userId") Integer userId,
+                            @Param("relationId") Integer relationId,
+                            @Param("type") String type);
+
 }

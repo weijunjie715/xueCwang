@@ -136,4 +136,20 @@
 	AND relation_type = #{type}
 	LIMIT 0,1
   </select>
+  <select id="selectRelations" resultMap="BaseResultMap">
+    SELECT
+	*
+    FROM
+	relation
+    WHERE 1=1
+    <if test="userId != null">
+      and user_id = #{userId}
+    </if>
+    <if test="relationId != null">
+      AND relation_id = #{relationId}
+    </if>
+    <if test="type != null">
+      AND relation_type = #{type}
+    </if>
+  </select>
 </mapper>

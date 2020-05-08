@@ -62,6 +62,11 @@ public class RelationServiceImpl implements RelationService {
         relationMapper.insert(relation);
     }
 
+    @Override
+    public void getCourseRelation(Integer curr, Integer limit, SysUser sysUser) {
+
+    }
+
     /**
      * @Description ID关系验证
      * @Date 2020/4/14 11:49

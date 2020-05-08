@@ -1,6 +1,9 @@
 package com.xue.mapper;
 
+import com.xue.bean.AllMyWorkInfo;
 import com.xue.bean.TMyWork;
+
+import java.util.List;
 
 public interface TMyWorkMapper {
     int deleteByPrimaryKey(Integer id);
@@ -14,4 +17,6 @@ public interface TMyWorkMapper {
     int updateByPrimaryKeySelective(TMyWork record);
 
     int updateByPrimaryKey(TMyWork record);
+
+    List<AllMyWorkInfo> getAllMyWork(String userId);
 }

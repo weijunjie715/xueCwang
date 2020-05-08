@@ -125,4 +125,13 @@
       w_uptime = #{wUptime,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <!--添加一条记录 返回ID-->
+  <insert id="insertForId" parameterType="com.xue.bean.TWork" useGeneratedKeys="true" keyProperty="id">
+  insert into t_work ( c_id, u_id,
+      sr_id, w_flag, w_name,
+      w_comment, w_uptime)
+    values (#{cId,jdbcType=INTEGER}, #{uId,jdbcType=INTEGER},
+      #{srId,jdbcType=INTEGER}, #{wFlag,jdbcType=VARCHAR}, #{wName,jdbcType=VARCHAR},
+      #{wComment,jdbcType=VARCHAR}, #{wUptime,jdbcType=VARCHAR})
+  </insert>
 </mapper>

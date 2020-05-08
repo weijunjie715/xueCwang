@@ -109,8 +109,8 @@
                                 <label class="form-label col-xs-3">课程选择：</label>
                                 <div class="formControls col-xs-8">
                                     <span class="select-box">
-                                      <select class="select" size="1" name="demo1">
-                                          <c:forEach var="${courseList}" items="c">
+                                      <select class="select" size="1" name="cId">
+                                          <c:forEach var="c" items="${courseList}" varStatus="1" >
                                               <option value="${c.cId}">${c.cName}</option>
                                           </c:forEach>
                                       </select>
@@ -120,7 +120,7 @@
                             <div class="row cl">
                                 <label class="form-label col-xs-3">作业名称：</label>
                                 <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" placeholder="请输入课程标题" name="cName" id="cName" autocomplete="off">
+                                    <input type="text" class="input-text" placeholder="请输入课程标题" name="wName" id="cName" autocomplete="off">
                                 </div>
                             </div>
                             <div class="row cl">
@@ -367,16 +367,16 @@
             return;
         }
         if($("#cName").val().length == 0){
-            alert("课程标题不允许为空！");
+            alert("作业标题不允许为空！");
             return;
         }
 
         var form = new FormData(x);
         //获取
         var beizhu = UE.getEditor('editor').getContent();
-        form.append('courseContent',beizhu);
-        form.append('cFlag','1');
-        var url = "/course/addCourse";
+        form.append('wComment',beizhu);
+        form.append('wFlag','1');
+        var url = "/work/addWork";
         $.ajax({
             url:url,
             data:form,
@@ -385,7 +385,7 @@
             contentType:false,
             success : function(data){
                 if(data.status == true){
-                    alert("注册成功，返回主页登陆");
+                    alert("发布成功");
                     window.location = "/toIndex";
                 }else{
                     alert(data.msg);

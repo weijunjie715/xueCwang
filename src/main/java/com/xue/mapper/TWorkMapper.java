@@ -14,4 +14,6 @@ public interface TWorkMapper {
     int updateByPrimaryKeySelective(TWork record);
 
     int updateByPrimaryKey(TWork record);
+
+    int insertForId(TWork record);
 }
