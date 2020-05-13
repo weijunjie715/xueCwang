@@ -2,6 +2,7 @@ package com.xue.mapper;
 
 import com.xue.bean.AllMyWorkInfo;
 import com.xue.bean.TMyWork;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -18,5 +19,16 @@ public interface TMyWorkMapper {
 
     int updateByPrimaryKey(TMyWork record);
 
-    List<AllMyWorkInfo> getAllMyWork(String userId);
+    List<AllMyWorkInfo> getSWorkList(@Param("userId") String userId,
+                                     @Param("bNumber") Integer bNumber,
+                                     @Param("eNumber") Integer eNumber);
+
+    int getSWorkCount(@Param("userId") String userId);
+
+    List<AllMyWorkInfo> getSWorkListByWId(@Param("wId") String wId,
+                                     @Param("bNumber") Integer bNumber,
+                                     @Param("eNumber") Integer eNumber);
+
+    int getSWorkCountByWId(@Param("wId") String wId);
+
 }

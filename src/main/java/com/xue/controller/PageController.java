@@ -95,6 +95,11 @@ public class PageController extends BaseController {
                     model.addAttribute("relation","已添加");
                 }
             }
+            //添加课程信息列表
+            List<Course> courseList = courseService.getCourseForIndex(0, 10,"1",sysUser.getSuId()+"");
+            if(courseList.size()>0){
+                model.addAttribute("courseList",courseList);
+            }
             return "student/userInfoPage";
         }
 
@@ -294,6 +299,28 @@ public class PageController extends BaseController {
             return "student/addWorkPage";
         }
 
+    }
+
+    /**
+     * @Description 教师访问作业列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toTWorkListPage")
+    public String toTWorkListPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/tWorkListPage";
+    }
+
+    /**
+     * @Description 学生访问作业列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toSWorkListPage")
+    public String toSWorkListPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        return "student/sWorkListPage";
     }
 
     @RequestMapping("tocccc")

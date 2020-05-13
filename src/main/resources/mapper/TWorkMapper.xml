@@ -134,4 +134,20 @@
       #{srId,jdbcType=INTEGER}, #{wFlag,jdbcType=VARCHAR}, #{wName,jdbcType=VARCHAR},
       #{wComment,jdbcType=VARCHAR}, #{wUptime,jdbcType=VARCHAR})
   </insert>
+
+  <!--获取教师发布的作业列表数据-->
+  <select id="getTWorkList" resultMap="BaseResultMap">
+    SELECT * from t_work where u_id = #{userId}
+    order by w_uptime desc
+	LIMIT #{bNumber},
+	#{eNumber}
+  </select>
+  <select id="getTWorkCount" resultType="integer">
+    SELECT
+	count(1)
+    FROM
+	t_work
+	WHERE
+	u_id = #{userId}
+  </select>
 </mapper>

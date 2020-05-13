@@ -157,19 +157,20 @@
                             <td>个人描述</td>
                             <td>${userInfoShow.suReason}</td>
                         </tr>
-                        <tr>
-                            <td>他的课程</td>
-                            <td>
-                                <ul>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                    <li><a>第一篇文章</a></li>
-                                </ul>
+                        <c:if test="${not empty courseList}">
+                            <tr>
+                                <td>他的课程</td>
+                                <td>
+                                    <ul>
+                                        <c:forEach items="${courseList}" var="course" varStatus="i">
+                                            <li><a href="/showCourseInfo?courseId=${course.cId}">${course.cName}</a></li>
+                                        </c:forEach>
+                                    </ul>
 
-                            </td>
-                        </tr>
+                                </td>
+                            </tr>
+                        </c:if>
+
                     </table>
                 </div>
             </div>

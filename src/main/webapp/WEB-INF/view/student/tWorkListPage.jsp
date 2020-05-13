@@ -30,11 +30,13 @@
         /* 星星评分大小 */
         .size-S img{width:16px;height:16px}
         .mainBody {
-            margin-left: 5%;
+            margin-left: 10%;
         }
-
+        .theTr{
+            height: 150px;
+        }
     </style>
-    <title>发布作业</title>
+    <title>我的问题</title>
 
 </head>
 <body ontouchstart>
@@ -100,43 +102,16 @@
                 <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
                 <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
             </div>
-            <div id="clazzs">
+            <div id="others">
                 <div class="mainBody">
-                    <h3>发布作业</h3>
-                    <div class="panel-body" style="margin-left: -20%;">
-                        <form action="" method="post" class="form form-horizontal responsive" id="demoform">
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">课程选择：</label>
-                                <div class="formControls col-xs-8">
-                                    <span class="select-box">
-                                      <select class="select" size="1" name="cId">
-                                          <c:forEach var="c" items="${courseList}" varStatus="1" >
-                                              <option value="${c.cId}">${c.cName}</option>
-                                          </c:forEach>
-                                      </select>
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">作业名称：</label>
-                                <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" placeholder="请输入课程标题" name="wName" id="cName" autocomplete="off">
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <label class="form-label col-xs-3">作业内容：</label>
-                                <div class="col-xs-8 modal-body" style="height: 600px;">
-                                    <div id="editor" style="height: 480px;"></div>
-                                </div>
-                            </div>
-                            <div class="row cl">
-                                <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="button" onclick="updateImg(this.form)" value="&nbsp;&nbsp;发布&nbsp;&nbsp;">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <h3>我的问题
+                        </h3>
+                    <table class="table table-border" id="bbsList">
+
+                    </table>
+                    <div class="themain" id="coursePageDiv"></div>
                 </div>
+                <div style="clear:both;"></div>
             </div>
         </div>
         <footer class="footer mt-20" style="margin-top: 60px;">
@@ -161,11 +136,7 @@
 <script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.all.min.js"> </script>
 <script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
 <script>
-    UE.getEditor('editor',{
-        initialFrameHeight:500,//设置编辑器高度
-        scaleEnabled:true//设置不自动调整高度
-        //scaleEnabled {Boolean} [默认值：false]//是否可以拉伸长高，(设置true开启时，自动长高失效)
-    });
+    UE.getEditor('editor').setHide();
     function showDeit() {
         var userId = $("#userHiddenId").val();
         if(userId.length == 0){
@@ -324,45 +295,58 @@
         UE.getEditor('editor').execCommand( "clearlocaldata" );
     }
 </script>
-<script>
-    /*注册数据提交*/
-    function updateImg(x) {
-        var userId = $("#userHiddenId").val();
-        if(userId.length == 0){
-            $("#modal-demo").modal("show");
-            return;
-        }
-        if($("#cName").val().length == 0){
-            alert("作业标题不允许为空！");
-            return;
-        }
 
-        var form = new FormData(x);
-        //获取
-        var beizhu = UE.getEditor('editor').getContent();
-        form.append('wComment',beizhu);
-        form.append('wFlag','1');
-        var url = "/work/addWork";
-        $.ajax({
-            url:url,
-            data:form,
-            type:'post',
-            processData:false,
-            contentType:false,
-            success : function(data){
-                var aa = data.msg;
-                if(aa == "success"){
-                    alert("发布成功");
-                    window.location = "/toIndex";
-                }else{
-                    alert(data.msg);
-                }
-            },
-            error : function(data){
-                alert("系统异常，联系管理员");
+<%--初始化分页插件数据信息--%>
+<script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
+<script>
+    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+        laypage({
+            limit:10,
+            cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
+            pages: res.pages, //通过后台拿到的总页数
+            curr: 1, //初始化当前页
+            jump: function(e){ //触发分页后的回调
+                console.log(e);
+                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
+                    var zz = res.content;
+                    var htmllet = "";
+                    $("#courseList").html(htmllet);
+                    createHtml(htmllet,zz,'bbsList');
+                });
+                $('body,html').animate({
+                        scrollTop: 0
+                    },
+                    500);
             }
         });
+        var zz = res.content;
+        var htmllet = "";
+        $("#courseList").html(htmllet);
+        createHtml(htmllet,zz,'bbsList');
+    });
+    function createHtml(htmllet,zz,id) {
+        for(var i = 0;i<zz.length;i++){
+            var z=i+1;
+            htmllet += '<tr class="theTr">\n' +
+                '                            <td>\n' +
+                '                                '+z+'\n' +
+                '                            </td>\n' +
+                '                            <td>\n' +
+                '                                <a href="/toBbsInfoPage?courseId='+zz[i].cId+'">'+zz[i].cName+'</a>\n' +
+                '                                <br/>\n' +
+                '                            </td>\n' +
+                '                            <td>\n' +
+                '                                '+zz[i].cUptime+'\n' +
+                '                            </td>\n' +
+                '                            <td>\n' +
+                '                                <a href="/showUserInfo?userId='+zz[i].userUid+'">'+zz[i].cAuthor+'</a>\n' +
+                '                            </td>\n' +
+                '                        </tr>';
+        }
+        $("#"+id).html(htmllet);
     }
+</script>
+<script>
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
@@ -381,8 +365,7 @@
                     if(aa == "success"){
                         $("#modal-demo").modal("hide");
                         //刷新当前页面
-                        //跳转首页
-                        window.location = "/toIndex";
+                        location.reload(true);
                     }else{
                         //弹出错误问题
                         alert("账号密码错误，登陆失败");
@@ -393,9 +376,6 @@
     });
     $(function() {
         $('.maskWraper').Huihover();
-    });
-    //轮播图
-    $(function(){
     });
     //弹窗
     function modaldemo(){

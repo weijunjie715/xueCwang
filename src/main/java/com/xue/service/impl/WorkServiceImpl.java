@@ -64,11 +64,40 @@ public class WorkServiceImpl implements WorkService {
     }
 
     /**
-     * @Description 获取我的作业列表
-     * @Author weijunjie
-     * @Date 2020/5/8 16:40
+     * @Description 获取学生作业列表数据
+     * @Date 2020/5/11 16:46
      **/
-    public List<AllMyWorkInfo> getAllMyWork(String userId){
-        return myWorkMapper.getAllMyWork(userId);
+    public List<AllMyWorkInfo> getSworkList(String uid,Integer bNumber,Integer eNumber){
+        return myWorkMapper.getSWorkList(uid,bNumber,eNumber);
     }
+
+    public Integer getSWorkCount(String uid){
+        return myWorkMapper.getSWorkCount(uid);
+    }
+
+    /**
+     * @Description 获取教师作业展示列表数据
+     * @Date 2020/5/11 16:59
+     **/
+    public List<TWork> getTworkList(String uid,Integer bNumber,Integer eNumber){
+        return workMapper.getTWorkList(uid,bNumber,eNumber);
+    }
+
+    public Integer getTWorkCount(String uid){
+        return workMapper.getTWorkCount(uid);
+    }
+
+    /**
+     * @Description 教师获取对应作业下的完成情况
+     * @Date 2020/5/12 10:40
+     **/
+    public List<AllMyWorkInfo> getWorkInfoByWId(String wId,Integer bNumber,Integer eNumber){
+        return myWorkMapper.getSWorkListByWId(wId,bNumber,eNumber);
+    }
+
+    public Integer getSWorkCountByWId(String wId){
+        return myWorkMapper.getSWorkCountByWId(wId);
+    }
+
+
 }

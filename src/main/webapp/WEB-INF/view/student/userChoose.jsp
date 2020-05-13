@@ -12,7 +12,7 @@
             <a href="/toMyBbsPage" >我的问题</a>
         </li>
         <li>
-            <a href="/toMyWork" >我的作业</a>
+            <a href="/toSWorkListPage" >我的作业</a>
         </li>
         <li>
             <a href="/toMyUserListPage" >我的好友</a>
@@ -32,7 +32,7 @@
             <a href="/toAddCoursePage" >课程发布</a>
         </li>
         <li>
-            <a href="/toWorkPage" >作业管理</a>
+            <a href="/toTWorkListPage" >作业管理</a>
         </li>
         <li>
             <a href="/toAddWorkPage" >作业发布</a>

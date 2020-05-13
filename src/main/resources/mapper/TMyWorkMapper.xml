@@ -154,7 +154,7 @@
     <result column="cName" jdbcType="INTEGER" property="cName" />
   </resultMap>
   <!--获取我的作业列表数据-->
-  <select id="getAllMyWork" resultMap="allMyWork">
+  <select id="getSWorkList" resultMap="allMyWork">
     SELECT
 	a.*,
 	c.c_id AS cId,
@@ -166,5 +166,38 @@
     WHERE
 	a.su_id = #{userId}
 	order by a.w_uptime desc
+	LIMIT #{bNumber},
+	#{eNumber}
+  </select>
+  <select id="getSWorkCount" resultType="integer">
+    SELECT
+	count(1)
+    FROM
+	t_my_work
+	WHERE
+	su_id = #{userId}
+  </select>
+  <select id="getSWorkListByWId" resultMap="allMyWork">
+    SELECT
+	a.*,
+	c.c_id AS cId,
+	c.c_name AS cName
+    FROM
+	t_my_work a
+	LEFT JOIN t_work b ON a.w_id = b.id
+	LEFT JOIN course c ON b.c_id = c.c_id
+    WHERE
+	a.w_id = #{wId}
+	order by a.w_uptime desc
+	LIMIT #{bNumber},
+	#{eNumber}
+  </select>
+  <select id="getSWorkCountByWId" resultType="integer">
+    SELECT
+	count(1)
+    FROM
+	t_my_work
+	WHERE
+	w_id = #{wId}
   </select>
 </mapper>

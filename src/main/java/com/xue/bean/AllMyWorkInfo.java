@@ -12,6 +12,26 @@ public class AllMyWorkInfo extends TMyWork {
 
     private String cName;
 
+    private String suName;
+
+    private String suUid;
+
+    public String getSuName() {
+        return suName;
+    }
+
+    public void setSuName(String suName) {
+        this.suName = suName;
+    }
+
+    public String getSuUid() {
+        return suUid;
+    }
+
+    public void setSuUid(String suUid) {
+        this.suUid = suUid;
+    }
+
     public String getcId() {
         return cId;
     }

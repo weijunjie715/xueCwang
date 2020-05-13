@@ -19,7 +19,7 @@ public class TMyWork implements Serializable {
 
     private String wUptime;
 
-    private String wScore;
+    private String wScore = "";
 
     private String wStatus;
 
