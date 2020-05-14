@@ -120,7 +120,6 @@ public class WorkController extends BaseController {
                                SysUser sysUser) throws Exception {
         Map<String,Object> result = new HashMap<>();
         result.put("status",false);
-
         return null;
     }
 }
