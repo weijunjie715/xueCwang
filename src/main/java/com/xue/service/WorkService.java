@@ -1,6 +1,7 @@
 package com.xue.service;
 
 import com.xue.bean.AllMyWorkInfo;
+import com.xue.bean.SysResources;
 import com.xue.bean.TWork;
 
 import java.util.List;
@@ -25,4 +26,7 @@ public interface WorkService {
 
     public Integer getSWorkCountByWId(String wId);
 
+    public String subMyWork(String fileUrl,String mwId,String fileType,String fileName);
+
+    public SysResources getResourcesByWId(String mwId);
 }

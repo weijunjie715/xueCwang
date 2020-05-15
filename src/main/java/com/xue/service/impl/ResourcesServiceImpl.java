@@ -46,12 +46,39 @@ public class ResourcesServiceImpl implements ResourcesService {
     }
 
     /**
+     * @Description 插入资源数据 返回id
+     * @Date 2020/3/31 17:27
+     **/
+    public int insertResourcesId(String fileUrl,String fileType,String fileName,String type){
+        try {
+            SysResources resources = new SysResources();
+            resources.setFlag(1);
+            resources.setFile(fileUrl);
+            resources.setSrName(fileName);
+            resources.setRemarks(fileType);
+            resources.setSrType(type);
+            resources.setSrIndex(getLastIndexByType(type));
+            int i = resourcesMapper.insertForId(resources);
+            return resources.getId();
+        }catch (Exception e){
+            e.printStackTrace();
+            return 0;
+        }
+
+    }
+
+
+    /**
      * @Description 获取类型图片的下标
      * @Date 2020/3/31 15:54
      **/
     public int getLastIndexByType(String type){
         int maxIndexByType = resourcesMapper.getMaxIndexByType(type);
         return maxIndexByType;
+    }
+
+    public SysResources getResourcesById(String id){
+        return resourcesMapper.selectByPrimaryKey(Integer.parseInt(id));
     }
 
 }

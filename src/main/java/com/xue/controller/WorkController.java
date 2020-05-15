@@ -2,6 +2,7 @@ package com.xue.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.xue.bean.AllMyWorkInfo;
+import com.xue.bean.SysResources;
 import com.xue.bean.SysUser;
 import com.xue.bean.TWork;
 import com.xue.service.WorkService;
@@ -113,13 +114,53 @@ public class WorkController extends BaseController {
      * @Date 2020/5/13 17:45
      **/
     @ResponseBody
-    @RequestMapping(value="addMyWork",method=RequestMethod.POST)
-    public String userRegister(HttpServletResponse response,
+    @RequestMapping(value="subMyWork",method=RequestMethod.POST)
+    public String subMyWork(HttpServletResponse response,
                                HttpSession session, HttpServletRequest request,
                                @RequestParam(value="workFile",required=false)MultipartFile file,
-                               SysUser sysUser) throws Exception {
+                               SysUser sysUser,String mwId) throws Exception {
         Map<String,Object> result = new HashMap<>();
         result.put("status",false);
-        return null;
+        if(file == null){
+            result.put("msg","未选择文件，上传失败");
+            return JSONObject.toJSONString(result);
+        }
+        //上传文件至服务器 保存获取文件路径
+        String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
+        String s = saveFile(response, session, request, file, uuid);
+        String msg = "";
+        if("300".equals(s)){
+            msg = "选择图片过大，请重新选择";
+            result.put("msg",msg);
+            return JSONObject.toJSONString(result);
+        }else if("301".equals(s)){
+            msg = "保存文件失败";
+            result.put("msg",msg);
+            return JSONObject.toJSONString(result);
+        }else if("302".equals(s)){
+            msg = "文件格式异常";
+            result.put("msg",msg);
+            return JSONObject.toJSONString(result);
+        }else{
+            msg = s;
+        }
+        //获取文件名 后缀信息  判断文件类型
+        String originalFilename = file.getOriginalFilename();
+        String suf = originalFilename.split("\\.")[1];
+        String fName = originalFilename.split("\\.")[0];
+        //进入提交作业方法
+        String s1 = workService.subMyWork(msg, mwId, suf, fName);
+        result.put("status",true);
+        result.put("msg","作业提交成功");
+        return JSONObject.toJSONString(result);
+    }
+
+    @RequestMapping(value = "testDow")
+    @ResponseBody
+    public void testDow(HttpServletResponse response,
+                        HttpSession session, HttpServletRequest request,String mwId) throws Exception{
+        //获取作业对应的资源文件数据
+        SysResources resources = workService.getResourcesByWId(mwId);
+        download(resources.getSrName()+"."+resources.getRemarks(),resources.getFile(),request,response);
     }
 }

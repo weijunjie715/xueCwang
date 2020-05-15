@@ -13,6 +13,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -131,6 +133,16 @@ public class BaseTest {
                 courseCommentMapper.insert(cc);
             }
 //        }
+    }
+
+    @Test
+    public void test222() throws Exception{
+
+        File file = new File("\\upload\\File\\20200515081256046.xlsx");
+        FileInputStream fileInputStream = new FileInputStream(file);
+
+        System.out.println(file);
+
     }
 
 }

@@ -106,6 +106,13 @@
                 <div class="mainBody">
                     <h3>我的作业
                         </h3>
+                    <%--<form id="fileToUp">
+                        <span class="btn-upload form-group">
+                          <input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a href="javascript:;" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i> 浏览文件</a>
+                          <input type="file" multiple name="workFile" class="input-file">
+                        </span>
+                        <input type="hidden" id="toUpId" name="mwId"/>
+                    </form>--%>
                     <table class="table table-border table-bordered table-hover" id="bbsList">
 
                     </table>
@@ -177,20 +184,23 @@
             var upBtn = '';
             if(zz[i].wStatus == "0"){
                 showStatus = '<span class="badge badge-danger radius">未提交</span>';
-                upBtn = '<form>' +
+                upBtn = '<form id="upFrom'+zz[i].id+'">' +
                     '<span class="btn-upload">\n' +
                     '  <input type="hidden" value="'+zz[i].id+'" name="mwId"/>\n' +
-                    '  <a href="javascript:void();" class="btn btn-primary radius btn-upload"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>\n' +
+                    '  <a href="javascript:void();"  class="btn btn-primary radius btn-upload"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>\n' +
                     '  <input type="file" multiple name="workFile" class="input-file">\n' +
                     '</span>' +
-                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="uploadMyWork(this.form)"> 提交</a>\n' +
+                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="uploadMyWork('+zz[i].id+')"> 提交</a>\n' +
                     '</form>';
             }else{
-                showStatus = '<span class="badge badge-success radius">已提交</span>';
-                upBtn = '<span class="btn-upload">\n' +
-                    '  <a href="javascript:void();" class="btn btn-primary radius"> 下载作业</a>\n' +
-                    '  <input type="file" multiple name="file_0" class="input-file">\n' +
-                    '</span>';
+                if(zz[i].wStatus == "1"){
+                    showStatus = '<span class="badge badge-success radius">已提交</span>';
+                }else{
+                    showStatus = '<span class="badge badge-success radius">已批改</span>';
+                }
+                upBtn = '<form action="/work/testDow??mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
+                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
+                    '</form>';
             }
             htmllet += '<tr>\n' +
                 '                            <td>'+zz[i].wName+'</td>\n' +
@@ -208,9 +218,15 @@
     $(function() {
         $('.maskWraper').Huihover();
     });
+    //下载查看我的作业
+    function dowMyWork(id){
+        $("#dowForm"+id).submit();
+    }
+    //上传提交作业
     function uploadMyWork(x) {
-        var form = new FormData(x);
-        var url = "/user/userRegister";
+        debugger;
+        var form = new FormData(document.getElementById("upFrom"+x));
+        var url = "/work/subMyWork";
         $.ajax({
             url:url,
             data:form,
@@ -219,8 +235,9 @@
             contentType:false,
             success : function(data){
                 if(data.status == true){
-                    alert("注册成功，返回主页登陆");
-                    window.location = "/toIndex";
+                    alert("作业提交成功");
+                    //刷新当前页面
+                    location.reload(true);
                 }else{
                     alert(data.msg);
                 }

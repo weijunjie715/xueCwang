@@ -1,12 +1,11 @@
 package com.xue.service.impl;
 
-import com.xue.bean.AllMyWorkInfo;
-import com.xue.bean.Relation;
-import com.xue.bean.TMyWork;
-import com.xue.bean.TWork;
+import com.xue.bean.*;
 import com.xue.mapper.RelationMapper;
+import com.xue.mapper.SysResourcesMapper;
 import com.xue.mapper.TMyWorkMapper;
 import com.xue.mapper.TWorkMapper;
+import com.xue.service.ResourcesService;
 import com.xue.service.WorkService;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +30,9 @@ public class WorkServiceImpl implements WorkService {
 
     @Autowired
     private TMyWorkMapper myWorkMapper;
+
+    @Autowired
+    private ResourcesService resourcesService;
 
     /**
      * @Description 布置添加作业
@@ -97,6 +99,29 @@ public class WorkServiceImpl implements WorkService {
 
     public Integer getSWorkCountByWId(String wId){
         return myWorkMapper.getSWorkCountByWId(wId);
+    }
+
+
+    public String subMyWork(String fileUrl,String mwId,String fileType,String fileName){
+        //资源文件入库操作
+        int i = resourcesService.insertResourcesId(fileUrl,fileType,fileName,"4");
+        //更新作业数据入库保存操作
+        TMyWork tMyWork = new TMyWork();
+        tMyWork.setId(Integer.parseInt(mwId));
+        tMyWork.setSrId(i);
+        tMyWork.setwStatus("1");
+        myWorkMapper.updateByPrimaryKeySelective(tMyWork);
+        return "success";
+    }
+
+    /**
+     * @Description 下载选中提交的作业数据
+     * @Date 2020/5/15 17:02
+     **/
+    public SysResources getResourcesByWId(String mwId){
+        TMyWork tMyWork = myWorkMapper.selectByPrimaryKey(Integer.parseInt(mwId));
+        SysResources resourcesById = resourcesService.getResourcesById(tMyWork.getSrId() + "");
+        return resourcesById;
     }
 
 

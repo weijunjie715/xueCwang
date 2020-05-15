@@ -3,7 +3,6 @@ package com.xue.controller;
 import com.alibaba.fastjson.JSONObject;
 import com.xue.bean.SysUser;
 import com.xue.service.UserService;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.tools.ant.util.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,8 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.File;
-import java.io.UnsupportedEncodingException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -91,7 +88,7 @@ public class UserController extends BaseController {
         String msg = "";
         String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
         if(null != file){
-            String s = saveFile(response, session, request, file, uuid);
+            String s = saveFileImg(response, session, request, file, uuid);
             if("300".equals(s)){
                 msg = "选择图片过大，请重新选择";
                 result.put("msg",msg);
@@ -168,7 +165,7 @@ public class UserController extends BaseController {
             String msg = null;
             String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
             if(null != file && file.getSize() >0){
-                String s = saveFile(response, session, request, file, uuid);
+                String s = saveFileImg(response, session, request, file, uuid);
                 if("300".equals(s)){
                     msg = "选择图片过大，请重新选择";
                     result.put("msg",msg);

@@ -105,7 +105,7 @@ public class CourseController extends BaseController {
         String msg = "";
         String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
         if(null != file && file.getSize() >0){
-            String s = saveFile(response, session, request, file, uuid);
+            String s = saveFileImg(response, session, request, file, uuid);
             if("300".equals(s)){
                 msg = "选择图片过大，请重新选择";
                 res.put("msg",msg);
