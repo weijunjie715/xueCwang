@@ -91,6 +91,24 @@ public class WorkController extends BaseController {
     }
 
     /**
+     * @Description 教师获取学生作业列表数据
+     * @Date 2020/5/11 14:50
+     **/
+    @RequestMapping("getTSWorkList")
+    @ResponseBody
+    public String getTSWorkList(HttpSession session, Integer curr, Integer limit, String wId){
+        SysUser user = checkLogin(session);
+        JSONObject res = new JSONObject();
+        curr = curr == null?1:curr;
+        String uid = user.getSuId()+"";
+        List<AllMyWorkInfo> sWorkList = workService.getWorkInfoByWId(wId, (curr - 1) * limit, limit);
+        Integer sWorkCount = workService.getSWorkCountByWId(wId);
+        res.put("content",sWorkList);
+        res.put("pages",getPageSize(sWorkCount,limit));
+        return JSONObject.toJSONString(res);
+    }
+
+    /**
      * @Description 获取学生教师作业列表
      * @Date 2020/5/11 14:50
      **/
@@ -156,11 +174,29 @@ public class WorkController extends BaseController {
     }
 
     @RequestMapping(value = "testDow")
-    @ResponseBody
     public void testDow(HttpServletResponse response,
                         HttpSession session, HttpServletRequest request,String mwId) throws Exception{
         //获取作业对应的资源文件数据
         SysResources resources = workService.getResourcesByWId(mwId);
         download(resources.getSrName()+"."+resources.getRemarks(),resources.getFile(),request,response);
     }
+
+    /**
+     * @Description 课程数据评分
+     * @Date 2020/5/15 17:45
+     **/
+    @RequestMapping(value = "setSc")
+    @ResponseBody
+    public String setSc(HttpServletResponse response,
+                        HttpSession session, HttpServletRequest request,String mwId,String sc) throws Exception{
+        //获取作业对应的资源文件数据
+        SysResources resources = workService.getResourcesByWId(mwId);
+        download(resources.getSrName()+"."+resources.getRemarks(),resources.getFile(),request,response);
+        Map<String,Object> result = new HashMap<>();
+        result.put("status",true);
+        result.put("msg","作业提交成功");
+        return JSONObject.toJSONString(result);
+    }
+
+
 }

@@ -104,9 +104,16 @@
             </div>
             <div id="others">
                 <div class="mainBody">
-                    <h3>我的问题
-                        </h3>
-                    <table class="table table-border" id="bbsList">
+                    <h3>我的作业
+                    </h3>
+                    <%--<form id="fileToUp">
+                        <span class="btn-upload form-group">
+                          <input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a href="javascript:;" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i> 浏览文件</a>
+                          <input type="file" multiple name="workFile" class="input-file">
+                        </span>
+                        <input type="hidden" id="toUpId" name="mwId"/>
+                    </form>--%>
+                    <table class="table table-border table-bordered table-hover" id="bbsList">
 
                     </table>
                     <div class="themain" id="coursePageDiv"></div>
@@ -132,174 +139,10 @@
         </footer>
     </div>
 </div>
-<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.config.js"></script>
-<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/ueditor.all.min.js"> </script>
-<script type="text/javascript" charset="utf-8" src="${staticPath}/utf8-jsp/lang/zh-cn/zh-cn.js"></script>
-<script>
-    UE.getEditor('editor').setHide();
-    function showDeit() {
-        var userId = $("#userHiddenId").val();
-        if(userId.length == 0){
-            $("#modal-demo").modal("show");
-            return;
-        }
-        clearLocalData();
-        var zz = '';
-        // UE.getEditor('editor').setContent('');
-        UE.getEditor('editor').setContent(zz);
-        $("#editorDiv").modal("show");
-        // UE.getEditor('editor').setShow();
-    }
-    function isFocus(e){
-        alert(UE.getEditor('editor').isFocus());
-        UE.dom.domUtils.preventDefault(e)
-    }
-    function setblur(e){
-        UE.getEditor('editor').blur();
-        UE.dom.domUtils.preventDefault(e)
-    }
-    function insertHtml() {
-        var value = prompt('插入html代码', '');
-        UE.getEditor('editor').execCommand('insertHtml', value)
-    }
-    function createEditor() {
-        enableBtn();
-        UE.getEditor('editor');
-    }
-    function getAllHtml() {
-        alert(UE.getEditor('editor').getAllHtml())
-    }
-    function getContent() {
-        var arr = [];
-        arr.push("使用editor.getContent()方法可以获得编辑器的内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getContent());
-        alert(arr.join("\n"));
-    }
-    //提交按钮点击操作
-    function alertMsg() {
-        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
-        var userId = $("#userHiddenId").val();
-        var cName = $("#courseName").val();
-        if(cName.length == 0){
-            alert("请输入问题标题！");
-            return;
-        }
-        if(userId.length == 0){
-            $("#modal-demo").modal("show");
-            return;
-        }else{
-            // var beizhu = $("#beizhu").val();
-            var beizhu = UE.getEditor('editor').getContent();
-            $.ajax({
-                url : "/course/addCourse",
-                type : "post",
-                data : {
-                    cSuId:userId,
-                    courseContent:beizhu,
-                    cFlag:'2',
-                    cName:cName
-                },
-                success : function(data) {
-                    debugger;
-                    var aa = data.msg
-                    if(aa == "success"){
-                        alert("发布成功");
-                        //刷新当前页面
-                        location.reload(true);
-                    }else{
-                        //弹出错误问题
-                        alert("发布失败，联系管理员");
-                    }
-                }
-            });
-        }
-
-    }
-    function getPlainTxt() {
-        var arr = [];
-        arr.push("使用editor.getPlainTxt()方法可以获得编辑器的带格式的纯文本内容");
-        arr.push("内容为：");
-        arr.push(UE.getEditor('editor').getPlainTxt());
-        alert(arr.join('\n'))
-    }
-    function setContent(isAppendTo) {
-        var arr = [];
-        arr.push("使用editor.setContent('欢迎使用ueditor')方法可以设置编辑器的内容");
-        UE.getEditor('editor').setContent('欢迎使用ueditor', isAppendTo);
-        alert(arr.join("\n"));
-    }
-    function setDisabled() {
-        UE.getEditor('editor').setDisabled('fullscreen');
-        disableBtn("enable");
-    }
-
-    function setEnabled() {
-        UE.getEditor('editor').setEnabled();
-        enableBtn();
-    }
-
-    function getText() {
-        //当你点击按钮时编辑区域已经失去了焦点，如果直接用getText将不会得到内容，所以要在选回来，然后取得内容
-        var range = UE.getEditor('editor').selection.getRange();
-        range.select();
-        var txt = UE.getEditor('editor').selection.getText();
-        alert(txt)
-    }
-
-    function getContentTxt() {
-        var arr = [];
-        arr.push("使用editor.getContentTxt()方法可以获得编辑器的纯文本内容");
-        arr.push("编辑器的纯文本内容为：");
-        arr.push(UE.getEditor('editor').getContentTxt());
-        alert(arr.join("\n"));
-    }
-    function hasContent() {
-        var arr = [];
-        arr.push("使用editor.hasContents()方法判断编辑器里是否有内容");
-        arr.push("判断结果为：");
-        arr.push(UE.getEditor('editor').hasContents());
-        alert(arr.join("\n"));
-    }
-    function setFocus() {
-        UE.getEditor('editor').focus();
-    }
-    function deleteEditor() {
-        disableBtn();
-        UE.getEditor('editor').destroy();
-    }
-    function disableBtn(str) {
-        var div = document.getElementById('btns');
-        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-        for (var i = 0, btn; btn = btns[i++];) {
-            if (btn.id == str) {
-                UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-            } else {
-                btn.setAttribute("disabled", "true");
-            }
-        }
-    }
-    function enableBtn() {
-        var div = document.getElementById('btns');
-        var btns = UE.dom.domUtils.getElementsByTagName(div, "button");
-        for (var i = 0, btn; btn = btns[i++];) {
-            UE.dom.domUtils.removeAttributes(btn, ["disabled"]);
-        }
-    }
-
-    function getLocalData () {
-        alert(UE.getEditor('editor').execCommand( "getlocaldata" ));
-    }
-
-    function clearLocalData () {
-        UE.getEditor('editor').execCommand( "clearlocaldata" );
-    }
-</script>
-
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/work/getSWorkList', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -307,7 +150,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
+                $.getJSON('/work/getSWorkList', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);
@@ -320,66 +163,81 @@
             }
         });
         var zz = res.content;
-        var htmllet = "";
+        var htmllet = '';
         $("#courseList").html(htmllet);
         createHtml(htmllet,zz,'bbsList');
     });
     function createHtml(htmllet,zz,id) {
+        htmllet += '<tr>\n' +
+            '                            <td>作业名</td>\n' +
+            '                            <td>作业描述</td>\n' +
+            '                            <td>发布时间</td>\n' +
+            '                            <td>状态</td>\n' +
+            '                            <td>操作</td>\n' +
+            '                        </tr>';
         for(var i = 0;i<zz.length;i++){
             var z=i+1;
-            htmllet += '<tr class="theTr">\n' +
-                '                            <td>\n' +
-                '                                '+z+'\n' +
-                '                            </td>\n' +
-                '                            <td>\n' +
-                '                                <a href="/toBbsInfoPage?courseId='+zz[i].cId+'">'+zz[i].cName+'</a>\n' +
-                '                                <br/>\n' +
-                '                            </td>\n' +
-                '                            <td>\n' +
-                '                                '+zz[i].cUptime+'\n' +
-                '                            </td>\n' +
-                '                            <td>\n' +
-                '                                <a href="/showUserInfo?userId='+zz[i].userUid+'">'+zz[i].cAuthor+'</a>\n' +
-                '                            </td>\n' +
+            //设置状态展示样式
+            var showStatus = '';
+            //设置进入作业详情页面
+            var toWorkInfo = '<a href="/toTSWorkListPage?wId='+zz[i].id+'">'+zz[i].wName+'</a>';
+            //设置操作按钮
+            var upBtn = '';
+            if(zz[i].wFlag == "0"){
+                showStatus = '<span class="badge badge-danger radius">未提交</span>';
+            }else{
+                if(zz[i].wFlag == "1"){
+                    showStatus = '<span class="badge badge-success radius">已提交</span>';
+                }else{
+                    showStatus = '<span class="badge badge-success radius">已批改</span>';
+                }
+            }
+            var doWork = '<a href="/toTSWorkListPage?wId='+zz[i].id+'">进入作业</a>';
+            //设置批改份数按钮
+
+            htmllet += '<tr>\n' +
+                '                            <td>'+toWorkInfo+'</td>\n' +
+                '                            <td>'+zz[i].wUptime+'</td>\n' +
+                '                            <td>'+zz[i].wUptime+'</td>\n' +
+                '                            <td>'+showStatus+'</td>\n' +
+                '                            <td>'+doWork+'</td>\n' +
                 '                        </tr>';
         }
         $("#"+id).html(htmllet);
     }
 </script>
 <script>
-    /*登陆按钮点击操作*/
-    $(function(){
-        $("#logSub").click(function () {
-            var code = $("#usernameLogin").val();
-            var pwd = $("#passwordLogin").val();
-            debugger;
-            $.ajax({
-                url : "/user/userLogin",
-                type : "post",
-                data : {
-                    code : code,
-                    pwd : pwd
-                },
-                success : function(data) {
-                    var aa = data.msg
-                    if(aa == "success"){
-                        $("#modal-demo").modal("hide");
-                        //刷新当前页面
-                        location.reload(true);
-                    }else{
-                        //弹出错误问题
-                        alert("账号密码错误，登陆失败");
-                    }
-                }
-            });
-        })
-    });
     $(function() {
         $('.maskWraper').Huihover();
     });
-    //弹窗
-    function modaldemo(){
-        $("#modal-demo").modal("show");
+    //下载查看我的作业
+    function dowMyWork(id){
+        $("#dowForm"+id).submit();
+    }
+    //上传提交作业
+    function uploadMyWork(x) {
+        debugger;
+        var form = new FormData(document.getElementById("upFrom"+x));
+        var url = "/work/subMyWork";
+        $.ajax({
+            url:url,
+            data:form,
+            type:'post',
+            processData:false,
+            contentType:false,
+            success : function(data){
+                if(data.status == true){
+                    alert("作业提交成功");
+                    //刷新当前页面
+                    location.reload(true);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(data){
+                alert("系统异常，联系管理员");
+            }
+        });
     }
 </script>
 </body>

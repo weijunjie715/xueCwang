@@ -323,6 +323,18 @@ public class PageController extends BaseController {
         return "student/sWorkListPage";
     }
 
+    /**
+     * @Description 学生访问作业列表页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toTSWorkListPage")
+    public String toTSWorkListPage(HttpSession session,Model model,String wId){
+        SysUser sysUser = checkLogin(session);
+        model.addAttribute("userInfo",sysUser);
+        model.addAttribute("wId",wId);
+        return "student/sWorkInfoListPage";
+    }
+
     @RequestMapping("tocccc")
     public String toUpdateUserInfoPage1(){
         return "student/userInfoUpdatePage";

@@ -182,29 +182,27 @@
             var showStatus = '';
             //设置操作按钮
             var upBtn = '';
+            upBtn = '<form action="/work/testDow??mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
+                ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
+                '</form>';
             if(zz[i].wStatus == "0"){
                 showStatus = '<span class="badge badge-danger radius">未提交</span>';
-                upBtn = '<form id="upFrom'+zz[i].id+'">' +
-                    '<span class="btn-upload">\n' +
-                    '  <input type="hidden" value="'+zz[i].id+'" name="mwId"/>\n' +
-                    '  <a href="javascript:void();"  class="btn btn-primary radius btn-upload"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>\n' +
-                    '  <input type="file" multiple name="workFile" class="input-file">\n' +
-                    '</span>' +
-                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="uploadMyWork('+zz[i].id+')"> 提交</a>\n' +
-                    '</form>';
             }else{
                 if(zz[i].wStatus == "1"){
                     showStatus = '<span class="badge badge-success radius">已提交</span>';
                 }else{
                     showStatus = '<span class="badge badge-success radius">已批改</span>';
                 }
-                upBtn = '<form action="/work/testDow?mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
-                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
-                    '</form>';
             }
+            //设置批改份数按钮
+            var sc = '';
+            sc = '<form action="/work/testDow?mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
+                ' <input type="text" value="'+zz[i].wScore+'" width="40px;" class="input-text radius size-S" name="sc" >\n' +
+                ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 评分</a>\n' +
+                '</form>';
             htmllet += '<tr>\n' +
                 '                            <td>'+zz[i].wName+'</td>\n' +
-                '                            <td>'+zz[i].cName+'</td>\n' +
+                '                            <td>'+zz[i].wComment+'</td>\n' +
                 '                            <td>'+zz[i].wUptime+'</td>\n' +
                 '                            <td>'+showStatus+'</td>\n' +
                 '                            <td>'+upBtn+'</td>\n' +
