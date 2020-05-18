@@ -17,7 +17,6 @@ import java.util.List;
 /**
  * @ClassName CourseServiceImpl
  * 描述 :
- * @Author weijunjie
  * @Date 2020/3/30 15:21
  */
 @Service

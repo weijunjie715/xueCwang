@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.URLEncoder;
 
 /**
  * @ClassName BaseController
@@ -106,7 +107,8 @@ public class BaseController {
         }else if(prefixName.equalsIgnoreCase("jpg")
                 || prefixName.equalsIgnoreCase("png")
                 || prefixName.equalsIgnoreCase("jpeg")
-                || prefixName.equalsIgnoreCase("gif")){
+                || prefixName.equalsIgnoreCase("gif")
+                || prefixName.equalsIgnoreCase("mp4")){
             //判断上传格式
             //定义新的文件名，当前系统时间+随机数+固定后缀，
             //RandomUtils需要引入jar文件commons-lang.jar
@@ -189,7 +191,9 @@ public class BaseController {
         //设置响应头和客户端保存文件名
         response.setCharacterEncoding("utf-8");
         response.setContentType("multipart/form-data");
+        fileName = URLEncoder.encode(fileName,"utf-8");
         response.setHeader("Content-Disposition", "attachment;fileName=" + fileName);
+
         //用于记录以完成的下载的数据量，单位是byte
         long downloadedLength = 0l;
         try {

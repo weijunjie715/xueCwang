@@ -41,6 +41,9 @@
             <a href="/toMyBbsPage" >问题管理</a>
         </li>
         <li>
+            <a href="/toAddResourcesPage" >资源发布</a>
+        </li>
+        <li>
             <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
         </li>
     </c:otherwise>

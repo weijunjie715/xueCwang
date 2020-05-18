@@ -151,7 +151,9 @@
   </update>
   <resultMap id="allMyWork" type="com.xue.bean.AllMyWorkInfo" extends="BaseResultMap">
     <result column="cId" jdbcType="VARCHAR" property="cId" />
-    <result column="cName" jdbcType="INTEGER" property="cName" />
+    <result column="cName" jdbcType="VARCHAR" property="cName" />
+    <result column="uName" jdbcType="VARCHAR" property="suName" />
+    <result column="uId" jdbcType="VARCHAR" property="suUid" />
   </resultMap>
   <!--获取我的作业列表数据-->
   <select id="getSWorkList" resultMap="allMyWork">
@@ -180,12 +182,12 @@
   <select id="getSWorkListByWId" resultMap="allMyWork">
     SELECT
 	a.*,
-	c.c_id AS cId,
-	c.c_name AS cName
+	c.su_uuid AS uId,
+	c.su_name AS uName
     FROM
 	t_my_work a
 	LEFT JOIN t_work b ON a.w_id = b.id
-	LEFT JOIN course c ON b.c_id = c.c_id
+	LEFT JOIN sys_user c ON a.su_id = c.su_id
     WHERE
 	a.w_id = #{wId}
 	order by a.w_uptime desc
@@ -200,4 +202,9 @@
 	WHERE
 	w_id = #{wId}
   </select>
+  <update id="updateWorkStatus">
+    UPDATE t_work a
+LEFT JOIN ( SELECT min( w_status ) AS mStatus, w_id AS wId FROM t_my_work GROUP BY w_id ) b ON a.id = b.wId
+SET a.w_flag = b.mStatus
+  </update>
 </mapper>

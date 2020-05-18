@@ -46,7 +46,7 @@ public class WorkController extends BaseController {
         SysUser user = checkLogin(session);
         work.setuId(user.getSuId());
         //组装work数据
-//        String s = workService.addWork(work);
+        String s = workService.addWork(work);
         JSONObject res = new JSONObject();
         //执行用户信息入库操作
         res.put("msg","success");
@@ -97,10 +97,8 @@ public class WorkController extends BaseController {
     @RequestMapping("getTSWorkList")
     @ResponseBody
     public String getTSWorkList(HttpSession session, Integer curr, Integer limit, String wId){
-        SysUser user = checkLogin(session);
         JSONObject res = new JSONObject();
         curr = curr == null?1:curr;
-        String uid = user.getSuId()+"";
         List<AllMyWorkInfo> sWorkList = workService.getWorkInfoByWId(wId, (curr - 1) * limit, limit);
         Integer sWorkCount = workService.getSWorkCountByWId(wId);
         res.put("content",sWorkList);
@@ -119,6 +117,9 @@ public class WorkController extends BaseController {
         JSONObject res = new JSONObject();
         curr = curr == null?1:curr;
         String uid = user.getSuId()+"";
+        //刷新课程作业提交状态
+        workService.updateWorkStatus();
+        //获取作业状态列表
         List<TWork> sWorkList = workService.getTworkList(uid, (curr - 1) * limit, limit);
         Integer sWorkCount = workService.getTWorkCount(uid);
         res.put("content",sWorkList);
@@ -128,7 +129,6 @@ public class WorkController extends BaseController {
 
     /**
      * @Description 提交作业方法
-     * @Author weijunjie
      * @Date 2020/5/13 17:45
      **/
     @ResponseBody
@@ -189,9 +189,8 @@ public class WorkController extends BaseController {
     @ResponseBody
     public String setSc(HttpServletResponse response,
                         HttpSession session, HttpServletRequest request,String mwId,String sc) throws Exception{
-        //获取作业对应的资源文件数据
-        SysResources resources = workService.getResourcesByWId(mwId);
-        download(resources.getSrName()+"."+resources.getRemarks(),resources.getFile(),request,response);
+        //修改分数数据
+        workService.updateSc(mwId,sc);
         Map<String,Object> result = new HashMap<>();
         result.put("status",true);
         result.put("msg","作业提交成功");

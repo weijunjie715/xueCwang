@@ -23,7 +23,7 @@
             success : function(data) {
                 var aa = data.msg
                 if(aa == "success"){
-                    location.reload(true);
+                    window.location = "/toIndex";
                 }else{
                     //弹出错误问题
                     alert("处理异常");

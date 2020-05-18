@@ -23,4 +23,9 @@ public interface SysResourcesMapper {
     int getMaxIndexByType(@Param("type") String type);
 
     int insertForId(SysResources record);
+
+    List<SysResources> selectByTypeForPage(@Param("type") String type,@Param("bNumber") Integer bNumber,
+                                           @Param("eNumber") Integer eNumber);
+
+    int selectByTypeForCount(@Param("type") String type);
 }

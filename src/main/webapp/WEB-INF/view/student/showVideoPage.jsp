@@ -30,22 +30,11 @@
         /* 星星评分大小 */
         .size-S img{width:16px;height:16px}
         .mainBody {
-            margin-left: 5%;
+            margin-left: 10%;
         }
-        .textMargin{
-            margin-top: 20px;
-            margin-bottom: 20px;
-        }
-        /* 幻灯片 */
-        #slider-1{width:80%;text-align:center;margin-left: 10%;}
-        #slider-1 .bd,#slider-1 .bd li,#slider-1 .bd img{width:100%; height:350px}
-        #slider-1 .hd{ margin-top:2px;height:60px;width:100%}
-        #slider-1 .hd li{ position:relative; display:inline-block; float:left; margin-right:2px;cursor:pointer;width:19%; height:58px}
-        #slider-1 .hd li img{ display:block;width:100%; height:58px}
-        #slider-1 .hd li i{ position:absolute; display:block; z-index:9; left:0; top:0; right:0; bottom:0; background-color:rgba(0,0,0,0.6)}
 
     </style>
-    <title>学C网首页</title>
+    <title>课程详情</title>
 
 </head>
 <body ontouchstart>
@@ -61,6 +50,7 @@
                 <a class="logo navbar-logo hidden-xs" href="/toIndex">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+                <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -74,7 +64,7 @@
                             <ul class="dropDown-menu menu radius box-shadow">
                                 <c:if test="${empty userInfo}">
                                     <li>
-                                        <a href="/toRegister">注册</a>
+                                        <a href="/toRegister" >注册</a>
                                     </li>
                                     <li>
                                         <a href="javascritp:;" onClick="modaldemo()">登陆</a>
@@ -98,20 +88,7 @@
     </header>
     <div class="wap-container">
         <div id="slider-1" class="bg-fff box-shadow radius">
-            <div class="slider">
-                <div class="bd bg-fff">
-                    <ul>
-                        <c:forEach items="${photoList}" var="p" varStatus="i">
-                            <li><a href="#" title="${p.srName}" ><img src="${p.file}" ></a></li>
-                        </c:forEach>
-                    </ul>
-                </div>
-                <ol class="hd cl">
-                    <c:forEach items="${photoList}" var="p" varStatus="i">
-                        <li><i></i><img src="${p.file}"></li>
-                    </c:forEach>
-                </ol>
-            </div>
+
         </div>
 
         <div class="panel-body">
@@ -120,63 +97,10 @@
             </div>
             <div id="clazzs">
                 <div class="mainBody">
-                    <h3>课程精选</h3>
-                    <div class="themain">
-                        <c:forEach items="${courseList}" var="course" varStatus="i">
-                            <div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px">
-                                <img src="${course.fileUrl}" width="300" height="250">
-                                <div class="maskBar text-c">${course.cName}</div>
-                            </div>
-                            <div class="aboutClass" style="width: 10%; height:250px; margin-top: 30px">
-                                <p class="textMargin">${course.cName}</p>
-                                <p class="textMargin">讲师：<a href="/showUserInfo?userId=${course.userUid}">${course.cAuthor}</a></p>
-                                <div class="clearfix">
-                                    <span class="f-l f-14 va-m">课程评分：</span>
-                                    <div class="star-bar star-bar-show size-S f-l va-m mr-10">
-                                        <span class="star" style="width:${course.cScoure}"></span>
-                                    </div>
-                                </div>
-                                <a style="margin-top: 30px;" href="/showCourseInfo?courseId=${course.cId}">进入学习</a>
-                            </div>
-                        </c:forEach>
-                    </div>
+                    <h3>课程视频</h3>
+                    <video id="video" width="640" height="360" src="${fileUrl}" controls="controls">
+                    </video>
                 </div>
-
-                <a style="margin-left: 10%; float: left;" href="/toCourseListPage">查看更多》》</a>
-                <div style="clear:both;"></div>
-            </div>
-            <div id="teachers">
-                <div class="mainBody">
-                    <h3>名师风采</h3>
-                    <div class="themain">
-                        <c:forEach items="${teacherList}" var="t" varStatus="i">
-                            <div class="maskWraper" style="width: 20%; height:250px; margin-top: 30px">
-                                <img src="${t.userPhoto}" width="300" height="250">
-                                <div class="maskBar text-c">${t.suName}</div>
-                            </div>
-                            <div class="aboutClass" style="width: 10%; height:250px; margin-top: 30px">
-                                <p class="textMargin">${t.suName}</p>
-                                <p class="textMargin">${t.suBirthday}</p>
-                                <p class="textMargin">${t.suSex == '1'?'男':'女'}</p>
-                                <a style="margin-top: 30px;" href="/showUserInfo?userId=${t.suUuid}">进入主页</a>
-                            </div>
-                        </c:forEach>
-                    </div>
-                </div>
-                <a style="margin-left: 10%; float: left;" href="/toTeacherListPage">查看更多》》</a>
-                <div style="clear:both;"></div>
-            </div>
-            <div id="others">
-                <div class="mainBody">
-                    <h3>学习伙伴</h3>
-                    <div class="themain">
-                        <c:forEach items="${userList}" var="u" varStatus="i">
-                            <img title="${u.suName}" onclick="toUserInfo('${u.suUuid}')" id="${u.suUuid}" src="${u.userPhoto}" alt="${u.suName}" class="round" style="width: 12%">
-                        </c:forEach>
-                    </div>
-                </div>
-                <a style="margin-left: 10%; float: left;" href="/toUserListPage">查看更多》》</a>
-                <div style="clear:both;"></div>
             </div>
         </div>
         <footer class="footer mt-20" style="margin-top: 60px;">
@@ -207,17 +131,17 @@
             </div>
             <div class="modal-body">
                 <div class="panel-body">
-                    <form action="" method="post" class="form form-horizontal responsive" id="demoform">
+                    <form action="" method="post" class="form form-horizontal responsive" id="demoformLogin">
                         <div class="row cl">
                             <label class="form-label col-xs-3">账号：</label>
                             <div class="formControls col-xs-8">
-                                <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="username" id="username">
+                                <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="username" id="usernameLogin">
                             </div>
                         </div>
                         <div class="row cl">
                             <label class="form-label col-xs-3">密码：</label>
                             <div class="formControls col-xs-8">
-                                <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password" id="password">
+                                <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password" id="passwordLogin">
                             </div>
                         </div>
                         <div class="row cl">
@@ -231,12 +155,60 @@
         </div>
     </div>
 </div>
+<%--初始化分页插件数据信息--%>
+<script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
+<script>
+    var courseId = $("#courseId").val();
+    $.getJSON('/comment/getCommentByCourseId', {curr: 1,limit:10,courseId:courseId,type:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+        laypage({
+            limit:10,
+            cont: 'forPage', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
+            pages: res.pages, //通过后台拿到的总页数
+            curr: 1, //初始化当前页
+            jump: function(e){ //触发分页后的回调
+                console.log(e);
+                $.getJSON('/comment/getCommentByCourseId', {curr: e.curr,limit:e.limit,courseId:courseId,type:'1'}, function(res){
+                    var zz = res.content;
+                    var htmllet = "";
+                    $("#commentList").html(htmllet);
+                    createHtml(htmllet,zz,'commentList');
+                });
+                $('body,html').animate({
+                        scrollTop: 0
+                    },
+                    500);
+            }
+        });
+        var zz = res.content;
+        var htmllet = "";
+        $("#commentList").html(htmllet);
+        createHtml(htmllet,zz,'commentList');
+    });
+    function createHtml(htmllet,zz,id) {
+        for(var i = 0;i<zz.length;i++){
+            console.log(zz[i].ccComment);
+            htmllet += '<li class="item cl"> <a href="/showUserInfo?userId='+zz[i].userUId+'"><i class="avatar size-L radius"><img alt="" src="'+zz[i].userFile+'"></i></a>\n' +
+                '                                    <div class="comment-main">\n' +
+                '                                        <header class="comment-header">\n' +
+                '                                            <div class="comment-meta"><a class="comment-author" href="/showUserInfo?userId='+zz[i].userUId+'">'+zz[i].userName+'</a> 评论于\n' +
+                '                                                <time title="">'+zz[i].ccTime+'</time>\n' +
+                '                                            </div>\n' +
+                '                                        </header>\n' +
+                '                                        <div class="comment-body">\n' +
+                '                                            <p>'+zz[i].ccComment+'</p>\n' +
+                '                                        </div>\n' +
+                '                                    </div>\n' +
+                '                                </li>';
+        }
+        $("#"+id).html(htmllet);
+    }
+</script>
 <script>
     /*登陆按钮点击操作*/
     $(function(){
         $("#logSub").click(function () {
-            var code = $("#username").val();
-            var pwd = $("#password").val();
+            var code = $("#usernameLogin").val();
+            var pwd = $("#passwordLogin").val();
             debugger;
             $.ajax({
                 url : "/user/userLogin",
@@ -259,21 +231,102 @@
             });
         })
     });
-    //hover效果
     $(function() {
         $('.maskWraper').Huihover();
+        /* 计算输入域字体数量 */
+        $(".textarea").Huitextarealength({
+            minlength:10,
+            maxlength:200.
+        });
     });
-    //轮播图
+    //添加订阅课程操作
+    function addUserRelation(uid){
+        //判断当前用户是否已经登录
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            $.ajax({
+                url : "/relation/addRelation",
+                type : "post",
+                data : {
+                    relationId:uid,
+                    relationType:"2",
+                    rFlag:"1"
+                },
+                success : function(data) {
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("订阅成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("订阅失败，联系管理员");
+                    }
+                }
+            });
+        }
+    }
+    //星星评价效果
     $(function(){
-        jQuery("#slider-1 .slider").slide({mainCell:".bd ul",titCell:".hd li",trigger:"click",effect:"leftLoop",autoPlay:true,delayTime:850,interTime:7000,pnLoop:false,titOnClassName:"active"})});
+        //星级评价
+        $("#star-1").raty({
+            hints: ['1','2', '3', '4', '5'],//自定义分数
+            starOff: 'iconpic-star-S-default.png',//默认灰色星星
+            starOn: 'iconpic-star-S.png',//黄色星星
+            path: '${staticPath}/hui/static/h-ui/images/star',//可以是相对路径
+            number: 5,//星星数量，要和hints数组对应
+            showHalf: true,
+            targetKeep : true,
+            click: function (score, evt) {//点击事件
+                //第一种方式：直接取值
+                // $("#result-1").html(score+'分');
+                $("#mySc").val(score);
+            }
+        });
+    });
     //弹窗
     function modaldemo(){
         $("#modal-demo").modal("show");
     }
+    //点击提交按钮触发对文章添加评论事件
+    function alertMsg() {
+        //判断当前用户是否是已登录的状态，不是的话弹出登陆框
+        var userId = $("#userHiddenId").val();
+        if(userId.length == 0){
+            $("#modal-demo").modal("show");
+            return;
+        }else{
+            var score = $("#mySc").val();
+            var beizhu = $("#beizhu").val();
+            var courseId = $("#courseId").val();
+            // alert(score+"------"+beizhu+"---"+courseId+"---"+userId);
+            $.ajax({
+                url : "/comment/addCourseComment",
+                type : "post",
+                data : {
+                    cId:courseId,
+                    ccUserId:userId,
+                    ccScoure:score,
+                    ccComment:beizhu,
+                    ccType:'1'
+                },
+                success : function(data) {
+                    var aa = data.msg
+                    if(aa == "success"){
+                        alert("评论成功");
+                        //刷新当前页面
+                        location.reload(true);
+                    }else{
+                        //弹出错误问题
+                        alert("添加评论失败，联系管理员");
+                    }
+                }
+            });
+        }
 
-    //进入用户信息页面
-    function toUserInfo(uid){
-        location.href="/showUserInfo?userId="+uid;
     }
 </script>
 </body>

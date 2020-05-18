@@ -31,4 +31,6 @@ public interface TMyWorkMapper {
 
     int getSWorkCountByWId(@Param("wId") String wId);
 
+    int updateWorkStatus();
+
 }

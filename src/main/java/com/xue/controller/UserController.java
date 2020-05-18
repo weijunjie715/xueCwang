@@ -87,7 +87,7 @@ public class UserController extends BaseController {
         request.setCharacterEncoding("UTF-8");
         String msg = "";
         String uuid = DateUtils.format(new Date(),"yyyyMMddHHmmssSSS");
-        if(null != file){
+        if(!file.isEmpty()){
             String s = saveFileImg(response, session, request, file, uuid);
             if("300".equals(s)){
                 msg = "选择图片过大，请重新选择";

@@ -95,12 +95,7 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
+                <c:import url="butArray.jsp"></c:import>
             </div>
             <div id="others">
                 <div class="mainBody">
@@ -194,11 +189,12 @@
                     '</form>';
             }else{
                 if(zz[i].wStatus == "1"){
-                    showStatus = '<span class="badge badge-success radius">已提交</span>';
+                    showStatus = '<span class="badge badge-secondary radius">已提交</span>';
                 }else{
                     showStatus = '<span class="badge badge-success radius">已批改</span>';
                 }
-                upBtn = '<form action="/work/testDow?mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
+                upBtn = '<form action="/work/testDow" method="GET" id="dowForm'+zz[i].id+'" >' +
+                    '  <input type="hidden" value="'+zz[i].id+'" name="mwId"/>\n' +
                     ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
                     '</form>';
             }

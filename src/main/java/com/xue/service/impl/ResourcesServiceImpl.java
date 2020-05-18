@@ -81,4 +81,20 @@ public class ResourcesServiceImpl implements ResourcesService {
         return resourcesMapper.selectByPrimaryKey(Integer.parseInt(id));
     }
 
+    public Integer insertResources(SysResources sysResources){
+        return resourcesMapper.insert(sysResources);
+    }
+
+    /**
+     * 功能描述: 获取展示资源数据列表的数据信息<br>
+     * @Date: 2020/5/17 14:39
+     */
+    public List<SysResources> getResourcesList(String type,Integer bNumber,Integer eNumber){
+        return resourcesMapper.selectByTypeForPage(type,bNumber,eNumber);
+    }
+
+    public Integer getResourcesCount(String type){
+        return resourcesMapper.selectByTypeForCount(type);
+    }
+
 }

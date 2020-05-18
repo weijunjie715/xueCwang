@@ -18,4 +18,10 @@ public interface ResourcesService {
     public int insertResourcesId(String fileUrl,String fileType,String fileName,String type);
 
     public SysResources getResourcesById(String id);
+
+    public Integer insertResources(SysResources sysResources);
+
+    public Integer getResourcesCount(String type);
+
+    public List<SysResources> getResourcesList(String type,Integer bNumber,Integer eNumber);
 }

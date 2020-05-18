@@ -32,9 +32,11 @@
         .mainBody {
             margin-left: 10%;
         }
-
+        .theTr{
+            height: 150px;
+        }
     </style>
-    <title>我的订阅</title>
+    <title>我的问题</title>
 
 </head>
 <body ontouchstart>
@@ -50,6 +52,7 @@
                 <a class="logo navbar-logo hidden-xs" href="/toIndex">C语言学习网</a>
                 <span class="logo navbar-slogan hidden-xs">简单 &middot; 免费 &middot; 适合初学者</span>
                 <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs JS-nav-toggle" href="javascript:;">&#xe667;</a>
+                <input type="hidden" value="${userInfo.suId}" id="userHiddenId">
                 <nav class="nav navbar-nav nav-collapse" role="navigation" id="Hui-navbar">
                     <ul class="cl" style="float:right!important;_display:inline">
                         <c:if test="${not empty userInfo}">
@@ -96,8 +99,17 @@
             </div>
             <div id="others">
                 <div class="mainBody">
-                    <h3>我的订阅</h3>
-                    <div class="themain" id="courseList"></div>
+                    <h3>资源列表</h3>
+                    <%--<form id="fileToUp">
+                        <span class="btn-upload form-group">
+                          <input class="input-text upload-url radius" type="text" name="uploadfile-1" id="uploadfile-1" readonly><a href="javascript:;" class="btn btn-primary radius"><i class="iconfont">&#xf0020;</i> 浏览文件</a>
+                          <input type="file" multiple name="workFile" class="input-file">
+                        </span>
+                        <input type="hidden" id="toUpId" name="mwId"/>
+                    </form>--%>
+                    <table class="table table-border table-bordered table-hover" id="bbsList">
+
+                    </table>
                     <div class="themain" id="coursePageDiv"></div>
                 </div>
                 <div style="clear:both;"></div>
@@ -121,44 +133,11 @@
         </footer>
     </div>
 </div>
-<!--普通弹出层-->
-<div id="modal-demo" class="modal fade middle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content radius">
-            <div class="modal-header">
-                <h3 class="modal-title">登陆窗口</h3>
-                <a class="close" data-dismiss="modal" aria-hidden="true" href="javascript:void(0);">×</a>
-            </div>
-            <div class="modal-body">
-                <div class="panel-body">
-                    <form action="" method="post" class="form form-horizontal responsive" id="demoformLogin">
-                        <div class="row cl">
-                            <label class="form-label col-xs-3">账号：</label>
-                            <div class="formControls col-xs-8">
-                                <input type="text" class="input-text" placeholder="4~16个字符，字母/中文/数字/下划线" name="username" id="usernameLogin">
-                            </div>
-                        </div>
-                        <div class="row cl">
-                            <label class="form-label col-xs-3">密码：</label>
-                            <div class="formControls col-xs-8">
-                                <input type="password" class="input-text" autocomplete="off" placeholder="密码" name="password" id="passwordLogin">
-                            </div>
-                        </div>
-                        <div class="row cl">
-                            <div class="col-xs-8 col-xs-offset-3">
-                                <input class="btn btn-primary" id="logSub" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:1,tag:"2"}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    //获取当前课程ID
+    $.getJSON('/resources/showResourcesList', {curr: 1,limit:10}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -166,11 +145,11 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:1,tag:"2"}, function(res){
+                $.getJSON('/resources/showResourcesList', {curr: e.curr,limit:e.limit}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);
-                    createHtml(htmllet,zz,'courseList');
+                    createHtml(htmllet,zz,'bbsList');
                 });
                 $('body,html').animate({
                         scrollTop: 0
@@ -179,74 +158,111 @@
             }
         });
         var zz = res.content;
-        var htmllet = "";
+        var htmllet = '';
         $("#courseList").html(htmllet);
-        createHtml(htmllet,zz,'courseList');
+        createHtml(htmllet,zz,'bbsList');
     });
     function createHtml(htmllet,zz,id) {
+        htmllet += '<tr>\n' +
+            '                            <td>资源名</td>\n' +
+            '                            <td>资源描述</td>\n' +
+            '                            <td>发布时间</td>\n' +
+            '                            <td>发布人</td>\n' +
+            '                            <td>操作</td>\n' +
+            '                        </tr>';
         for(var i = 0;i<zz.length;i++){
-            htmllet += '<div class="maskWraper" style="width: 20%; height:250px;">\n' +
-                '                            <img src="'+zz[i].fileUrl+'" width="300" height="250">\n' +
-                '                            <div class="maskBar text-c">'+zz[i].cName+'</div>\n' +
-                '                        </div>\n' +
-                '                        <div class="aboutClass" style="width: 70%; height:250px; ">\n' +
-                '                            <p>'+zz[i].cName+'</p>\n' +
-                '                            <div style="margin-top: 30px;">\n' +
-                '                                讲师：<a href="/showUserInfo?userId='+zz[i].userUid+'">'+zz[i].cAuthor+'</a>\n' +
-                '                            </div>\n' +
-                '                            <div style="margin-top: 30px;">\n' +
-                '                                发布时间：'+zz[i].cUptime+'\n' +
-                '                            </div>\n' +
-                '                            <div class="clearfix" style="margin-top: 30px;">\n' +
-                '                                <span class="f-l f-14 va-m">课程评分：</span>\n' +
-                '                                <div class="star-bar star-bar-show size-S f-l va-m mr-10">\n' +
-                '                                    <span class="star" style="width:'+zz[i].cScoure+'"></span>\n' +
-                '                                </div>\n' +
-                '                            </div>\n' +
-                '                            <div style="margin-top: 30px;">\n' +
-                '                                <a href="/showCourseInfo?courseId='+zz[i].cId+'">进入学习》</a>\n' +
-                '                            </div>\n' +
-                '\n' +
-                '                        </div>\n' +
-                '                        <div style="clear:both;"></div>';
+            var z=i+1;
+            //设置状态展示样式
+            var showStatus = '';
+            //设置操作按钮
+            var upBtn = '';
+            if(zz[i].url == "3"){
+                //下载
+                upBtn = '<form action="/resources/toDowResources" method="GET" id="dowForm'+zz[i].id+'" >' +
+                    '  <input type="hidden" value="'+zz[i].id+'" name="rId"/>\n' +
+                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载资源</a>\n' +
+                    '</form>';
+            }else{
+                if(zz[i].url == "1"){
+                    //视频
+                    upBtn = '<form action="/toShowVideoPage" method="GET" id="dowForm'+zz[i].id+'" >' +
+                        '  <input type="hidden" value="'+zz[i].id+'" name="rId"/>\n' +
+                        ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 视频播放</a>\n' +
+                        '</form>';
+                }else{
+                    //图片
+                    upBtn = '<form action="/toShowImgPage" method="GET" id="dowForm'+zz[i].id+'" >' +
+                        '  <input type="hidden" value="'+zz[i].id+'" name="rId"/>\n' +
+                        ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 图片查看</a>\n' +
+                        '</form>';
+                }
+            }
+            htmllet += '<tr>\n' +
+                '                            <td>'+zz[i].srName+'</td>\n' +
+                '                            <td>'+zz[i].remarks+'</td>\n' +
+                '                            <td>'+zz[i].upTime+'</td>\n' +
+                '                            <td><a href="/showUserInfo?userId='+zz[i].userUuId+'">'+zz[i].userName+'</a></td>\n' +
+                '                            <td>'+upBtn+'</td>\n' +
+                '                        </tr>';
         }
         $("#"+id).html(htmllet);
     }
 </script>
 <script>
-    /*登陆按钮点击操作*/
-    $(function(){
-        $("#logSub").click(function () {
-            var code = $("#usernameLogin").val();
-            var pwd = $("#passwordLogin").val();
-            debugger;
-            $.ajax({
-                url : "/user/userLogin",
-                type : "post",
-                data : {
-                    code : code,
-                    pwd : pwd
-                },
-                success : function(data) {
-                    var aa = data.msg
-                    if(aa == "success"){
-                        $("#modal-demo").modal("hide");
-                        //刷新当前页面
-                        location.reload(true);
-                    }else{
-                        //弹出错误问题
-                        alert("账号密码错误，登陆失败");
-                    }
-                }
-            });
-        })
-    });
     $(function() {
         $('.maskWraper').Huihover();
     });
-    //弹窗
-    function modaldemo(){
-        $("#modal-demo").modal("show");
+    //下载查看我的作业
+    function setSC(id){
+        var form = new FormData(document.getElementById("setScForm"+id));
+        var url = "/work/setSc";
+        $.ajax({
+            url:url,
+            data:form,
+            type:'post',
+            processData:false,
+            contentType:false,
+            success : function(data){
+                if(data.status == true){
+                    alert("打分成功");
+                    //刷新当前页面
+                    location.reload(true);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(data){
+                alert("系统异常，联系管理员");
+            }
+        });
+    }
+    //下载查看我的作业
+    function dowMyWork(id){
+        $("#dowForm"+id).submit();
+    }
+    //上传提交作业
+    function uploadMyWork(x) {
+        var form = new FormData(document.getElementById("upFrom"+x));
+        var url = "/work/subMyWork";
+        $.ajax({
+            url:url,
+            data:form,
+            type:'post',
+            processData:false,
+            contentType:false,
+            success : function(data){
+                if(data.status == true){
+                    alert("作业提交成功");
+                    //刷新当前页面
+                    location.reload(true);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(data){
+                alert("系统异常，联系管理员");
+            }
+        });
     }
 </script>
 </body>

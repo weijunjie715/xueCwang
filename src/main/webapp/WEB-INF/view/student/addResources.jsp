@@ -92,12 +92,7 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
+                <c:import url="butArray.jsp"></c:import>
             </div>
             <div id="clazzs">
                 <div class="mainBody">
@@ -108,7 +103,7 @@
                             <div class="row cl">
                                 <label class="form-label col-xs-3">名称：</label>
                                 <div class="formControls col-xs-8">
-                                    <input type="text" class="input-text" placeholder="输入资源名称" name="suCode" id="username">
+                                    <input type="text" class="input-text" placeholder="输入资源名称" name="fileName" id="username">
                                 </div>
                             </div>
                             <div class="row cl">
@@ -116,7 +111,7 @@
                                 <div class="formControls col-xs-8">
                                     <select class="select" size="1" name="fileType">
                                         <option value="1">视频</option>
-                                        <option value="2">图片</option>
+                                        <option value="2">PPT</option>
                                         <option value="3">文档</option>
                                     </select>
                                 </div>
@@ -127,7 +122,7 @@
 											<span class="btn-upload form-group">
 											<input class="input-text upload-url" type="text" name="uploadfile-2" id="uploadfile-2" readonly style="width:200px">
 											<a href="javascript:void(0);" class="btn btn-primary upload-btn"><i class="Hui-iconfont">&#xe642;</i> 浏览文件</a>
-											<input type="file" multiple name="uploadfile" class="input-file">
+											<input type="file" multiple name="resourcesFile" class="input-file">
 											</span>
                                 </div>
                             </div>
@@ -140,7 +135,7 @@
 
                             <div class="row cl">
                                 <div class="col-xs-8 col-xs-offset-3">
-                                    <input class="btn btn-primary" type="button" onclick="updateImg(this.form)" value="&nbsp;&nbsp;注册&nbsp;&nbsp;">
+                                    <input class="btn btn-primary" type="button" onclick="updateImg(this.form)" value="&nbsp;&nbsp;提交学习资源&nbsp;&nbsp;">
                                 </div>
                             </div>
                         </form>
@@ -157,8 +152,8 @@
                     <span class="pipe">|</span>
                     <a  href="http://www.h-ui.net/juanzeng.shtml">感谢捐赠</a>
                 </nav>
-                <p>Copyright &copy;2013-2017 H-ui.net All Rights Reserved. <br>
-                    <a rel="nofollow"  href="http://www.miitbeian.gov.cn/">京ICP备15015336号-1</a>
+                <p>Copyright &copy;2013-2017 xueCwang.net All Rights Reserved. <br>
+                    <a rel="nofollow"  href="http://www.miitbeian.gov.cn/">京ICP备0000001号-1</a>
                     <br>
                     未经允许，禁止转载、抄袭、镜像<br>
                     用心做站，做不一样的站</p>
@@ -170,7 +165,7 @@
     /*注册数据提交*/
     function updateImg(x) {
         var form = new FormData(x);
-        var url = "/user/userRegister";
+        var url = "/resources/addResources";
         $.ajax({
             url:url,
             data:form,
@@ -179,8 +174,8 @@
             contentType:false,
             success : function(data){
                 if(data.status == true){
-                    alert("注册成功，返回主页登陆");
-                    window.location = "/toIndex";
+                    alert("发布资源成功，前往资源列表页面");
+                    window.location = "/toResourcesListPage";
                 }else{
                     alert(data.msg);
                 }

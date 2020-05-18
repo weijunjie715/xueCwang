@@ -29,4 +29,9 @@ public interface WorkService {
     public String subMyWork(String fileUrl,String mwId,String fileType,String fileName);
 
     public SysResources getResourcesByWId(String mwId);
+
+    public String updateSc(String mwId,String sc);
+
+    public void updateWorkStatus();
+
 }

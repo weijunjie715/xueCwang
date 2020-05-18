@@ -95,12 +95,7 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
+                <c:import url="butArray.jsp"></c:import>
             </div>
             <div id="others">
                 <div class="mainBody">
@@ -142,7 +137,9 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/work/getSWorkList', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    //获取当前课程ID
+    var theWId = ${wId};
+    $.getJSON('/work/getTSWorkList?wId='+theWId, {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -150,7 +147,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/work/getSWorkList', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
+                $.getJSON('/work/getTSWorkList?wId='+theWId, {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);
@@ -170,7 +167,7 @@
     function createHtml(htmllet,zz,id) {
         htmllet += '<tr>\n' +
             '                            <td>作业名</td>\n' +
-            '                            <td>所属课程</td>\n' +
+            '                            <td>学生姓名</td>\n' +
             '                            <td>发布时间</td>\n' +
             '                            <td>状态</td>\n' +
             '                            <td>操作</td>\n' +
@@ -182,31 +179,33 @@
             var showStatus = '';
             //设置操作按钮
             var upBtn = '';
-            upBtn = '<form action="/work/testDow??mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
-                ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
-                '</form>';
             if(zz[i].wStatus == "0"){
                 showStatus = '<span class="badge badge-danger radius">未提交</span>';
             }else{
+                upBtn = '<form action="/work/testDow" method="GET" id="dowForm'+zz[i].id+'" >' +
+                    '  <input type="hidden" value="'+zz[i].id+'" name="mwId"/>\n' +
+                    ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 下载作业</a>\n' +
+                    '</form>';
                 if(zz[i].wStatus == "1"){
-                    showStatus = '<span class="badge badge-success radius">已提交</span>';
+                    showStatus = '<span class="badge badge-secondary radius">已提交</span>';
                 }else{
                     showStatus = '<span class="badge badge-success radius">已批改</span>';
                 }
             }
             //设置批改份数按钮
             var sc = '';
-            sc = '<form action="/work/testDow?mwId='+zz[i].id+'" method="GET" id="dowForm'+zz[i].id+'" >' +
-                ' <input type="text" value="'+zz[i].wScore+'" width="40px;" class="input-text radius size-S" name="sc" >\n' +
-                ' <a href="javascript:void();" class="btn btn-primary radius" onclick="dowMyWork('+zz[i].id+')"> 评分</a>\n' +
+            sc = '<form id="setScForm'+zz[i].id+'" >' +
+                ' <input type="text" value="'+zz[i].wScore+'" style="width: 40px;" class="input-text radius size-S" name="sc" >\n' +
+                ' <input type="hidden" value="'+zz[i].id+'" name="mwId" >\n' +
+                ' <a href="javascript:void();" class="btn btn-primary radius" onclick="setSC('+zz[i].id+')"> 评分</a>\n' +
                 '</form>';
             htmllet += '<tr>\n' +
                 '                            <td>'+zz[i].wName+'</td>\n' +
-                '                            <td>'+zz[i].wComment+'</td>\n' +
+                '                            <td><a href="/showUserInfo?userId='+zz[i].suUid+'">'+zz[i].suName+'</a></td>\n' +
                 '                            <td>'+zz[i].wUptime+'</td>\n' +
                 '                            <td>'+showStatus+'</td>\n' +
                 '                            <td>'+upBtn+'</td>\n' +
-                '                            <td>'+zz[i].wScore+'</td>\n' +
+                '                            <td>'+sc+'</td>\n' +
                 '                        </tr>';
         }
         $("#"+id).html(htmllet);
@@ -217,12 +216,35 @@
         $('.maskWraper').Huihover();
     });
     //下载查看我的作业
+    function setSC(id){
+        var form = new FormData(document.getElementById("setScForm"+id));
+        var url = "/work/setSc";
+        $.ajax({
+            url:url,
+            data:form,
+            type:'post',
+            processData:false,
+            contentType:false,
+            success : function(data){
+                if(data.status == true){
+                    alert("打分成功");
+                    //刷新当前页面
+                    location.reload(true);
+                }else{
+                    alert(data.msg);
+                }
+            },
+            error : function(data){
+                alert("系统异常，联系管理员");
+            }
+        });
+    }
+    //下载查看我的作业
     function dowMyWork(id){
         $("#dowForm"+id).submit();
     }
     //上传提交作业
     function uploadMyWork(x) {
-        debugger;
         var form = new FormData(document.getElementById("upFrom"+x));
         var url = "/work/subMyWork";
         $.ajax({

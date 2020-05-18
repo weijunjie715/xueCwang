@@ -236,6 +236,9 @@ public class PageController extends BaseController {
     @RequestMapping("toUserCoursePage")
     public String toUserCoursePage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/userCourseListPage";
     }
@@ -247,6 +250,9 @@ public class PageController extends BaseController {
     @RequestMapping("toMyCoursePage")
     public String toTeacherCoursePage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/myCourseListPage";
     }
@@ -258,6 +264,9 @@ public class PageController extends BaseController {
     @RequestMapping("toMyBbsPage")
     public String toMyBbsPage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/myBbsListPage";
     }
@@ -278,6 +287,9 @@ public class PageController extends BaseController {
     @RequestMapping("toAddCoursePage")
     public String toAddCoursePage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/addCoursePage";
     }
@@ -289,6 +301,9 @@ public class PageController extends BaseController {
     @RequestMapping("toAddWorkPage")
     public String toAddWorkPage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         //获取当前教师对应的课程数据信息
         List<Course> courseList = courseService.getCourseForIndex(0, 20, "1", sysUser.getSuId() + "");
@@ -308,6 +323,9 @@ public class PageController extends BaseController {
     @RequestMapping("toTWorkListPage")
     public String toTWorkListPage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/tWorkListPage";
     }
@@ -319,6 +337,9 @@ public class PageController extends BaseController {
     @RequestMapping("toSWorkListPage")
     public String toSWorkListPage(HttpSession session,Model model){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         return "student/sWorkListPage";
     }
@@ -330,9 +351,67 @@ public class PageController extends BaseController {
     @RequestMapping("toTSWorkListPage")
     public String toTSWorkListPage(HttpSession session,Model model,String wId){
         SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
         model.addAttribute("userInfo",sysUser);
         model.addAttribute("wId",wId);
         return "student/sWorkInfoListPage";
+    }
+
+    /**
+     * @Description 进入上传资源页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toAddResourcesPage")
+    public String toAddResourcesPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
+        model.addAttribute("userInfo",sysUser);
+        return "student/addResources";
+    }
+
+    /**
+     * @Description 进入资源列表下载页面
+     * @Date 2020/4/16 9:44
+     **/
+    @RequestMapping("toResourcesListPage")
+    public String toResourcesListPage(HttpSession session,Model model){
+        SysUser sysUser = checkLogin(session);
+        if(null == sysUser){
+            return "404";
+        }
+        model.addAttribute("userInfo",sysUser);
+        return "student/resourcesListPage";
+    }
+
+    /**
+     * 功能描述: 进入展示图片<br>
+     * @Date: 2020/5/17 13:59
+     */
+    @RequestMapping("toShowImgPage")
+    public String toShowImgPage(HttpSession session,Model model,String rId){
+        SysUser sysUser = checkLogin(session);
+        SysResources resourcesById = resourcesService.getResourcesById(rId);
+        model.addAttribute("fileUrl",resourcesById.getFile());
+        model.addAttribute("userInfo",sysUser);
+        return "student/showImgPage";
+    }
+
+    /**
+     * 功能描述: 进入播放视频页面数据 <br>
+     * @Date: 2020/5/17 13:59
+     */
+    @RequestMapping("toShowVideoPage")
+    public String toShowVideoPage(HttpSession session,Model model,String rId){
+        SysUser sysUser = checkLogin(session);
+        //获取资源文件路径数据
+        SysResources resourcesById = resourcesService.getResourcesById(rId);
+        model.addAttribute("fileUrl",resourcesById.getFile());
+        model.addAttribute("userInfo",sysUser);
+        return "student/showVideoPage";
     }
 
     @RequestMapping("tocccc")

@@ -95,12 +95,7 @@
 
         <div class="panel-body">
             <div class="btn-group banner" style="text-align:center;">
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toCourseListPage'">课程学习</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toAboutUsPage'">关于我们</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toTeacherListPage'">名师风采</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/tozuoye'">课堂作业</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/toBbsListPage'">解惑答疑</span>
-                <span class="btn btn-default radius radiusNew" onclick="javascript:window.location.href='/todowFile'">资源下载</span>
+                <c:import url="butArray.jsp"></c:import>
             </div>
             <div id="others">
                 <div class="mainBody">
@@ -142,7 +137,7 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/work/getSWorkList', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/work/getTWorkList', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -150,7 +145,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/work/getSWorkList', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
+                $.getJSON('/work/getTWorkList', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);
@@ -184,20 +179,20 @@
             //设置操作按钮
             var upBtn = '';
             if(zz[i].wFlag == "0"){
-                showStatus = '<span class="badge badge-danger radius">未提交</span>';
+                showStatus = '<span class="badge badge-danger radius">有未提交</span>';
             }else{
                 if(zz[i].wFlag == "1"){
-                    showStatus = '<span class="badge badge-success radius">已提交</span>';
+                    showStatus = '<span class="badge badge-secondary radius">未批改</span>';
                 }else{
                     showStatus = '<span class="badge badge-success radius">已批改</span>';
                 }
             }
-            var doWork = '<a href="/toTSWorkListPage?wId='+zz[i].id+'">进入作业</a>';
+            var doWork = '<a  href="/toTSWorkListPage?wId='+zz[i].id+'">查看作业情况</a>';
             //设置批改份数按钮
 
             htmllet += '<tr>\n' +
                 '                            <td>'+toWorkInfo+'</td>\n' +
-                '                            <td>'+zz[i].wUptime+'</td>\n' +
+                '                            <td>'+zz[i].wComment+'</td>\n' +
                 '                            <td>'+zz[i].wUptime+'</td>\n' +
                 '                            <td>'+showStatus+'</td>\n' +
                 '                            <td>'+doWork+'</td>\n' +

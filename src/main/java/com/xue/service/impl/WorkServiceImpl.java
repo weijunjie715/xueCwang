@@ -41,7 +41,7 @@ public class WorkServiceImpl implements WorkService {
     public String addWork(TWork work){
         work.setwUptime(DateUtils.format(new Date(),"yyyy-MM-dd"));
         int i = workMapper.insertForId(work);
-        allocationWork(work,i);
+        allocationWork(work,work.getId());
         return "success";
     }
 
@@ -124,5 +124,26 @@ public class WorkServiceImpl implements WorkService {
         return resourcesById;
     }
 
+    /**
+     * 功能描述: <br>
+     * 〈〉
+     * @Param: [mwId, sc]
+     * @Return: java.lang.String
+     */
+    public String updateSc(String mwId,String sc){
+        TMyWork tMyWork = new TMyWork();
+        tMyWork.setId(Integer.parseInt(mwId));
+        tMyWork.setwScore(sc);
+        myWorkMapper.updateByPrimaryKeySelective(tMyWork);
+        return "success";
+    }
+
+    /**
+     * @Description 遍历学生作业，更新课程布置作业的完成情况
+     * @Date 2020/5/18 10:55
+     **/
+    public void updateWorkStatus(){
+        myWorkMapper.updateWorkStatus();
+    }
 
 }

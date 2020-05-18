@@ -14,6 +14,11 @@
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
+  <resultMap id="userResourcesMap" extends="BaseResultMap" type="com.xue.bean.SysResources">
+    <result column="userUuId" jdbcType="VARCHAR" property="userUuId" />
+    <result column="userName" jdbcType="VARCHAR" property="userName" />
+    <result column="upTime" jdbcType="VARCHAR" property="upTime" />
+  </resultMap>
   <sql id="Base_Column_List">
     id, sr_name, sr_type, file, url, sr_index, out_id, flag, remarks, create_time, update_time
   </sql>
@@ -182,4 +187,33 @@
   #{file,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{srIndex,jdbcType=INTEGER},
   #{outId,jdbcType=INTEGER}, #{flag,jdbcType=INTEGER}, #{remarks,jdbcType=VARCHAR})
   </insert>
+  <!--获取资源列表页面展示数据-->
+  <sql id="userResources">
+    id, sr_name, sr_type, file, url, sr_index, out_id, flag, remarks, create_time, update_time,
+  </sql>
+  <select id="selectByTypeForPage" resultMap="userResourcesMap">
+    select a.id ,
+	a.sr_name,
+	a.sr_type,
+	a.file,
+	a.url,
+	a.sr_index,
+	a.out_id,
+	a.flag,
+	a.remarks,
+	a.create_time,
+	a.update_time,
+	b.su_uuid AS userUuId,
+	b.su_name AS userName,
+	DATE_FORMAT(a.create_time,'%Y-%m-%d %H:%i:%s') as upTime
+    from sys_resources a left join sys_user b on a.out_id = b.su_id where a.sr_type = #{type}
+    order by a.id desc
+    LIMIT #{bNumber},
+    #{eNumber}
+  </select>
+<!--获取资源列表页面展示数据-->
+  <select id="selectByTypeForCount" resultType="int">
+    select count(1)
+    from sys_resources where sr_type = #{type}
+  </select>
 </mapper>

@@ -56,6 +56,36 @@ public class SysResources implements Serializable {
      */
     private Date updateTime;
 
+    private String userUuId;
+
+    private String userName;
+
+    private String upTime;
+
+    public String getUpTime() {
+        return upTime;
+    }
+
+    public void setUpTime(String upTime) {
+        this.upTime = upTime;
+    }
+
+    public String getUserUuId() {
+        return userUuId;
+    }
+
+    public void setUserUuId(String userUuId) {
+        this.userUuId = userUuId;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
