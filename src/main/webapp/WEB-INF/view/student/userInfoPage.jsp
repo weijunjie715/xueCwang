@@ -134,11 +134,11 @@
                         </tr>
                         <tr>
                             <td>性别</td>
-                            <td>${userInfoShow.suSex == '1'?'男':'女'}</td>
+                            <td>${userInfoShow.suSex eq '1'?'男':'女'}</td>
                         </tr>
                         <tr>
                             <td>角色</td>
-                            <td>${userInfoShow.suRole == '0'?'教师':'学生'}</td>
+                            <td>${userInfoShow.suRole eq '0'?'教师':'学生'}</td>
                         </tr>
                         <tr>
                             <td>生日</td>

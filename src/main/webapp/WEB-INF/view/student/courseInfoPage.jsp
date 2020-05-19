@@ -105,15 +105,19 @@
 
                         </div>
                         <div class="aboutClass" style="width: 70%; height:250px; ">
+
                             <h4>${courseInfo.cName}
-                                <c:choose>
-                                    <c:when test="${not empty relation}">
-                                        <span class="badge badge-success radius">${relation}</span>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <span class="badge badge-danger radius">未订阅</span>
-                                    </c:otherwise>
-                                </c:choose>
+                                <c:if test="${courseInfo.cAuthor ne userInfo.suName}">
+                                    <c:choose>
+                                        <c:when test="${not empty relation}">
+                                            <span class="badge badge-success radius">${relation}</span>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="badge badge-danger radius">未订阅</span>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
+
                             </h4>
                             <input type="hidden" id="courseId" value="${courseInfo.cId}">
                             <div style="margin-top: 30px;">
@@ -131,16 +135,16 @@
                                 <!-- <strong class="f-l f-14 va-m">3.5</strong> -->
                             </div>
                             <div>
-                                <c:choose>
-                                    <c:when test="${not empty relation}">
-                                        <a class="Hui-iconfont Hui-iconfont-xuanzhong1" title="取消订阅" style="color: green;font-size: 30px!important;"></a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" onclick="addUserRelation('${courseInfo.cId}')" style="font-size: 30px!important;"></a>
-                                    </c:otherwise>
-                                </c:choose>
-
-
+                                <c:if test="${courseInfo.cAuthor ne userInfo.suName}">
+                                    <c:choose>
+                                        <c:when test="${not empty relation}">
+                                            <a class="Hui-iconfont Hui-iconfont-xuanzhong1" title="取消订阅" style="color: green;font-size: 30px!important;"></a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a class="Hui-iconfont Hui-iconfont-weigouxuan2" title="订阅课程" onclick="addUserRelation('${courseInfo.cId}')" style="font-size: 30px!important;"></a>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:if>
                             </div>
                         </div>
                         <div style="clear:both;"></div>

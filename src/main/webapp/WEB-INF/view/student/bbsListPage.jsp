@@ -16,7 +16,7 @@
 
         /* 菜单按钮样式 */
         .radiusNew {
-            width: 16.66666667%;
+            width: 20%;
             height: 50px;
             font-size: 25px;
             vertical-align: middle;
@@ -101,7 +101,7 @@
                 <div class="mainBody">
                     <h3>学习论坛
                         <a class="Hui-iconfont Hui-iconfont-add4" onClick="showDeit()" title="发布问题"></a>
-                        <a class="Hui-iconfont Hui-iconfont-order" title="我的问题"></a></h3>
+                        <a class="Hui-iconfont Hui-iconfont-order" href="/toMyBbsPage" title="我的问题"></a></h3>
                     <table class="table table-border" id="bbsList">
 
                     </table>

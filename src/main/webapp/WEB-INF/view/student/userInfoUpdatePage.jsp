@@ -96,7 +96,7 @@
             </div>
             <div id="clazzs">
                 <div class="mainBody">
-                    <h3>账户注册</h3>
+                    <h3>账户修改</h3>
                     <div class="panel-body" style="margin-left: -20%;">
                         <form action="" method="post" class="form form-horizontal responsive" id="demoform">
 
@@ -145,13 +145,13 @@
                             <div class="row cl">
                                 <label class="form-label col-xs-3">角色：</label>
                                 <div class="formControls skin-minimal col-xs-5">
-                                    ${userInfoShow.suSex == '1'?'学生':'教师'}
+                                    ${userInfoForUpdate.suRole eq '0'?'教师':'学生'}
                                 </div>
                             </div>
                             <div class="row cl">
                                 <label class="form-label col-xs-3">性别：</label>
                                 <div class="formControls skin-minimal col-xs-5">
-                                    ${userInfoShow.suSex == '1'?'男':'女'}
+                                    ${userInfoForUpdate.suSex eq '1'?'男':'女'}
                                 </div>
                             </div>
                             <div class="row cl">
