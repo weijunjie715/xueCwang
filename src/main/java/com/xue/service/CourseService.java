@@ -22,4 +22,8 @@ public interface CourseService {
     public Integer getUserCourseCount(String uId,String courseType,String rType);
 
     public List<Course> getUserCourse(Integer bNumber,Integer eNumber,String uId,String courseType,String rType);
+
+    public Integer getMyBbsCount(Integer uId,String courseType);
+
+    public List<Course> getMyBbsList(Integer bNumber,Integer eNumber,String uId,String courseType);
 }

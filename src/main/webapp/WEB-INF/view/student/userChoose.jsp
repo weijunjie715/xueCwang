@@ -15,9 +15,6 @@
             <a href="/toSWorkListPage" >我的作业</a>
         </li>
         <li>
-            <a href="/toMyUserListPage" >我的好友</a>
-        </li>
-        <li>
             <a href="javascritp:;" onclick="loginOut()" >注销登陆</a>
         </li>
     </c:when>

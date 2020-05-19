@@ -148,4 +148,28 @@ public class CourseController extends BaseController {
         return JSONObject.toJSONString(res);
     }
 
+    /**
+     * @Description type = 1 2 3 4
+     * @Date 2020/4/13 9:20
+     **/
+    @ResponseBody
+    @RequestMapping("getMyBbsForPage")
+    public String getMyBbsForPage(String tag,HttpSession session, Integer curr, Integer limit){
+        tag = StringUtils.isBlank(tag)?"1":tag;
+        SysUser user = checkLogin(session);
+        JSONObject res = new JSONObject();
+        curr = curr == null?1:curr;
+        String uid = null;
+        Course course = new Course();
+        //获取查询信息数据
+        course.setcFlag("2");
+        List<Course> courseList = new ArrayList<>();
+        Integer courseCount = 0;
+        courseList = courseService.getMyBbsList((curr-1) * limit, limit,user.getSuId()+"","2");
+        courseCount = courseService.getMyBbsCount(user.getSuId(),"2");
+        res.put("content",courseList);
+        res.put("pages",getPageSize(courseCount,limit));
+        return JSONObject.toJSONString(res);
+    }
+
 }

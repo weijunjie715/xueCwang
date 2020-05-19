@@ -80,7 +80,7 @@
                         </li>
 
                         <li>
-                            <a href="http://h-ui.net/aboutHui.shtml" >联系我们</a>
+                            <a href="http://h-ui.net/aboutHui.shtml" >技术支持</a>
                         </li>
                     </ul>
                 </nav>
@@ -354,7 +354,7 @@
 <%--初始化分页插件数据信息--%>
 <script type="text/javascript" src="${staticPath}/hui/lib/laypage/1.2/laypage.js"></script>
 <script>
-    $.getJSON('/course/getCourseListForPage', {curr: 1,limit:10,type:3,tag:'1'}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
+    $.getJSON('/course/getMyBbsForPage', {curr: 1,limit:10}, function(res){ //从第6页开始请求。返回的json格式可以任意定义
         laypage({
             limit:10,
             cont: 'coursePageDiv', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：&lt;div id="page1">&lt;/div>
@@ -362,7 +362,7 @@
             curr: 1, //初始化当前页
             jump: function(e){ //触发分页后的回调
                 console.log(e);
-                $.getJSON('/course/getCourseListForPage', {curr: e.curr,limit:e.limit,type:3,tag:'1'}, function(res){
+                $.getJSON('/course/getMyBbsForPage', {curr: e.curr,limit:e.limit}, function(res){
                     var zz = res.content;
                     var htmllet = "";
                     $("#courseList").html(htmllet);

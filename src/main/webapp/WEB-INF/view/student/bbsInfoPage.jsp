@@ -80,7 +80,7 @@
                         </li>
 
                         <li>
-                            <a href="http://h-ui.net/aboutHui.shtml" >联系我们</a>
+                            <a href="http://h-ui.net/aboutHui.shtml" >技术支持</a>
                         </li>
                     </ul>
                 </nav>

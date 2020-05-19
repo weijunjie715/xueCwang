@@ -78,7 +78,7 @@
                         </li>
 
                         <li>
-                            <a href="http://h-ui.net/aboutHui.shtml" >联系我们</a>
+                            <a href="http://h-ui.net/aboutHui.shtml" >技术支持</a>
                         </li>
                     </ul>
                 </nav>
@@ -352,7 +352,7 @@
     }
 </script>
 <script>
-    /*注册数据提交*/
+    /*数据提交*/
     function updateImg(x) {
         var userId = $("#userHiddenId").val();
         if(userId.length == 0){
